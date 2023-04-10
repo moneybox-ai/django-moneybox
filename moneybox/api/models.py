@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
-from django.db import models
+from django.db import models, transaction
+from decimal import Decimal
 
 User = get_user_model()
 
@@ -22,6 +23,55 @@ class TimestampMixin(models.Model):
         abstract = True
         verbose_name = "Timestamp Mixin"
         verbose_name_plural = "Timestamp Mixins"
+
+
+class Currency(TimestampMixin):
+    code = models.CharField(
+        max_length=3,
+        unique=True,
+        verbose_name="Currency Code",
+        help_text='The unique code for this currency, e.g. "USD" for US dollars',
+    )
+    name = models.CharField(
+        max_length=255,
+        verbose_name="Currency Name",
+        help_text='The name of the currency, e.g. "US Dollar"',
+    )
+
+    @classmethod
+    def get_usd(cls):
+        return Currency.objects.get(code="USD")
+
+    class Meta:
+        verbose_name = "Currency"
+        verbose_name_plural = "Currencies"
+
+
+class CurrencyRate(TimestampMixin):
+    source_currency = models.ForeignKey(
+        Currency,
+        related_name="source_currency",
+        on_delete=models.CASCADE,
+        verbose_name="Source Currency",
+        help_text="The currency from which the exchange rate is being calculated.",
+    )
+    target_currency = models.ForeignKey(
+        Currency,
+        related_name="target_currency",
+        on_delete=models.CASCADE,
+        verbose_name="Target Currency",
+        help_text="The currency to which the exchange rate is being calculated.",
+    )
+    rate = models.DecimalField(
+        max_digits=10,
+        decimal_places=4,
+        verbose_name="Exchange Rate",
+        help_text="The rate at which the source currency can be exchanged for the target currency.",
+    )
+
+    class Meta:
+        verbose_name = "Currency rate"
+        verbose_name_plural = "Currency rates"
 
 
 class Profile(TimestampMixin):
@@ -89,6 +139,13 @@ class Wallet(TimestampMixin):
         on_delete=models.CASCADE,
         verbose_name="Group",
         help_text="Group that the wallet belongs to",
+        db_index=True,
+    )
+    currency = models.ForeignKey(
+        "Currency",
+        on_delete=models.CASCADE,
+        verbose_name="Currency",
+        help_text="Currency of the wallet",
         db_index=True,
     )
 
@@ -183,6 +240,12 @@ class Income(TimestampMixin):
         verbose_name = "Income"
         verbose_name_plural = "Incomes"
 
+    @transaction.atomic
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        self.wallet.balance += self.amount
+        self.wallet.save()
+
 
 class Expense(TimestampMixin):
     amount = models.DecimalField(
@@ -216,6 +279,12 @@ class Expense(TimestampMixin):
     class Meta:
         verbose_name = "Expense"
         verbose_name_plural = "Expenses"
+
+    @transaction.atomic
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        self.wallet.balance -= self.amount
+        self.wallet.save()
 
 
 class Transfer(TimestampMixin):
@@ -266,47 +335,20 @@ class Transfer(TimestampMixin):
         verbose_name = "Transfer"
         verbose_name_plural = "Transfers"
 
-
-class Currency(TimestampMixin):
-    code = models.CharField(
-        max_length=3,
-        unique=True,
-        verbose_name="Currency Code",
-        help_text='The unique code for this currency, e.g. "USD" for US dollars',
-    )
-    name = models.CharField(
-        max_length=255,
-        verbose_name="Currency Name",
-        help_text='The name of the currency, e.g. "US Dollar"',
-    )
-
-    class Meta:
-        verbose_name = "Currency"
-        verbose_name_plural = "Currencies"
-
-
-class CurrencyRate(TimestampMixin):
-    source_currency = models.ForeignKey(
-        Currency,
-        related_name="source_currency",
-        on_delete=models.CASCADE,
-        verbose_name="Source Currency",
-        help_text="The currency from which the exchange rate is being calculated.",
-    )
-    target_currency = models.ForeignKey(
-        Currency,
-        related_name="target_currency",
-        on_delete=models.CASCADE,
-        verbose_name="Target Currency",
-        help_text="The currency to which the exchange rate is being calculated.",
-    )
-    rate = models.DecimalField(
-        max_digits=10,
-        decimal_places=4,
-        verbose_name="Exchange Rate",
-        help_text="The rate at which the source currency can be exchanged for the target currency.",
-    )
-
-    class Meta:
-        verbose_name = "Currency rate"
-        verbose_name_plural = "Currency rates"
+    @transaction.atomic
+    def save(self, *args, **kwargs):
+        # TODO add checking of current and target currencies
+        super().save(*args, **kwargs)
+        rate_from = CurrencyRate.objects.get(
+            source_currency=self.from_wallet.currency,
+            target_currency=self.to_wallet.currency,
+        )
+        amount_converted = Decimal(self.amount) * rate_from.rate
+        self.from_wallet.balance -= self.amount
+        self.from_wallet.save()
+        self.to_wallet.balance += amount_converted
+        self.to_wallet.save()
+        self.from_wallet.balance -= self.amount
+        self.from_wallet.save()
+        self.to_wallet.balance += amount_converted
+        self.to_wallet.save()

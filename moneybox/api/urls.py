@@ -1,4 +1,5 @@
 from django.urls import path
+from django.conf.urls.static import static
 from rest_framework.routers import SimpleRouter
 from api import views
 
@@ -7,6 +8,8 @@ from drf_spectacular.views import (
     SpectacularRedocView,
     SpectacularSwaggerView,
 )
+
+from moneybox.settings import DEBUG, STATIC_URL, STATIC_ROOT
 
 
 router = SimpleRouter()
@@ -37,3 +40,5 @@ docs_urlpatterns = [
 ]
 
 urlpatterns = router.urls + docs_urlpatterns
+if DEBUG:
+    urlpatterns += static(STATIC_URL, document_root=STATIC_ROOT)
