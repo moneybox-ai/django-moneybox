@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("DJANGO_SECRET", "secret")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv("DJANGO_DEBUG", "True") == "True"
+DEBUG = os.getenv("DJANGO_DEBUG", "False") == "True"
 
 ALLOWED_HOSTS = []
 
@@ -169,3 +169,7 @@ SPECTACULAR_SETTINGS = {
     "SERVE_INCLUDE_SCHEMA": False,
     "AUTH_HEADER_TYPES": ["Token"],
 }
+
+EXCHANGE_RATE_API_CLIENT = os.getenv("EXCHANGE_RATE_API_CLIENT")
+
+RUN_TYPE = os.getenv("RUN_TYPE", "WEB")

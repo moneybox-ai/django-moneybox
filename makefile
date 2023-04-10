@@ -11,7 +11,7 @@ createsuperuser:
 	$(MANAGE_PY) createsuperuser
 
 loaddata:
-	$(MANAGE_PY) loaddata fixtures/*.json
+	$(MANAGE_PY) loaddata api/fixtures/currency.json
 
 resetdb:
 	rm db.sqlite3
