@@ -16,5 +16,5 @@ class ApiConfig(AppConfig):
             import api.signals
         else:
             scheduler = BackgroundScheduler()
-            scheduler.add_job(update_currency, "interval", minutes=1)
+            scheduler.add_job(update_currency, "interval", hours=12)
             scheduler.start()
