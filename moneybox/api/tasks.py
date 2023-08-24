@@ -1,11 +1,11 @@
-from clients.currency.client import ExchangeRatesAPIClient, client
+from clients.currency.client import client
 
 
 def update_currency():
     import django
 
     django.setup()
-    from api.models import Currency, CurrencyRate
+    from wallet.models import Currency, CurrencyRate
 
     usd = Currency.get_usd()
     currencies = client.get_currencies()
