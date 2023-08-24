@@ -15,12 +15,16 @@ class Profile(TimestampMixin):
         db_index=True,
     )
     first_name = models.CharField(
-        max_length=255, verbose_name="First name", help_text="First name of the user"
+        max_length=255, verbose_name="First name",
+        help_text="First name of the user"
     )
     last_name = models.CharField(
-        max_length=255, verbose_name="Last name", help_text="Last name of the user"
+        max_length=255, verbose_name="Last name",
+        help_text="Last name of the user"
     )
-    email = models.EmailField(verbose_name="Email", help_text="Email of the user")
+    email = models.EmailField(
+        verbose_name="Email", help_text="Email of the user"
+    )
 
     class Meta:
         verbose_name = "Profile"

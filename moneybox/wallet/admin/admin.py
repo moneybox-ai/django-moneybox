@@ -2,13 +2,7 @@
 from django.contrib import admin
 import wallet.models as models
 import users.models as users_models
-from wallet.admin.currency_admin import CurrencyAdmin, CurrencyRateAdmin
-from wallet.admin.expense_admin import ExpenseCategoryAdmin, ExpenseAdmin
-from wallet.admin.group_admin import GroupAdmin
-from wallet.admin.income_admin import IncomeCategoryAdmin, IncomeAdmin
-from wallet.admin.profile_admin import ProfileAdmin
-from wallet.admin.transfer_admin import TransferAdmin
-from wallet.admin.wallet_admin import WalletAdmin
+from wallet.admin import *
 
 
 def _register(model, admin_class):
