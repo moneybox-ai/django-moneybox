@@ -1,7 +1,7 @@
 from rest_framework.viewsets import ModelViewSet
 
 from api.serializers import TransferSerializer
-from wallet.models import Transfer
+from wallet.models.transfer_models import Transfer
 
 
 class TransferViewSet(ModelViewSet):

@@ -1,7 +1,8 @@
 from django.db import models
 
 from users.models import Profile
-from wallet.models import TimestampMixin, Group
+from wallet.models.group_models import Group
+from wallet.models.timestamp_models import TimestampMixin
 
 
 class Wallet(TimestampMixin):

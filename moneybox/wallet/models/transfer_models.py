@@ -3,7 +3,10 @@ from decimal import Decimal
 from django.db import models, transaction
 
 from users.models import Profile
-from wallet.models import TimestampMixin, Group, Wallet, CurrencyRate
+from wallet.models.currency_models import CurrencyRate
+from wallet.models.group_models import Group
+from wallet.models.timestamp_models import TimestampMixin
+from wallet.models.wallet_models import Wallet
 
 
 class Transfer(TimestampMixin):

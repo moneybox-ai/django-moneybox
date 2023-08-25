@@ -1,7 +1,7 @@
 from rest_framework.viewsets import ModelViewSet
 
 from api.serializers import ExpenseCategorySerializer, ExpenseSerializer
-from wallet.models import ExpenseCategory, Expense
+from wallet.models.expense_models import ExpenseCategory, Expense
 
 
 class ExpenseCategoryViewSet(ModelViewSet):

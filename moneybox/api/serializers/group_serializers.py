@@ -1,6 +1,6 @@
 from rest_framework.serializers import ModelSerializer
 
-from wallet.models import Group
+from wallet.models.group_models import Group
 
 
 class GroupSerializer(ModelSerializer):

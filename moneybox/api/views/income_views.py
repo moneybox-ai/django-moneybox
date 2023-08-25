@@ -1,7 +1,7 @@
 from rest_framework.viewsets import ModelViewSet
 
 from api.serializers import IncomeCategorySerializer, IncomeSerializer
-from wallet.models import IncomeCategory, Income
+from wallet.models.income_models import IncomeCategory, Income
 
 
 class IncomeCategoryViewSet(ModelViewSet):
