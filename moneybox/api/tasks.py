@@ -1,4 +1,4 @@
-from clients.currency.client import ExchangeRatesAPIClient, client
+from clients.currency.client import client
 
 
 def update_currency():

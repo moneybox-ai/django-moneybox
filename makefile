@@ -25,3 +25,6 @@ generateadmin:
 
 generateapi:
 	 $(MANAGE_PY) generate api -f modelviewset --force
+
+lint:
+	ruff check .

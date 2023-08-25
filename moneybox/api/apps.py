@@ -13,7 +13,7 @@ class ApiConfig(AppConfig):
 
     def ready(self):
         if RUN_TYPE == "WEB":
-            import api.signals
+            import api.signals  # noqa: F401
         else:
             scheduler = BackgroundScheduler()
             scheduler.add_job(update_currency, "interval", hours=12)
