@@ -1,10 +1,10 @@
-from .currency_serializers import CurrencySerializer, CurrencyRateSerializer
-from .group_serializers import GroupSerializer
-from .expense_serializers import ExpenseSerializer, ExpenseCategorySerializer
-from .income_serializers import IncomeCategorySerializer, IncomeSerializer
-from .profile_serializers import ProfileSerializer
-from .transfer_serializers import TransferSerializer
-from .wallet_serializers import WalletSerializer
+from .currency import CurrencySerializer, CurrencyRateSerializer
+from .group import GroupSerializer
+from .expense import ExpenseSerializer, ExpenseCategorySerializer
+from .income import IncomeCategorySerializer, IncomeSerializer
+from .profile import ProfileSerializer
+from .transfer import TransferSerializer
+from .wallet import WalletSerializer
 
 __all__ = [
     'CurrencySerializer',

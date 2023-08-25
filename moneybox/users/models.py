@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
 
-from wallet.models.timestamp_models import TimestampMixin
+from wallet.models.timestamp import TimestampMixin
 from django.db import models
 
 User = get_user_model()

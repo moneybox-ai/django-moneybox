@@ -3,12 +3,12 @@ from django.contrib import admin
 
 from users.models import Profile
 from wallet.admin import *
-from wallet.models.currency_models import Currency, CurrencyRate
-from wallet.models.expense_models import ExpenseCategory, Expense
-from wallet.models.group_models import Group
-from wallet.models.income_models import IncomeCategory, Income
-from wallet.models.transfer_models import Transfer
-from wallet.models.wallet_models import Wallet
+from wallet.models.currency import Currency, CurrencyRate
+from wallet.models.expense import ExpenseCategory, Expense
+from wallet.models.group import Group
+from wallet.models.income import IncomeCategory, Income
+from wallet.models.transfer import Transfer
+from wallet.models.wallet import Wallet
 
 
 def _register(model, admin_class):

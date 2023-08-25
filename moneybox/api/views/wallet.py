@@ -1,7 +1,7 @@
 from rest_framework.viewsets import ModelViewSet
 
 from api.serializers import WalletSerializer
-from wallet.models.wallet_models import Wallet
+from wallet.models.wallet import Wallet
 
 
 class WalletViewSet(ModelViewSet):

@@ -8,7 +8,18 @@ from drf_spectacular.views import (
     SpectacularSwaggerView,
 )
 
-from api.views import *
+from api.views import (
+    ProfileViewSet,
+    GroupViewSet,
+    WalletViewSet,
+    IncomeCategoryViewSet,
+    ExpenseCategoryViewSet,
+    IncomeViewSet,
+    ExpenseViewSet,
+    TransferViewSet,
+    CurrencyViewSet,
+    CurrencyRateViewSet
+)
 from moneybox.settings import DEBUG, STATIC_URL, STATIC_ROOT
 
 

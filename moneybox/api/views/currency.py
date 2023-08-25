@@ -1,7 +1,7 @@
 from rest_framework.viewsets import ModelViewSet
 
 from api.serializers import CurrencySerializer, CurrencyRateSerializer
-from wallet.models.currency_models import Currency, CurrencyRate
+from wallet.models.currency import Currency, CurrencyRate
 
 
 class CurrencyViewSet(ModelViewSet):

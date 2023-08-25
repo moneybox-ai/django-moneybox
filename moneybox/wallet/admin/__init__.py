@@ -1,10 +1,10 @@
-from .currency_admin import CurrencyAdmin, CurrencyRateAdmin
-from .expense_admin import ExpenseCategoryAdmin, ExpenseAdmin
-from .group_admin import GroupAdmin
-from .income_admin import IncomeCategoryAdmin, IncomeAdmin
-from .profile_admin import ProfileAdmin
-from .transfer_admin import TransferAdmin
-from .wallet_admin import WalletAdmin
+from .currency import CurrencyAdmin, CurrencyRateAdmin
+from .expense import ExpenseCategoryAdmin, ExpenseAdmin
+from .group import GroupAdmin
+from .income import IncomeCategoryAdmin, IncomeAdmin
+from .profile import ProfileAdmin
+from .transfer import TransferAdmin
+from .wallet import WalletAdmin
 
 
 __all__ = [

@@ -1,6 +1,6 @@
 from rest_framework.serializers import ModelSerializer
 
-from wallet.models.expense_models import ExpenseCategory, Expense
+from wallet.models.expense import ExpenseCategory, Expense
 
 
 class ExpenseCategorySerializer(ModelSerializer):

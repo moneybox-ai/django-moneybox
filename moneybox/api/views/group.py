@@ -1,7 +1,7 @@
 from rest_framework.viewsets import ModelViewSet
 
 from api.serializers import GroupSerializer
-from wallet.models.group_models import Group
+from wallet.models.group import Group
 
 
 class GroupViewSet(ModelViewSet):

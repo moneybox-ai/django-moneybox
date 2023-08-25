@@ -1,6 +1,6 @@
 from django.db import models
 
-from wallet.models.timestamp_models import TimestampMixin
+from wallet.models.timestamp import TimestampMixin
 
 
 class Currency(TimestampMixin):

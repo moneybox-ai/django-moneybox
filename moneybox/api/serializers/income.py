@@ -1,6 +1,6 @@
 from rest_framework.serializers import ModelSerializer
 
-from wallet.models.income_models import IncomeCategory, Income
+from wallet.models.income import IncomeCategory, Income
 
 
 class IncomeCategorySerializer(ModelSerializer):
