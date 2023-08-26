@@ -7,14 +7,14 @@ from .transfer import TransferViewSet
 from .wallet import WalletViewSet
 
 __all__ = [
-    'CurrencyViewSet',
-    'CurrencyRateViewSet',
-    'ExpenseCategoryViewSet',
-    'ExpenseViewSet',
-    'GroupViewSet',
-    'IncomeCategoryViewSet',
-    'IncomeViewSet',
-    'ProfileViewSet',
-    'TransferViewSet',
-    'WalletViewSet',
+    "CurrencyViewSet",
+    "CurrencyRateViewSet",
+    "ExpenseCategoryViewSet",
+    "ExpenseViewSet",
+    "GroupViewSet",
+    "IncomeCategoryViewSet",
+    "IncomeViewSet",
+    "ProfileViewSet",
+    "TransferViewSet",
+    "WalletViewSet",
 ]

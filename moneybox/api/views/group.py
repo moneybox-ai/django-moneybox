@@ -5,5 +5,5 @@ from wallet.models.group import Group
 
 
 class GroupViewSet(ModelViewSet):
-    queryset = Group.objects.order_by('pk')
+    queryset = Group.objects.order_by("pk")
     serializer_class = GroupSerializer

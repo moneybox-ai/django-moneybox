@@ -34,21 +34,15 @@ class IncomeCategory(TimestampMixin):
 
 
 class Income(TimestampMixin):
-    amount = models.DecimalField(
-        max_digits=10, decimal_places=2, verbose_name="Income amount"
-    )
+    amount = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Income amount")
     category = models.ForeignKey(
         IncomeCategory,
         on_delete=models.CASCADE,
         verbose_name="Income category",
         db_index=True,
     )
-    comment = models.CharField(
-        max_length=255, blank=True, null=True, verbose_name="Comment on income"
-    )
-    created_by = models.ForeignKey(
-        Profile, on_delete=models.CASCADE, verbose_name="Income creator"
-    )
+    comment = models.CharField(max_length=255, blank=True, null=True, verbose_name="Comment on income")
+    created_by = models.ForeignKey(Profile, on_delete=models.CASCADE, verbose_name="Income creator")
     wallet = models.ForeignKey(
         Wallet,
         on_delete=models.CASCADE,

@@ -6,4 +6,4 @@ from wallet.models.transfer import Transfer
 class TransferSerializer(ModelSerializer):
     class Meta:
         model = Transfer
-        fields = '__all__'
+        fields = "__all__"

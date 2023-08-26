@@ -14,7 +14,7 @@ SECRET_KEY = os.getenv("DJANGO_SECRET", "secret")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DJANGO_DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -74,9 +74,9 @@ LOCAL_ENV = "local"
 ENV = os.getenv("ENV", LOCAL_ENV)
 if ENV == LOCAL_ENV:
     DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
         }
     }
 else:

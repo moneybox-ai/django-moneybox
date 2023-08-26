@@ -5,5 +5,5 @@ from users.models import Profile
 
 
 class ProfileViewSet(ModelViewSet):
-    queryset = Profile.objects.order_by('pk')
+    queryset = Profile.objects.order_by("pk")
     serializer_class = ProfileSerializer
