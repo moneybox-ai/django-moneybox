@@ -18,7 +18,7 @@ from api.views import (
     ExpenseViewSet,
     TransferViewSet,
     CurrencyViewSet,
-    CurrencyRateViewSet
+    CurrencyRateViewSet,
 )
 from moneybox.settings import DEBUG, STATIC_URL, STATIC_ROOT
 

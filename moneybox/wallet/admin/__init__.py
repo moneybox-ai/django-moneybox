@@ -7,14 +7,14 @@ from wallet.admin.transfer import TransferAdmin
 from wallet.admin.wallet import WalletAdmin
 
 __all__ = [
-    'CurrencyAdmin',
-    'CurrencyRateAdmin',
-    'ExpenseAdmin',
-    'ExpenseCategoryAdmin',
-    'GroupAdmin',
-    'IncomeAdmin',
-    'IncomeCategoryAdmin',
-    'ProfileAdmin',
-    'TransferAdmin',
-    'WalletAdmin',
+    "CurrencyAdmin",
+    "CurrencyRateAdmin",
+    "ExpenseAdmin",
+    "ExpenseCategoryAdmin",
+    "GroupAdmin",
+    "IncomeAdmin",
+    "IncomeCategoryAdmin",
+    "ProfileAdmin",
+    "TransferAdmin",
+    "WalletAdmin",
 ]

@@ -5,5 +5,5 @@ from wallet.models.transfer import Transfer
 
 
 class TransferViewSet(ModelViewSet):
-    queryset = Transfer.objects.order_by('pk')
+    queryset = Transfer.objects.order_by("pk")
     serializer_class = TransferSerializer

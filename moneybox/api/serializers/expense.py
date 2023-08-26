@@ -6,10 +6,10 @@ from wallet.models.expense import ExpenseCategory, Expense
 class ExpenseCategorySerializer(ModelSerializer):
     class Meta:
         model = ExpenseCategory
-        fields = '__all__'
+        fields = "__all__"
 
 
 class ExpenseSerializer(ModelSerializer):
     class Meta:
         model = Expense
-        fields = '__all__'
+        fields = "__all__"

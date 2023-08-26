@@ -7,14 +7,14 @@ from .transfer import TransferSerializer
 from .wallet import WalletSerializer
 
 __all__ = [
-    'CurrencySerializer',
-    'CurrencyRateSerializer',
-    'ExpenseSerializer',
-    'ExpenseCategorySerializer',
-    'GroupSerializer',
-    'IncomeSerializer',
-    'IncomeCategorySerializer',
-    'ProfileSerializer',
-    'TransferSerializer',
-    'WalletSerializer',
+    "CurrencySerializer",
+    "CurrencyRateSerializer",
+    "ExpenseSerializer",
+    "ExpenseCategorySerializer",
+    "GroupSerializer",
+    "IncomeSerializer",
+    "IncomeCategorySerializer",
+    "ProfileSerializer",
+    "TransferSerializer",
+    "WalletSerializer",
 ]

@@ -5,5 +5,5 @@ from wallet.models.wallet import Wallet
 
 
 class WalletViewSet(ModelViewSet):
-    queryset = Wallet.objects.order_by('pk')
+    queryset = Wallet.objects.order_by("pk")
     serializer_class = WalletSerializer

@@ -5,10 +5,10 @@ from wallet.models.income import IncomeCategory, Income
 
 
 class IncomeCategoryViewSet(ModelViewSet):
-    queryset = IncomeCategory.objects.order_by('pk')
+    queryset = IncomeCategory.objects.order_by("pk")
     serializer_class = IncomeCategorySerializer
 
 
 class IncomeViewSet(ModelViewSet):
-    queryset = Income.objects.order_by('pk')
+    queryset = Income.objects.order_by("pk")
     serializer_class = IncomeSerializer
