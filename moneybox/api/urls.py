@@ -1,7 +1,6 @@
 from django.urls import path
 from django.conf.urls.static import static
 from rest_framework.routers import SimpleRouter
-from api import views
 
 from drf_spectacular.views import (
     SpectacularAPIView,
@@ -9,21 +8,33 @@ from drf_spectacular.views import (
     SpectacularSwaggerView,
 )
 
+from api.views import (
+    ProfileViewSet,
+    GroupViewSet,
+    WalletViewSet,
+    IncomeCategoryViewSet,
+    ExpenseCategoryViewSet,
+    IncomeViewSet,
+    ExpenseViewSet,
+    TransferViewSet,
+    CurrencyViewSet,
+    CurrencyRateViewSet
+)
 from moneybox.settings import DEBUG, STATIC_URL, STATIC_ROOT
 
 
 router = SimpleRouter()
 
-router.register(r"api/v1/profile", views.ProfileViewSet)
-router.register(r"api/v1/group", views.GroupViewSet)
-router.register(r"api/v1/wallet", views.WalletViewSet)
-router.register(r"api/v1/incomecategory", views.IncomeCategoryViewSet)
-router.register(r"api/v1/expensecategory", views.ExpenseCategoryViewSet)
-router.register(r"api/v1/income", views.IncomeViewSet)
-router.register(r"api/v1/expense", views.ExpenseViewSet)
-router.register(r"api/v1/transfer", views.TransferViewSet)
-router.register(r"api/v1/currency", views.CurrencyViewSet)
-router.register(r"api/v1/currencyrate", views.CurrencyRateViewSet)
+router.register(r"api/v1/profile", ProfileViewSet)
+router.register(r"api/v1/group", GroupViewSet)
+router.register(r"api/v1/wallet", WalletViewSet)
+router.register(r"api/v1/incomecategory", IncomeCategoryViewSet)
+router.register(r"api/v1/expensecategory", ExpenseCategoryViewSet)
+router.register(r"api/v1/income", IncomeViewSet)
+router.register(r"api/v1/expense", ExpenseViewSet)
+router.register(r"api/v1/transfer", TransferViewSet)
+router.register(r"api/v1/currency", CurrencyViewSet)
+router.register(r"api/v1/currencyrate", CurrencyRateViewSet)
 
 docs_urlpatterns = [
     path("api/v1/schema/", SpectacularAPIView.as_view(), name="schema"),

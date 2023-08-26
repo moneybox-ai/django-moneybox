@@ -12,7 +12,7 @@ services:
       - "5432:5432"
 
   prerun:
-    build: .
+    build: ..
     command:
       - /bin/sh
       - -c
@@ -20,18 +20,18 @@ services:
         python manage.py migrate
         python manage.py collectstatic --noinput
     env_file:
-      - .env.example
+      - ../.env.example
     depends_on:
       - db
     volumes:
       - static_volume:/app/static
 
   web:
-    build: .
+    build: ..
     restart: always
     command: gunicorn moneybox.wsgi:application --bind 0.0.0.0:8000
     env_file:
-      - .env.example
+      - ../.env.example
     expose:
       - "8000"
     depends_on:
