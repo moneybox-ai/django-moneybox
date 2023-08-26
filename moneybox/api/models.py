@@ -82,12 +82,8 @@ class Profile(TimestampMixin):
         help_text="User associated with the profile",
         db_index=True,
     )
-    first_name = models.CharField(
-        max_length=255, verbose_name="First name", help_text="First name of the user"
-    )
-    last_name = models.CharField(
-        max_length=255, verbose_name="Last name", help_text="Last name of the user"
-    )
+    first_name = models.CharField(max_length=255, verbose_name="First name", help_text="First name of the user")
+    last_name = models.CharField(max_length=255, verbose_name="Last name", help_text="Last name of the user")
     email = models.EmailField(verbose_name="Email", help_text="Email of the user")
 
     class Meta:
@@ -208,21 +204,15 @@ class ExpenseCategory(TimestampMixin):
 
 
 class Income(TimestampMixin):
-    amount = models.DecimalField(
-        max_digits=10, decimal_places=2, verbose_name="Income amount"
-    )
+    amount = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Income amount")
     category = models.ForeignKey(
         IncomeCategory,
         on_delete=models.CASCADE,
         verbose_name="Income category",
         db_index=True,
     )
-    comment = models.CharField(
-        max_length=255, blank=True, null=True, verbose_name="Comment on income"
-    )
-    created_by = models.ForeignKey(
-        Profile, on_delete=models.CASCADE, verbose_name="Income creator"
-    )
+    comment = models.CharField(max_length=255, blank=True, null=True, verbose_name="Comment on income")
+    created_by = models.ForeignKey(Profile, on_delete=models.CASCADE, verbose_name="Income creator")
     wallet = models.ForeignKey(
         Wallet,
         on_delete=models.CASCADE,
@@ -248,21 +238,15 @@ class Income(TimestampMixin):
 
 
 class Expense(TimestampMixin):
-    amount = models.DecimalField(
-        max_digits=10, decimal_places=2, verbose_name="Amount of expense"
-    )
+    amount = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Amount of expense")
     category = models.ForeignKey(
         ExpenseCategory,
         on_delete=models.CASCADE,
         verbose_name="Expense category",
         db_index=True,
     )
-    comment = models.CharField(
-        max_length=255, blank=True, null=True, verbose_name="Comment on expense"
-    )
-    created_by = models.ForeignKey(
-        Profile, on_delete=models.CASCADE, verbose_name="User who made the expense"
-    )
+    comment = models.CharField(max_length=255, blank=True, null=True, verbose_name="Comment on expense")
+    created_by = models.ForeignKey(Profile, on_delete=models.CASCADE, verbose_name="User who made the expense")
     wallet = models.ForeignKey(
         Wallet,
         on_delete=models.CASCADE,

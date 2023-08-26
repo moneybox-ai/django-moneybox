@@ -24,3 +24,12 @@ exclude = [
     "*/migrations/*"
 ]
 line-length = 119
+
+[tool.black]
+line-length = 119
+exclude = '''
+/(
+  | venv
+  | migrations
+)/
+'''
