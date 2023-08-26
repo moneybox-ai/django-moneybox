@@ -2,7 +2,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
 
-from api.models import Profile
+from users.models import Profile
 
 
 @receiver(post_save, sender=Profile)
