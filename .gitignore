@@ -132,7 +132,4 @@ dmypy.json
 # .idea
 .idea
 !/.env
-<<<<<<< HEAD
-=======
 .ruff_cache/
->>>>>>> upstream/main
