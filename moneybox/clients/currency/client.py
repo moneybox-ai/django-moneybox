@@ -1,7 +1,6 @@
 import requests
 
 from clients.currency.defs import Response
-
 from moneybox.settings import EXCHANGE_RATE_API_CLIENT
 
 
