@@ -7,6 +7,7 @@ from .transfer import TransferViewSet
 from .wallet import WalletViewSet
 
 __all__ = [
+<<<<<<< HEAD
     'CurrencyViewSet',
     'CurrencyRateViewSet',
     'ExpenseCategoryViewSet',
@@ -17,4 +18,16 @@ __all__ = [
     'ProfileViewSet',
     'TransferViewSet',
     'WalletViewSet',
+=======
+    "CurrencyViewSet",
+    "CurrencyRateViewSet",
+    "ExpenseCategoryViewSet",
+    "ExpenseViewSet",
+    "GroupViewSet",
+    "IncomeCategoryViewSet",
+    "IncomeViewSet",
+    "ProfileViewSet",
+    "TransferViewSet",
+    "WalletViewSet",
+>>>>>>> upstream/main
 ]

@@ -2,7 +2,22 @@
 from django.contrib import admin
 
 from users.models import Profile
+<<<<<<< HEAD
 from wallet.admin import *
+=======
+from wallet.admin import (
+    ProfileAdmin,
+    GroupAdmin,
+    WalletAdmin,
+    IncomeCategoryAdmin,
+    ExpenseCategoryAdmin,
+    IncomeAdmin,
+    ExpenseAdmin,
+    TransferAdmin,
+    CurrencyAdmin,
+    CurrencyRateAdmin,
+)
+>>>>>>> upstream/main
 from wallet.models.currency import Currency, CurrencyRate
 from wallet.models.expense import ExpenseCategory, Expense
 from wallet.models.group import Group

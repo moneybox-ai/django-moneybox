@@ -14,6 +14,7 @@ class Profile(TimestampMixin):
         help_text="User associated with the profile",
         db_index=True,
     )
+<<<<<<< HEAD
     first_name = models.CharField(
         max_length=255, verbose_name="First name",
         help_text="First name of the user"
@@ -25,6 +26,11 @@ class Profile(TimestampMixin):
     email = models.EmailField(
         verbose_name="Email", help_text="Email of the user"
     )
+=======
+    first_name = models.CharField(max_length=255, verbose_name="First name", help_text="First name of the user")
+    last_name = models.CharField(max_length=255, verbose_name="Last name", help_text="Last name of the user")
+    email = models.EmailField(verbose_name="Email", help_text="Email of the user")
+>>>>>>> upstream/main
 
     class Meta:
         verbose_name = "Profile"

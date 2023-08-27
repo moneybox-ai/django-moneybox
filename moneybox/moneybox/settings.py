@@ -14,7 +14,7 @@ SECRET_KEY = os.getenv("DJANGO_SECRET", "secret")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DJANGO_DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -69,13 +69,14 @@ WSGI_APPLICATION = "moneybox.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
+LOCAL_ENV = "local"
 
-ENV = os.getenv("ENV", "local")
-if ENV == "local":
+ENV = os.getenv("ENV", LOCAL_ENV)
+if ENV == LOCAL_ENV:
     DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
         }
     }
 else:

@@ -33,15 +33,20 @@ class ExpenseCategory(TimestampMixin):
 
 
 class Expense(TimestampMixin):
+<<<<<<< HEAD
     amount = models.DecimalField(
         max_digits=10, decimal_places=2, verbose_name="Amount of expense"
     )
+=======
+    amount = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Amount of expense")
+>>>>>>> upstream/main
     category = models.ForeignKey(
         ExpenseCategory,
         on_delete=models.CASCADE,
         verbose_name="Expense category",
         db_index=True,
     )
+<<<<<<< HEAD
     comment = models.CharField(
         max_length=255, blank=True, null=True,
         verbose_name="Comment on expense"
@@ -50,6 +55,10 @@ class Expense(TimestampMixin):
         Profile, on_delete=models.CASCADE,
         verbose_name="User who made the expense"
     )
+=======
+    comment = models.CharField(max_length=255, blank=True, null=True, verbose_name="Comment on expense")
+    created_by = models.ForeignKey(Profile, on_delete=models.CASCADE, verbose_name="User who made the expense")
+>>>>>>> upstream/main
     wallet = models.ForeignKey(
         Wallet,
         on_delete=models.CASCADE,
