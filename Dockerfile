@@ -7,8 +7,4 @@ ENV PYTHONUNBUFFERED 1
 WORKDIR /app
 COPY requirements/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
-<<<<<<< HEAD
 COPY moneybox .
-=======
-COPY moneybox .
->>>>>>> upstream/main

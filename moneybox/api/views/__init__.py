@@ -1,24 +1,12 @@
-from .currency import CurrencyViewSet, CurrencyRateViewSet
-from .expense import ExpenseCategoryViewSet, ExpenseViewSet
-from .group import GroupViewSet
-from .income import IncomeViewSet, IncomeCategoryViewSet
-from .profile import ProfileViewSet
-from .transfer import TransferViewSet
-from .wallet import WalletViewSet
+from api.views.currency import CurrencyViewSet, CurrencyRateViewSet
+from api.views.expense import ExpenseCategoryViewSet, ExpenseViewSet
+from api.views.group import GroupViewSet
+from api.views.income import IncomeViewSet, IncomeCategoryViewSet
+from api.views.profile import ProfileViewSet
+from api.views.transfer import TransferViewSet
+from api.views.wallet import WalletViewSet
 
 __all__ = [
-<<<<<<< HEAD
-    'CurrencyViewSet',
-    'CurrencyRateViewSet',
-    'ExpenseCategoryViewSet',
-    'ExpenseViewSet',
-    'GroupViewSet',
-    'IncomeCategoryViewSet',
-    'IncomeViewSet',
-    'ProfileViewSet',
-    'TransferViewSet',
-    'WalletViewSet',
-=======
     "CurrencyViewSet",
     "CurrencyRateViewSet",
     "ExpenseCategoryViewSet",
@@ -29,5 +17,4 @@ __all__ = [
     "ProfileViewSet",
     "TransferViewSet",
     "WalletViewSet",
->>>>>>> upstream/main
 ]

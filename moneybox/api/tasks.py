@@ -5,7 +5,7 @@ def update_currency():
     import django
 
     django.setup()
-    from wallet.models import Currency, CurrencyRate
+    from wallet.models.currency import Currency, CurrencyRate
 
     usd = Currency.get_usd()
     currencies = client.get_currencies()
