@@ -9,7 +9,7 @@ class ExchangeRatesAPIClient:
     LATEST = "https://openexchangerates.org/api/latest.json"
     CURRENCIES = "https://openexchangerates.org/api/currencies.json"
 
-    def __init__(self, api_key) -> dict[str, float]:
+    def __init__(self, api_key) -> None:
         self.api_key = api_key
 
     def get_currencies(self) -> dict[str, str]:
