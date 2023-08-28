@@ -11,7 +11,7 @@ class CurrencyViewSet(ModelViewSet):
     """List of currencies or add new currency"""
     queryset = Currency.objects.order_by("pk")
     serializer_class = CurrencySerializer
-    filter_backends = [filters.SearchFilter,]
+    filter_backends = [filters.SearchFilter, ]
     search_fields = ["code", "name"]
     permission_classes = (permissions.AllowAny, IsAdminOrReadOnly,)
 
