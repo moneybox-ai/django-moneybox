@@ -8,7 +8,7 @@ class Currency(TimestampMixin):
         max_length=3,
         unique=True,
         verbose_name="Currency Code",
-        help_text="The unique code for this currency," "e.g. 'USD' for US dollars",
+        help_text="The unique code for this currency",
     )
     name = models.CharField(
         max_length=255,
@@ -23,6 +23,9 @@ class Currency(TimestampMixin):
     class Meta:
         verbose_name = "Currency"
         verbose_name_plural = "Currencies"
+
+    def __str__(self):
+        return self.name
 
 
 class CurrencyRate(TimestampMixin):

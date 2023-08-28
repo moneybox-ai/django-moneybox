@@ -34,6 +34,7 @@ router.register(r"api/v1/income", IncomeViewSet)
 router.register(r"api/v1/expense", ExpenseViewSet)
 router.register(r"api/v1/transfer", TransferViewSet)
 router.register(r"api/v1/currency", CurrencyViewSet)
+router.register(r"api/v1/currency/<int:pk>/", CurrencyViewSet)
 router.register(r"api/v1/currencyrate", CurrencyRateViewSet)
 
 docs_urlpatterns = [
