@@ -4,13 +4,15 @@ from api.serializers import CurrencySerializer, CurrencyRateSerializer
 from wallet.models.currency import Currency, CurrencyRate
 
 from api.permissions import IsAdminOrReadOnly
-from rest_framework import permissions
+from rest_framework import filters, permissions
 
 
 class CurrencyViewSet(ModelViewSet):
     """List of currencies or add new currency"""
     queryset = Currency.objects.order_by("pk")
     serializer_class = CurrencySerializer
+    filter_backends = [filters.SearchFilter,]
+    search_fields = ["code", "name"]
     permission_classes = (permissions.AllowAny, IsAdminOrReadOnly,)
 
 
