@@ -1,5 +1,6 @@
 from django.urls import path
 from django.conf.urls.static import static
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework.routers import SimpleRouter
 
 from drf_spectacular.views import (
@@ -9,23 +10,25 @@ from drf_spectacular.views import (
 )
 
 from api.views import (
-    ProfileViewSet,
-    GroupViewSet,
-    WalletViewSet,
-    IncomeCategoryViewSet,
-    ExpenseCategoryViewSet,
-    IncomeViewSet,
-    ExpenseViewSet,
-    TransferViewSet,
     CurrencyViewSet,
     CurrencyRateViewSet,
+    CustomUserViewSet,
+    ExpenseCategoryViewSet,
+    ExpenseViewSet,
+    GroupViewSet,
+    IncomeCategoryViewSet,
+    IncomeViewSet,
+    signin,
+    signup,
+    TransferViewSet,
+    WalletViewSet,
 )
 from moneybox.settings import DEBUG, STATIC_URL, STATIC_ROOT
 
 
 router = SimpleRouter()
 
-router.register(r"api/v1/profile", ProfileViewSet)
+router.register(r"api/v1/user", CustomUserViewSet)
 router.register(r"api/v1/group", GroupViewSet)
 router.register(r"api/v1/wallet", WalletViewSet)
 router.register(r"api/v1/incomecategory", IncomeCategoryViewSet)
@@ -50,6 +53,11 @@ docs_urlpatterns = [
     ),
 ]
 
-urlpatterns = router.urls + docs_urlpatterns
+auth_urlpatterns = [
+    path("auth/signup/", signup),
+    path("auth/signin/", csrf_exempt(signin)),
+]
+
+urlpatterns = router.urls + docs_urlpatterns + auth_urlpatterns
 if DEBUG:
     urlpatterns += static(STATIC_URL, document_root=STATIC_ROOT)
