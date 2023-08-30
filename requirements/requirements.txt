@@ -8,6 +8,7 @@ Django==3.2
 django-admin-generator==2.6.0
 django-utils2==3.0.0
 djangorestframework==3.14.0
+django-celery-beat==2.5.0
 drf-generators==0.5.0
 drf-spectacular==0.26.1
 gunicorn==20.1.0

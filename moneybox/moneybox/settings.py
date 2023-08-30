@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework.authtoken",
     "drf_generators",
+    'django_celery_beat',
     "api",
     "wallet",
     "users",
@@ -174,3 +175,5 @@ SPECTACULAR_SETTINGS = {
 EXCHANGE_RATE_API_CLIENT = os.getenv("EXCHANGE_RATE_API_CLIENT")
 
 RUN_TYPE = os.getenv("RUN_TYPE", "WEB")
+
+CELERY_BEAT_SCHEDULER='django_celery_beat.schedulers:DatabaseScheduler'
