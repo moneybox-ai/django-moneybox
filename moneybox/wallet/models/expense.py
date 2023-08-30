@@ -1,9 +1,9 @@
 from django.db import models, transaction
 
-from users.models import Profile
 from wallet.models.group import Group
 from wallet.models.timestamp import TimestampMixin
 from wallet.models.wallet import Wallet
+from users.models import CustomUser
 
 
 class ExpenseCategory(TimestampMixin):
@@ -21,7 +21,7 @@ class ExpenseCategory(TimestampMixin):
         db_index=True,
     )
     created_by = models.ForeignKey(
-        Profile,
+        CustomUser,
         on_delete=models.CASCADE,
         verbose_name="User",
         help_text="The user who created this expense category",
@@ -41,7 +41,7 @@ class Expense(TimestampMixin):
         db_index=True,
     )
     comment = models.CharField(max_length=255, blank=True, null=True, verbose_name="Comment on expense")
-    created_by = models.ForeignKey(Profile, on_delete=models.CASCADE, verbose_name="User who made the expense")
+    created_by = models.ForeignKey(CustomUser, on_delete=models.CASCADE, verbose_name="User who made the expense")
     wallet = models.ForeignKey(
         Wallet,
         on_delete=models.CASCADE,
