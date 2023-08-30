@@ -12,8 +12,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("DJANGO_SECRET", "secret")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = os.getenv("DJANGO_DEBUG", "False") == "True"
-DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
@@ -29,7 +27,6 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "rest_framework.authtoken",
-    "drf_generators",
     "api",
     "wallet",
     "users",
