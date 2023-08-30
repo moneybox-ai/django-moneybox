@@ -20,12 +20,6 @@ resetdb:
 test:
 	$(MANAGE_PY) test
 
-generateadmin:
-	$(MANAGE_PY) admin_generator api > moneybox/api/admin.py
-
-generateapi:
-	 $(MANAGE_PY) generate api -f modelviewset --force
-
 lint:
 	black .
 	ruff check .
