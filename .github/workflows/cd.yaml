@@ -19,7 +19,8 @@ jobs:
       - name: Push to DockerHub
         uses: docker/build-push-action@v4
         with:
-          context: ../
+          context: .
+          dockerfile: ./Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/moneybox_backend:${{ github.event.release.tag_name }}
   deploy:
