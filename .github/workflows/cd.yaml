@@ -23,27 +23,6 @@ jobs:
           dockerfile: ./Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/moneybox_backend:${{ github.event.release.tag_name }}
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build_backend_and_push_to_docker_hub
-    steps:
-      - name: Executing remote ssh commands to deploy
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USER }}
-          key: ${{ secrets.SSH_KEY }}
-          passphrase: ${{ secrets.SSH_PASSPHRASE }}
-          script: |
-            cd django-moneybox
-            sudo docker compose -f docker-compose.yml pull
-            sudo docker compose -f docker-compose.yml down
-            sudo docker compose -f docker-compose.yml up -d
-            sudo docker compose -f docker-compose.yml exec backend python manage.py makemigrations
-            sudo docker compose -f docker-compose.yml exec backend python manage.py migrate
-            sudo docker compose -f docker-compose.yml exec backend python manage.py collectstatic
-            sudo docker compose -f docker-compose.yml exec backend cp -r /app/collected_static/. /backend_static/static/
-            sudo docker system prune -af
   send_message:
     runs-on: ubuntu-latest
     needs: deploy
