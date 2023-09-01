@@ -30,7 +30,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework.authtoken",
     "drf_generators",
-    'django_celery_beat',
+    "django_celery_beat",
     "api",
     "wallet",
     "users",
@@ -178,5 +178,5 @@ RUN_TYPE = os.getenv("RUN_TYPE", "WEB")
 
 CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
 
-BROKER_URL = 'redis://127.0.0.1:6379'
-CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379'
+CELERY_BROKER_URL = "redis://127.0.0.1:16379/0"
+#CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379'
