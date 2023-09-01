@@ -1,16 +1,20 @@
 import os
 
 from celery import Celery
+from celery.schedules import crontab
 
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'moneybox.settings')
 
-app = Celery('moneybox', broker='redis://127.0.0.1:6379')
+app = Celery('moneybox')
 app.config_from_object('django.conf:settings', namespace='CELERY')
-#Celery.config_from_object(celeryconfig)
-#app.autodiscover_tasks()
+app.autodiscover_tasks()
 
 
-@app.task(bind=True, ignore_result=True)
-def debug_task(self):
-    print(f'Request: {self.request!r}')
+app.conf.beat_schedule = {
+    'every': { 
+        'task': 'api.tasks.get_CBR_valute_kurs',
+        'schedule': crontab(hour=1),# по умолчанию выполняет каждую минуту, очень гибко 
+    },                                                              # настраивается
+
+}

@@ -4,20 +4,22 @@ import xml.etree.ElementTree as ET
 
 
 class CBRClient:
-    _instance = None
-
-    def __new__(cls, *args, **kwargs):
-        if cls._instance is None:
-            cls._instance = super().__new__(cls)
-        return cls._instance
-
     def __init__(self):
-        self.cbr_curs_date, self.cbr_curs = self.get_currencies_rates()
+        self.cbr_kurs_date, self.cbr_kurs = None, None
+        self.get_currencies_rates()
 
     def get_currencies_rates(self):
 
         try:
-            currencies = dict()
+            currencies = {
+                'RUB': {
+                    'NumCode': '643',
+                    'CharCode': 'RUB',
+                    'Nominal': '1',
+                    'Name': 'Российский рубль',
+                    'Value': '1'
+                    }
+                }
 
             current_date = date.today().strftime('%d/%m/%Y')
             url = f'https://cbr.ru/scripts/XML_daily.asp?date_req={current_date}'
@@ -25,9 +27,9 @@ class CBRClient:
 
             root = ET.fromstring(response.text)
 
-            curs_date = root.attrib.get('Date', None)
-            if curs_date:
-                cbr_curs_date = datetime.strptime(curs_date, '%d.%m.%Y').date()
+            kurs_date = root.attrib.get('Date', None)
+            if kurs_date:
+                cbr_kurs_date = datetime.strptime(kurs_date, '%d.%m.%Y').date()
 
             for i in range(len(root)):
                 currency_dict = dict()
@@ -43,7 +45,8 @@ class CBRClient:
                 currencies.setdefault(currency_name, currency_dict)
 
             if currencies:
-                return cbr_curs_date, currencies
+                self.cbr_kurs_date, self.currencies = cbr_kurs_date, currencies
+                return self.cbr_kurs_date, self.currencies
 
         except ValueError:
             return None, None
