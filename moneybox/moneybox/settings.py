@@ -179,12 +179,3 @@ RUN_TYPE = os.getenv("RUN_TYPE", "WEB")
 CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
 
 CELERY_BROKER_URL = "redis://127.0.0.1:16379/0"
-
-#CACHES = {
-#    "default": {
-#        "BACKEND": "django.core.cache.backends.redis.RedisCache",
-#        "LOCATION": "redis://127.0.0.1:16379/1",
-#    }
-#}
-
-#CELERY_CACHE_BACKEND = "default"
