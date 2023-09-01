@@ -20,6 +20,7 @@ from api.views import (
     CurrencyViewSet,
     CurrencyRateViewSet,
 )
+from api.views.report import ReportViewSet
 from moneybox.settings import DEBUG, STATIC_URL, STATIC_ROOT
 
 
@@ -35,6 +36,7 @@ router.register(r"api/v1/expense", ExpenseViewSet)
 router.register(r"api/v1/transfer", TransferViewSet)
 router.register(r"api/v1/currency", CurrencyViewSet)
 router.register(r"api/v1/currencyrate", CurrencyRateViewSet)
+router.register(r"api/v1/report", ReportViewSet, basename="report")
 
 docs_urlpatterns = [
     path("api/v1/schema/", SpectacularAPIView.as_view(), name="schema"),
