@@ -2,7 +2,7 @@ from rest_framework.viewsets import ModelViewSet
 
 from api.serializers import CurrencySerializer, CurrencyRateSerializer
 from wallet.models.currency import Currency, CurrencyRate
-
+# TODO fix it when the user model is done
 from api.permissions import IsAdminOrReadOnly
 from rest_framework import filters, permissions
 
@@ -14,7 +14,7 @@ class CurrencyViewSet(ModelViewSet):
     filter_backends = (filters.SearchFilter, )
     search_fields = ("code", "name",)
     # TODO fix it when the user model is done
-    permission_classes = (permissions.AllowAny, IsAdminOrReadOnly,)
+    permission_classes = (permissions.AllowAny, )# or IsAdminOrReadOnly
 
 
 class CurrencyRateViewSet(ModelViewSet):

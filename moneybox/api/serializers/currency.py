@@ -18,6 +18,9 @@ class CurrencySerializer(ModelSerializer):
         ),
         required=True,
     )
+    nominal = serializers.CharField(),
+
+    value = serializers.CharField(),
 
     class Meta:
         model = Currency
