@@ -25,7 +25,7 @@ class CurrencySerializer(ModelSerializer):
         validators = (
             UniqueTogetherValidator(
                 queryset=Currency.objects.all(),
-                fields=['code', 'name']
+                fields=('code', 'name',)
             ),
         )
 

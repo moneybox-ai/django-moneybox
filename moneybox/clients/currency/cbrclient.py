@@ -50,3 +50,6 @@ class CBRClient:
 
         except ValueError:
             return None, None
+
+
+cbr_klient = CBRClient()

@@ -1,9 +1,8 @@
-from clients.currency.cbrclient import CBRClient
+from clients.currency.cbrclient import cbr_klient
 from moneybox.celery import app
 
 
 @app.task
-def get_CBR_valute_kurs():
+def get_exchange_rates():
     """Delivering valute courses from cbr.ru."""
-    cbr_klient = CBRClient()
     return cbr_klient.get_currencies_rates()

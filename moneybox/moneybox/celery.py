@@ -13,7 +13,7 @@ app.autodiscover_tasks()
 
 app.conf.beat_schedule = {
     'every': {
-        'task': 'api.tasks.get_CBR_valute_kurs',
+        'task': 'api.tasks.get_exchange_rates',
         'schedule': crontab(minute=5),
     },
 }
