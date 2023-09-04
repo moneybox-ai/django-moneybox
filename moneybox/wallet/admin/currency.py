@@ -1,6 +1,8 @@
 from django.contrib import admin
+from wallet.models.currency import Currency, CurrencyRate
 
 
+@admin.register(Currency)
 class CurrencyAdmin(admin.ModelAdmin):
     list_display = ("id", "created_at", "updated_at", "code", "name")
     list_filter = ("created_at", "updated_at", "id", "code", "name")
@@ -8,6 +10,7 @@ class CurrencyAdmin(admin.ModelAdmin):
     date_hierarchy = "created_at"
 
 
+@admin.register(CurrencyRate)
 class CurrencyRateAdmin(admin.ModelAdmin):
     list_display = (
         "id",

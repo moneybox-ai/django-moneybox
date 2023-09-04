@@ -1,6 +1,9 @@
 from django.contrib import admin
 
+from wallet.models.transfer import Transfer
 
+
+@admin.register(Transfer)
 class TransferAdmin(admin.ModelAdmin):
     list_display = (
         "id",
