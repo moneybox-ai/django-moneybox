@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     "api",
     "wallet",
     "users",
+    "core",
     "drf_spectacular",
 ]
 

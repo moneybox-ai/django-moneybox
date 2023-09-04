@@ -1,15 +1,22 @@
 from datetime import datetime
-from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Sum, Max
+from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.exceptions import APIException
 
 from api.serializers.report import ReportSerializer
+from core.utils import Utils
 from users.models import Profile
 from wallet.models.expense import Expense
 from wallet.models.income import Income
+
+
+class ReportAPIException(APIException):
+    status_code = 500
+    default_detail = "Произошла ошибка при получении отчета"
 
 
 class ReportViewSet(viewsets.ViewSet):
@@ -24,62 +31,48 @@ class ReportViewSet(viewsets.ViewSet):
             serializer = ReportViewSet.serializer_class(queryset, context={"request": request})
             return Response(serializer.data)
         except Exception as e:
-            raise Exception("Произошла ошибка при получении отчета: " + str(e))
+            raise ReportAPIException(detail=f"Произошла ошибка при получении отчета: {e}")
 
     @staticmethod
     def get_user_profile(user):
-        try:
-            return Profile.objects.get(user=user)
-        except ObjectDoesNotExist:
-            raise Exception("Профиль не найден для этого пользователя")
+        profile = get_object_or_404(Profile, user=user)
+        return profile
 
     @staticmethod
     def get_start_end_dates(start_date=None, end_date=None):
         if not start_date or not end_date:
-            today = datetime.now().date()
-            start_of_day = datetime.combine(today, datetime.min.time())
-            end_of_day = datetime.combine(today, datetime.max.time())
+            today = timezone.now().date()
+            start_of_day = timezone.make_aware(datetime.combine(today, datetime.min.time()))
+            end_of_day = timezone.make_aware(datetime.combine(today, datetime.max.time()))
         else:
-            start_of_day = datetime.combine(start_date, datetime.min.time())
-            end_of_day = datetime.combine(end_date, datetime.max.time())
-
-        start_of_day = timezone.make_aware(start_of_day)
-        end_of_day = timezone.make_aware(end_of_day)
+            start_of_day = timezone.make_aware(datetime.combine(start_date, datetime.min.time()))
+            end_of_day = timezone.make_aware(datetime.combine(end_date, datetime.max.time()))
 
         return start_of_day, end_of_day
 
     @staticmethod
-    def get_total_incomes(profile, start_date=None, end_date=None):
+    def get_total_incomes(group, start_date=None, end_date=None):
         total_incomes_per = (
-            Income.objects.filter(
-                created_by=profile, created_at__range=ReportViewSet.get_start_end_dates(start_date, end_date)
-            )
+            group.income_set.filter(created_at__range=ReportViewSet.get_start_end_dates(start_date, end_date))
             .aggregate(total_incomes=Sum("amount"))
             .get("total_incomes")
             or 0
         )
 
-        total_incomes = (
-            Income.objects.filter(created_by=profile).aggregate(total_incomes=Sum("amount")).get("total_incomes") or 0
-        )
+        total_incomes = group.income_set.aggregate(total_incomes=Sum("amount")).get("total_incomes") or 0
 
         return total_incomes_per, total_incomes
 
     @staticmethod
-    def get_total_expenses(profile, start_date=None, end_date=None):
+    def get_total_expenses(group, start_date=None, end_date=None):
         total_expenses_per = (
-            Expense.objects.filter(
-                created_by=profile, created_at__range=ReportViewSet.get_start_end_dates(start_date, end_date)
-            )
+            group.expense_set.filter(created_at__range=ReportViewSet.get_start_end_dates(start_date, end_date))
             .aggregate(total_expenses=Sum("amount"))
             .get("total_expenses")
             or 0
         )
 
-        total_expenses = (
-            Expense.objects.filter(created_by=profile).aggregate(total_expenses=Sum("amount")).get("total_expenses")
-            or 0
-        )
+        total_expenses = group.expense_set.aggregate(total_expenses=Sum("amount")).get("total_expenses") or 0
 
         return total_expenses_per, total_expenses
 
@@ -88,13 +81,9 @@ class ReportViewSet(viewsets.ViewSet):
         if total_expenses_per != 0:
             income_expense_ratio = total_incomes_per / total_expenses_per
         else:
-            income_expense_ratio = "В данном периоде не было расходов"
+            income_expense_ratio = 0
 
         return income_expense_ratio
-
-    @staticmethod
-    def convert_date(date):
-        return date.strftime("%d.%m.%Y %H:%M:%S")
 
     @staticmethod
     def get_category_incomes(profile, start_date=None, end_date=None):
@@ -107,7 +96,7 @@ class ReportViewSet(viewsets.ViewSet):
             .values("category__name", "total_expenses", "created_at")
         )
 
-        return [{**x, "created_at": ReportViewSet.convert_date(x["created_at"])} for x in category_incomes]
+        return [{**x, "created_at": Utils.convert_date(x["created_at"])} for x in category_incomes]
 
     @staticmethod
     def get_category_expenses(profile, start_date=None, end_date=None):
@@ -120,7 +109,7 @@ class ReportViewSet(viewsets.ViewSet):
             .values("category__name", "total_expenses", "created_at")
         )
 
-        return [{**x, "created_at": ReportViewSet.convert_date(x["created_at"])} for x in category_expenses]
+        return [{**x, "created_at": Utils.convert_date(x["created_at"])} for x in category_expenses]
 
     @staticmethod
     def get_queryset(profile, start_date=None, end_date=None):
