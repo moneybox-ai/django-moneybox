@@ -8,4 +8,9 @@ def get_exchange_rates():
     """Delivering valute courses from cbr.ru."""
     currencies = cbr_klient.get_currencies_rates()
     for code, code_data in currencies.items():
-        Currency.objects.get_or_create(code=code, name=code_data['Name'])
+        Currency.objects.get_or_create(
+            code=code,
+            name=code_data.get("Name", code),
+            nominal=code_data.get("Nominal", "No nominal"),
+            value=code_data.get("Value", "No value")
+            )

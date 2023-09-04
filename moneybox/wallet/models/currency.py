@@ -13,19 +13,27 @@ class Currency(TimestampMixin):
     name = models.CharField(
         max_length=255,
         verbose_name="Currency Name",
-        help_text='The name of the currency, e.g. "US Dollar"',
+        help_text="The name of the currency, e.g. US Dollar",
     )
 
-    @classmethod
-    def get_usd(cls):
-        return Currency.objects.get(code="USD")
+    nominal = models.CharField(
+        max_length=15,
+        verbose_name="Currency Nominal for rates",
+        help_text="Currency denomination for exchange rate conversion",
+    )
+
+    value = models.CharField(
+        max_length=15,
+        verbose_name="Currency exchange rate",
+        help_text='Currency value for exchange rate"',
+    )
 
     class Meta:
         verbose_name = "Currency"
         verbose_name_plural = "Currencies"
 
     def __str__(self):
-        return self.name
+        return f"{self.code} {self.name}"
 
 
 class CurrencyRate(TimestampMixin):

@@ -8,6 +8,8 @@ class CurrencyAdmin(admin.ModelAdmin):
         "id",
         "code",
         "name",
+        "nominal",
+        "value",
         "created_at",
         "updated_at"
     )
