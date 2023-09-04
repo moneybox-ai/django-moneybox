@@ -19,5 +19,8 @@ def get_exchange_rates():
                 code=code,
                 name=code_data.get("Name", code),
                 nominal=code_data.get("Nominal", "No nominal"),
-                value=code_data.get("Value", "No value")
+                value=code_data.get("Value", "No value"),
+                #TODO etit updated_at field
+                updated_at="no field"
+                
             )
