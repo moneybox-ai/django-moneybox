@@ -14,6 +14,6 @@ app.autodiscover_tasks()
 app.conf.beat_schedule = {
     'every': {
         'task': 'api.tasks.get_exchange_rates',
-        'schedule': crontab(minute=5),
+        'schedule': 60#crontab(minute=5),
     },
 }

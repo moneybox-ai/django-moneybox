@@ -176,6 +176,6 @@ EXCHANGE_RATE_API_CLIENT = os.getenv("EXCHANGE_RATE_API_CLIENT")
 
 RUN_TYPE = os.getenv("RUN_TYPE", "WEB")
 
-CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
+CELERY_BEAT_SCHEDULER = os.getenv("CELERY_BEAT_SCHEDULER")
 
-CELERY_BROKER_URL = "redis://127.0.0.1:16379/0"
+CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL", "redis://127.0.0.1:16379/0")

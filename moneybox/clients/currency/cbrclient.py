@@ -46,10 +46,10 @@ class CBRClient:
 
             if currencies:
                 self.cbr_kurs_date, self.currencies = cbr_kurs_date, currencies
-                return self.cbr_kurs_date, self.currencies
+                return self.currencies
 
         except ValueError:
-            return None, None
+            return None
 
 
 cbr_klient = CBRClient()
