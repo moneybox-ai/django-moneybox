@@ -38,12 +38,12 @@ python runserver
 You can now access the API at http://localhost:8000.
 
 
-# Installing redis in container
+### Installing redis in container
 
 ```bash
 docker run -p 127.0.0.1:16379:6379 --name redis-celery -d redis
 ```
-# Launch Celery
+### Launch Celery
 
 Open new bash window
 
