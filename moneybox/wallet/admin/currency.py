@@ -7,9 +7,9 @@ class CurrencyAdmin(admin.ModelAdmin):
     list_display = (
         "id",
         "code",
+        "nominal",
         "name",
         "value",
-        "nominal",
         "created_at",
         "updated_at"
     )

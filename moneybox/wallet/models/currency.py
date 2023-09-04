@@ -18,12 +18,14 @@ class Currency(TimestampMixin):
 
     nominal = models.CharField(
         max_length=15,
+        default='0',
         verbose_name="Currency Nominal for rates",
         help_text="Currency denomination for exchange rate conversion",
     )
 
     value = models.CharField(
         max_length=15,
+        default='0',
         verbose_name="Currency exchange rate",
         help_text='Currency value for exchange rate"',
     )
