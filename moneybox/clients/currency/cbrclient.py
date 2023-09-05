@@ -12,15 +12,8 @@ class CBRClient:
     def get_currencies_rates(self, target_date=None):
         """Target_date must be str in dd/mm/YYYY format. Example 01/01/2000."""
 
-        currencies = {
-            "RUB": {
-                "num_code": "643",
-                "char_code": "RUB",
-                "nominal": "1",
-                "name": "Российский рубль",
-                "value": "1"
-                }
-            }
+        currencies = {}
+
         if target_date is None:
             target_date = date.today().strftime("%d/%m/%Y")
 
