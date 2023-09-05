@@ -15,8 +15,9 @@ from wallet.models.income import Income
 
 
 class ReportAPIException(APIException):
-    status_code = 500
-    default_detail = "Произошла ошибка при получении отчета"
+    def __init__(self, detail, status_code=None):
+        super().__init__(detail)
+        self.status_code = status_code
 
 
 class ReportViewSet(viewsets.ViewSet):
