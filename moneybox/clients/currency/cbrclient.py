@@ -5,11 +5,12 @@ from moneybox.settings import CBR_TIMEOUT, CBR_URL
 
 
 class CBRClient:
-    def __init__(self, url: str, timeout: int) -> None:
+    def __init__(self, url: str = CBR_URL, timeout: int = CBR_TIMEOUT) -> None:
         self.url = url
         self.timeout = timeout
 
-    def get_currencies_rates(self):
+    def get_currencies_rates(self, target_date=None):
+        """Target_date mast be in dd/mm/YYYY format."""
 
         currencies = {
             "RUB": {
@@ -20,10 +21,11 @@ class CBRClient:
                 "value": "1"
                 }
             }
-        current_date = date.today().strftime("%d/%m/%Y")
+        if target_date is None:
+            target_date = date.today().strftime("%d/%m/%Y")
 
         try:
-            response = requests.get(url=self.url+"?date_req="+current_date, timeout=self.timeout)
+            response = requests.get(url=self.url+"?date_req="+target_date, timeout=self.timeout)
         except requests.exceptions.RequestException as e:
             raise SystemExit(e)
 
@@ -41,4 +43,4 @@ class CBRClient:
         return currencies
 
 
-cbr_сlient = CBRClient(url=CBR_URL, timeout=CBR_TIMEOUT)
+cbr_сlient = CBRClient()
