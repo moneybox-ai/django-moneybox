@@ -10,7 +10,7 @@ class CBRClient:
         self.timeout = timeout
 
     def get_currencies_rates(self, target_date=None):
-        """Target_date mast be in dd/mm/YYYY format."""
+        """Target_date must be str in dd/mm/YYYY format. Example 01/01/2000."""
 
         currencies = {
             "RUB": {
