@@ -179,3 +179,7 @@ RUN_TYPE = os.getenv("RUN_TYPE", "WEB")
 CELERY_BEAT_SCHEDULER = os.getenv("CELERY_BEAT_SCHEDULER")
 
 CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL", "redis://127.0.0.1:16379/0")
+
+CBR_TIMEOUT = 10
+
+CBR_URL = "https://cbr.ru/scripts/XML_daily.asp"
