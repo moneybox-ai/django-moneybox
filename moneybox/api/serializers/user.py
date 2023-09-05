@@ -1,11 +1,11 @@
 from rest_framework import serializers
 
-from users.models import CustomUser
+from users.models import APIUser
 
 
-class CustomUserSerializer(serializers.ModelSerializer):
-    uuid = serializers.UUIDField(format='hex_verbose')
+class APIUserSerializer(serializers.ModelSerializer):
+    token = serializers.UUIDField(format="hex_verbose", source="uuid")
 
     class Meta:
-        model = CustomUser
+        model = APIUser
         fields = "__all__"

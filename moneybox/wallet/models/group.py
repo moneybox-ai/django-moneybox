@@ -1,7 +1,7 @@
 from django.db import models
 
 from wallet.models.timestamp import TimestampMixin
-from users.models import CustomUser
+from users.models import APIUser
 
 
 class Group(TimestampMixin):
@@ -12,7 +12,7 @@ class Group(TimestampMixin):
         db_index=True,
     )
     members = models.ManyToManyField(
-        CustomUser,
+        APIUser,
         related_name="groups",
         verbose_name="Group members",
         help_text="Members of the group",

@@ -12,7 +12,7 @@ from drf_spectacular.views import (
 from api.views import (
     CurrencyViewSet,
     CurrencyRateViewSet,
-    CustomUserViewSet,
+    APIUserViewSet,
     ExpenseCategoryViewSet,
     ExpenseViewSet,
     GroupViewSet,
@@ -29,7 +29,7 @@ from moneybox.settings import DEBUG, STATIC_URL, STATIC_ROOT
 
 router = SimpleRouter()
 
-router.register(r"api/v1/user", CustomUserViewSet)
+router.register(r"api/v1/user", APIUserViewSet)
 router.register(r"api/v1/group", GroupViewSet)
 router.register(r"api/v1/wallet", WalletViewSet)
 router.register(r"api/v1/incomecategory", IncomeCategoryViewSet)

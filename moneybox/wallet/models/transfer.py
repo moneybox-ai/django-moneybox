@@ -6,7 +6,7 @@ from wallet.models.currency import CurrencyRate
 from wallet.models.group import Group
 from wallet.models.timestamp import TimestampMixin
 from wallet.models.wallet import Wallet
-from users.models import CustomUser
+from users.models import APIUser
 
 
 class Transfer(TimestampMixin):
@@ -40,7 +40,7 @@ class Transfer(TimestampMixin):
         help_text="Additional comment about the transfer (optional).",
     )
     created_by = models.ForeignKey(
-        CustomUser,
+        APIUser,
         on_delete=models.CASCADE,
         verbose_name="User",
         help_text="The user who made the transfer.",

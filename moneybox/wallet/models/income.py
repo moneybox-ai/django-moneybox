@@ -3,7 +3,7 @@ from django.db import models, transaction
 from wallet.models.group import Group
 from wallet.models.timestamp import TimestampMixin
 from wallet.models.wallet import Wallet
-from users.models import CustomUser
+from users.models import APIUser
 
 
 class IncomeCategory(TimestampMixin):
@@ -21,7 +21,7 @@ class IncomeCategory(TimestampMixin):
         db_index=True,
     )
     created_by = models.ForeignKey(
-        CustomUser,
+        APIUser,
         on_delete=models.CASCADE,
         related_name="income_categories",
         verbose_name="Created by",
@@ -42,7 +42,7 @@ class Income(TimestampMixin):
         db_index=True,
     )
     comment = models.CharField(max_length=255, blank=True, null=True, verbose_name="Comment on income")
-    created_by = models.ForeignKey(CustomUser, on_delete=models.CASCADE, verbose_name="Income creator")
+    created_by = models.ForeignKey(APIUser, on_delete=models.CASCADE, verbose_name="Income creator")
     wallet = models.ForeignKey(
         Wallet,
         on_delete=models.CASCADE,

@@ -1,9 +1,9 @@
 from rest_framework.viewsets import ModelViewSet
 
-from api.serializers import CustomUserSerializer
-from users.models import CustomUser
+from api.serializers import APIUserSerializer
+from users.models import APIUser
 
 
-class CustomUserViewSet(ModelViewSet):
-    queryset = CustomUser.objects.order_by("pk")
-    serializer_class = CustomUserSerializer
+class APIUserViewSet(ModelViewSet):
+    queryset = APIUser.objects.order_by("pk")
+    serializer_class = APIUserSerializer
