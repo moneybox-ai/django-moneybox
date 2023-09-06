@@ -1,3 +1,4 @@
+from .exceptions import CBRRequestException
 import requests
 from datetime import date
 import xml.etree.ElementTree as ET
@@ -20,7 +21,7 @@ class CBRClient:
         try:
             response = requests.get(url=self.url+"?date_req="+target_date, timeout=self.timeout)
         except requests.exceptions.RequestException as e:
-            raise SystemExit(e)
+            raise CBRRequestException(e)
 
         root = ET.fromstring(response.text)
         for valute in root:
