@@ -15,6 +15,7 @@ from api.views import (
     APIUserViewSet,
     ExpenseCategoryViewSet,
     ExpenseViewSet,
+    get_token,
     GroupViewSet,
     IncomeCategoryViewSet,
     IncomeViewSet,
@@ -56,6 +57,7 @@ docs_urlpatterns = [
 ]
 
 auth_urlpatterns = [
+    path("auth/get_token/", get_token),
     path("auth/signup/", signup),
     path("auth/signin/", csrf_exempt(signin)),
 ]
