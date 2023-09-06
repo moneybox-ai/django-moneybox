@@ -14,23 +14,26 @@ f = Fernet(KEY.encode())
 
 @api_view(("POST",))
 def signup(request):
-    uuid_str = str(uuid4())
-    uuid_bytes = uuid_str.encode()
-    token_bytes = f.encrypt(uuid_bytes)
-    token_str = token_bytes.decode()
-    APIUser.objects.create(token=token_str)
-    return Response({"token": uuid_str}, status=status.HTTP_201_CREATED)
+    token = str(uuid4())
+    token_encrypted = f.encrypt(token.encode()).decode()
+    APIUser.objects.create(token=token_encrypted)
+    return Response({"token": token}, status=status.HTTP_201_CREATED)
 
 
 @api_view(("POST",))
 def signin(request):
-    uuid_str_to_check = request.data["token"]
-    queryset = APIUser.objects.all()
-    for obj in queryset:
-        token_str = obj.token
-        token_bytes = token_str.encode()
-        uuid_bytes = f.decrypt(token_bytes)
-        uuid_str = uuid_bytes.decode()
-        if uuid_str == uuid_str_to_check:
+    token_to_compare = request.data["token"]
+    api_users = APIUser.objects.all()
+    for api_user in api_users:
+        token_encrypted = api_user.token
+        token_decrypted = f.decrypt(token_encrypted.encode()).decode()
+        if token_decrypted == token_to_compare:
             return Response(status=status.HTTP_200_OK)
     return Response({"error": "no such token exists"}, status.HTTP_401_UNAUTHORIZED)
+
+
+@api_view(("GET",))
+def get_token(request):
+    auth_header = request.headers["Authorization"]
+    token = auth_header.split(" ")[1]
+    return Response({"token": token}, status.HTTP_200_OK)
