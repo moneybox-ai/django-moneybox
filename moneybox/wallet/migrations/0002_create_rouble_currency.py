@@ -10,7 +10,7 @@ def forwards_func(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('wallet', '0002_auto_20230906_0655'),
+        ('wallet', '0001_initial'),
     ]
 
     operations = [
