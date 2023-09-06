@@ -21,12 +21,9 @@ class APIUser(TimestampMixin):
 
 class CustomUserManager(UserManager):
     def create_superuser(self, username: str, password: str | None):
-        uuid_str = str(uuid4())
-        uuid_bytes = uuid_str.encode()
-        token_bytes = f.encrypt(uuid_bytes)
-        token_str = token_bytes.decode()
-        new_api_user = APIUser.objects.create(token=token_str)
-
+        token = str(uuid4())
+        token_encrypted = f.encrypt(token.encode()).decode()
+        new_api_user = APIUser.objects.create(token=token_encrypted)
         user = self.create_user(
             username=username, password=password, api_user=new_api_user, is_staff=True, is_superuser=True
         )
