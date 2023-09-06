@@ -1,4 +1,4 @@
-from api.views.auth import signin, signup
+from api.views.auth import get_token, signin, signup
 from api.views.currency import CurrencyViewSet, CurrencyRateViewSet
 from api.views.expense import ExpenseCategoryViewSet, ExpenseViewSet
 from api.views.group import GroupViewSet
@@ -13,6 +13,7 @@ __all__ = [
     "CurrencyRateViewSet",
     "ExpenseCategoryViewSet",
     "ExpenseViewSet",
+    "get_token",
     "GroupViewSet",
     "IncomeCategoryViewSet",
     "IncomeViewSet",
