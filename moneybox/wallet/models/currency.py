@@ -15,24 +15,6 @@ class Currency(TimestampMixin):
         verbose_name="Currency Name",
         help_text="The name of the currency, e.g. US Dollar",
     )
-    cbr_valute_id = models.CharField(
-        max_length=15,
-        verbose_name="Currency id exchange rate",
-        help_text="Currency id needed to get valute rates",
-    )
-    nominal = models.CharField(
-        max_length=8,
-        default='0',
-        verbose_name="Currency Nominal for rates",
-        help_text="Currency denomination for exchange rate conversion",
-    )
-
-    value = models.CharField(
-        max_length=15,
-        default='0',
-        verbose_name="Currency exchange rate",
-        help_text='Currency value for exchange rate"',
-    )
 
     class Meta:
         verbose_name = "Currency"
