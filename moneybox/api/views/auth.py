@@ -1,23 +1,36 @@
+import os
+from uuid import uuid4
+
+from cryptography.fernet import Fernet
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from api.serializers import CustomUserSerializer
-from users.models import CustomUser
+from users.models import APIUser
+
+KEY = os.getenv("FERNET_KEY")
+f = Fernet(KEY.encode())
 
 
 @api_view(("POST",))
 def signup(request):
-    new_user = CustomUser.objects.create()
-    return Response({"uuid": new_user.uuid}, status=status.HTTP_201_CREATED)
+    uuid_str = str(uuid4())
+    uuid_bytes = uuid_str.encode()
+    token_bytes = f.encrypt(uuid_bytes)
+    token_str = token_bytes.decode()
+    APIUser.objects.create(token=token_str)
+    return Response({"token": uuid_str}, status=status.HTTP_201_CREATED)
 
 
 @api_view(("POST",))
 def signin(request):
-    serializer = CustomUserSerializer(data=request.data)
-    serializer.is_valid(raise_exception=True)
-    token = serializer.validated_data['uuid']
-    if CustomUser.objects.filter(uuid=token).exists():
-        return Response(status=status.HTTP_200_OK)
-    return Response({"error": "no such uuid exists"},
-                    status.HTTP_401_UNAUTHORIZED)
+    uuid_str_to_check = request.data["token"]
+    queryset = APIUser.objects.all()
+    for obj in queryset:
+        token_str = obj.token
+        token_bytes = token_str.encode()
+        uuid_bytes = f.decrypt(token_bytes)
+        uuid_str = uuid_bytes.decode()
+        if uuid_str == uuid_str_to_check:
+            return Response(status=status.HTTP_200_OK)
+    return Response({"error": "no such token exists"}, status.HTTP_401_UNAUTHORIZED)
