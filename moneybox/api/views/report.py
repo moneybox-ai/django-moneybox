@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from rest_framework.exceptions import APIException
 
 from api.serializers.report import ReportSerializer
-from core.utils import Utils
+from core.datetime import convert_date
 from users.models import Profile
 from wallet.models.expense import Expense
 from wallet.models.income import Income
@@ -97,7 +97,7 @@ class ReportViewSet(viewsets.ViewSet):
             .values("category__name", "total_expenses", "created_at")
         )
 
-        return [{**x, "created_at": Utils.convert_date(x["created_at"])} for x in category_incomes]
+        return [{**x, "created_at": convert_date(x["created_at"])} for x in category_incomes]
 
     @staticmethod
     def get_category_expenses(profile, start_date=None, end_date=None):
@@ -110,7 +110,7 @@ class ReportViewSet(viewsets.ViewSet):
             .values("category__name", "total_expenses", "created_at")
         )
 
-        return [{**x, "created_at": Utils.convert_date(x["created_at"])} for x in category_expenses]
+        return [{**x, "created_at": convert_date(x["created_at"])} for x in category_expenses]
 
     @staticmethod
     def get_queryset(profile, start_date=None, end_date=None):
