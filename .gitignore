@@ -133,3 +133,6 @@ dmypy.json
 .idea
 !/.env
 .ruff_cache/
+
+.vscode
+.env
