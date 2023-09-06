@@ -10,6 +10,7 @@ class CurrencyAdmin(admin.ModelAdmin):
         "nominal",
         "name",
         "value",
+        "cbr_valute_id",
         "created_at",
         "updated_at"
     )
@@ -24,6 +25,7 @@ class CurrencyAdmin(admin.ModelAdmin):
     search_fields = (
         "code",
         "name"
+        "cbr_valute_id"
     )
     date_hierarchy = "created_at"
 
