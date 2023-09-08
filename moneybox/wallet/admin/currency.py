@@ -4,26 +4,10 @@ from wallet.models.currency import Currency
 
 @admin.register(Currency)
 class CurrencyAdmin(admin.ModelAdmin):
-    list_display = (
-        "id",
-        "code",
-        "name",
-        "created_at",
-        "updated_at"
-    )
+    list_display = ("id", "code", "name", "created_at", "updated_at")
 
-    list_filter = (
-        "code",
-        "name",
-        "created_at",
-        "updated_at",
-        "id"
-    )
-    search_fields = (
-        "code",
-        "name"
-        "cbr_valute_id"
-    )
+    list_filter = ("code", "name", "created_at", "updated_at", "id")
+    search_fields = ("code", "name" "cbr_valute_id")
     date_hierarchy = "created_at"
 
 

@@ -8,7 +8,7 @@ def create_or_update_table_currency(currencies):
         Currency.objects.update_or_create(
             code=code,
             name=code_data.get("name", code),
-            )
+        )
 
 
 @app.task

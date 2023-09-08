@@ -7,20 +7,16 @@ from wallet.models.currency import Currency, CurrencyRate
 
 class CurrencySerializer(ModelSerializer):
     code = serializers.CharField(
-        validators=(
-            UniqueValidator(queryset=Currency.objects.all()),
-        ),
+        validators=(UniqueValidator(queryset=Currency.objects.all()),),
         required=True,
     )
     name = serializers.CharField(
-        validators=(
-            UniqueValidator(queryset=Currency.objects.all()),
-        ),
+        validators=(UniqueValidator(queryset=Currency.objects.all()),),
         required=True,
     )
-    nominal = serializers.CharField(),
+    nominal = (serializers.CharField(),)
 
-    value = serializers.CharField(),
+    value = (serializers.CharField(),)
 
     class Meta:
         model = Currency
@@ -28,7 +24,10 @@ class CurrencySerializer(ModelSerializer):
         validators = (
             UniqueTogetherValidator(
                 queryset=Currency.objects.all(),
-                fields=('code', 'name',)
+                fields=(
+                    "code",
+                    "name",
+                ),
             ),
         )
 

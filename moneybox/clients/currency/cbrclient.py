@@ -19,7 +19,7 @@ class CBRClient:
             target_date = date.today().strftime("%d/%m/%Y")
 
         try:
-            response = requests.get(url=self.url+"?date_req="+target_date, timeout=self.timeout)
+            response = requests.get(url=self.url + "?date_req=" + target_date, timeout=self.timeout)
         except requests.exceptions.RequestException as e:
             raise CBRRequestException(e)
 
@@ -32,7 +32,7 @@ class CBRClient:
                 "nominal": valute.find("Nominal").text,
                 "name": valute.find("Name").text,
                 "value": valute.find("Value").text,
-                "cbr_valute_id": valute.attrib["ID"]
+                "cbr_valute_id": valute.attrib["ID"],
             }
             currencies.setdefault(valute_name, valute_data)
         return currencies
