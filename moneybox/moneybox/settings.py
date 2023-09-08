@@ -29,12 +29,12 @@ INSTALLED_APPS = [
     "django_admin_generator",
     "rest_framework",
     "rest_framework.authtoken",
-    "drf_generators",
-    "django_celery_beat",
     "api",
     "wallet",
     "users",
     "drf_spectacular",
+    "drf_generators",
+    "django_celery_beat",
 ]
 
 MIDDLEWARE = [
