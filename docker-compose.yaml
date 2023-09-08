@@ -5,14 +5,26 @@ services:
     image: postgres:13-alpine
     restart: always
     env_file:
-      - .env.example
+      - ./.env.example
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     ports:
       - "5432:5432"
 
+  redis:
+    image: redis:7.2-alpine
+    restart: always
+    expose: 
+      - "6379"
+    ports:
+      - "6379:6379"
+    depends_on:
+      - db
+
   prerun:
-    build: ..
+    build:
+      context: .
+      dockerfile: Dockerfile
     command:
       - /bin/sh
       - -c
@@ -20,18 +32,19 @@ services:
         python manage.py migrate
         python manage.py collectstatic --noinput
     env_file:
-      - ../.env.example
+      - ./.env.example
     depends_on:
       - db
     volumes:
       - static_volume:/app/static
 
   web:
-    build: ..
+    build:
+      context: .
     restart: always
     command: gunicorn moneybox.wsgi:application --bind 0.0.0.0:8000
     env_file:
-      - ../.env.example
+      - ./.env.example
     expose:
       - "8000"
     depends_on:
@@ -47,6 +60,32 @@ services:
       - "80:80"
       - "443:443"
     depends_on:
+      - web
+
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    hostname: celery-worker
+    env_file:
+      - ./.env.example
+    command: celery -A moneybox worker -l info
+    depends_on:
+      - redis
+      - db
+      - web
+
+  beat:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    hostname: celery-beat
+    env_file:
+      - ./.env.example
+    command: celery -A moneybox beat -l info
+    depends_on:
+      - redis
+      - db
       - web
 
 volumes:
