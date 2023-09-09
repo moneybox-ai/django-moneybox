@@ -2,18 +2,19 @@
 from django.contrib import admin
 
 from users.models import Profile
-from wallet.admin import (
-    ProfileAdmin,
-    GroupAdmin,
-    WalletAdmin,
-    IncomeCategoryAdmin,
-    ExpenseCategoryAdmin,
-    IncomeAdmin,
-    ExpenseAdmin,
-    TransferAdmin,
-    CurrencyAdmin,
-    CurrencyRateAdmin,
-)
+
+# from wallet.admin import (
+#     ProfileAdmin,
+#     GroupAdmin,
+#     WalletAdmin,
+#     IncomeCategoryAdmin,
+#     ExpenseCategoryAdmin,
+#     IncomeAdmin,
+#     ExpenseAdmin,
+#     TransferAdmin,
+#     CurrencyAdmin,
+#     CurrencyRateAdmin,
+# )
 from wallet.models.currency import Currency, CurrencyRate
 from wallet.models.expense import ExpenseCategory, Expense
 from wallet.models.group import Group
@@ -26,13 +27,13 @@ def _register(model, admin_class):
     admin.site.register(model, admin_class)
 
 
-_register(Profile, ProfileAdmin)
-_register(Group, GroupAdmin)
-_register(Wallet, WalletAdmin)
-_register(IncomeCategory, IncomeCategoryAdmin)
-_register(ExpenseCategory, ExpenseCategoryAdmin)
-_register(Income, IncomeAdmin)
-_register(Expense, ExpenseAdmin)
-_register(Transfer, TransferAdmin)
-_register(Currency, CurrencyAdmin)
-_register(CurrencyRate, CurrencyRateAdmin)
+# _register(Profile, ProfileAdmin)
+# _register(Group, GroupAdmin)
+# _register(Wallet, WalletAdmin)
+# _register(IncomeCategory, IncomeCategoryAdmin)
+# _register(ExpenseCategory, ExpenseCategoryAdmin)
+# _register(Income, IncomeAdmin)
+# _register(Expense, ExpenseAdmin)
+# _register(Transfer, TransferAdmin)
+# _register(Currency, CurrencyAdmin)
+# _register(CurrencyRate, CurrencyRateAdmin)

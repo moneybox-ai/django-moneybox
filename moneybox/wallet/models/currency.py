@@ -15,6 +15,22 @@ class Currency(TimestampMixin):
         verbose_name="Currency Name",
         help_text='The name of the currency, e.g. "US Dollar"',
     )
+    cbr_code = models.CharField(
+        max_length=7,
+        unique=True,
+        verbose_name="CbrCode",
+        blank=True,
+        null=True,
+        help_text="The code for getting monet id from cbr api",
+    )
+    value = models.DecimalField(
+        max_digits=10,
+        decimal_places=4,
+        blank=True,
+        null=True,
+        verbose_name="Currency Value",
+        help_text="The value of the currency",
+    )
 
     @classmethod
     def get_usd(cls):
@@ -26,19 +42,12 @@ class Currency(TimestampMixin):
 
 
 class CurrencyRate(TimestampMixin):
-    source_currency = models.ForeignKey(
+    currency = models.ForeignKey(
         Currency,
-        related_name="source_currency",
+        related_name="currency",
         on_delete=models.CASCADE,
-        verbose_name="Source Currency",
-        help_text="The currency from which" "the exchange rate is being calculated.",
-    )
-    target_currency = models.ForeignKey(
-        Currency,
-        related_name="target_currency",
-        on_delete=models.CASCADE,
-        verbose_name="Target Currency",
-        help_text="The currency to which" "the exchange rate is being calculated.",
+        verbose_name="Currency",
+        help_text="Currency",
     )
     rate = models.DecimalField(
         max_digits=10,
@@ -50,3 +59,12 @@ class CurrencyRate(TimestampMixin):
     class Meta:
         verbose_name = "Currency rate"
         verbose_name_plural = "Currency rates"
+
+    def get_exchange_rate(self, currency1, currency2, date):
+        first_value = CurrencyRate.objects.get(
+            currency=currency1, created_at__day=date.day, created_at__month=date.month, created_at__year=date.year
+        )
+        second_value = CurrencyRate.objects.get(
+            currency=currency2, created_at__day=date.day, created_at__month=date.month, created_at__year=date.year
+        )
+        return round((first_value.rate / second_value.rate), 4)
