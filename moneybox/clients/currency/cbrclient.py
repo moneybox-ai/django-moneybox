@@ -39,4 +39,3 @@ class CBRClient:
 
 
 cbr_сlient = CBRClient()
-# print(cbr_сlient.get_currencies_rates())
