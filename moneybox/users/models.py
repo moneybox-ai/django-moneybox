@@ -1,14 +1,11 @@
-import os
+from typing import Any
 from uuid import uuid4
 
-from cryptography.fernet import Fernet
-from django.db import models
 from django.contrib.auth.models import AbstractUser, UserManager
+from django.db import models
 
+from moneybox.settings import F
 from wallet.models.timestamp import TimestampMixin
-
-KEY = os.getenv("FERNET_KEY")
-f = Fernet(KEY.encode())
 
 
 class APIUser(TimestampMixin):
@@ -20,10 +17,12 @@ class APIUser(TimestampMixin):
 
 
 class CustomUserManager(UserManager):
-    def create_superuser(self, username: str, password: str | None):
-        token = str(uuid4())
-        token_encrypted = f.encrypt(token.encode()).decode()
-        new_api_user = APIUser.objects.create(token=token_encrypted)
+    def create_superuser(self, username: str, password: str | None, new_api_user=None, **extra_fields: Any) -> Any:
+        if new_api_user is None:
+            token_new = str(uuid4())
+            token_encrypted = F.encrypt(token_new.encode()).decode()
+            new_api_user = APIUser.objects.create(token=token_encrypted)
+
         user = self.create_user(
             username=username, password=password, api_user=new_api_user, is_staff=True, is_superuser=True
         )
