@@ -1,5 +1,6 @@
 import os
 
+from cryptography.fernet import Fernet
 from dotenv import load_dotenv
 from pathlib import Path
 
@@ -15,6 +16,7 @@ DEBUG = os.getenv("DJANGO_DEBUG", "True") == "True"
 ALLOWED_HOSTS = ["*"]
 
 INSTALLED_APPS = [
+    "users",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -24,7 +26,6 @@ INSTALLED_APPS = [
     "rest_framework",
     "api",
     "wallet",
-    "users",
     "core",
     "drf_spectacular",
 ]
@@ -81,7 +82,7 @@ else:
         }
     }
 
-AUTH_USER_MODEL = 'users.User'
+AUTH_USER_MODEL = "users.User"
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -143,3 +144,6 @@ SPECTACULAR_SETTINGS = {
 EXCHANGE_RATE_API_CLIENT = os.getenv("EXCHANGE_RATE_API_CLIENT")
 
 RUN_TYPE = os.getenv("RUN_TYPE", "WEB")
+
+ENCRYPTION_KEY = os.getenv("FERNET_KEY")
+F = Fernet(ENCRYPTION_KEY.encode())
