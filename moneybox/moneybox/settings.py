@@ -4,7 +4,6 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
@@ -12,6 +11,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("DJANGO_SECRET", "secret")
 
 # SECURITY WARNING: don't run with debug turned on in production!
+
 
 ALLOWED_HOSTS = ["*"]
 
@@ -32,6 +32,8 @@ INSTALLED_APPS = [
     "users",
     "core",
     "drf_spectacular",
+    "drf_generators",
+    "django_celery_beat",
 ]
 
 MIDDLEWARE = [
@@ -172,3 +174,11 @@ SPECTACULAR_SETTINGS = {
 EXCHANGE_RATE_API_CLIENT = os.getenv("EXCHANGE_RATE_API_CLIENT")
 
 RUN_TYPE = os.getenv("RUN_TYPE", "WEB")
+
+CELERY_BEAT_SCHEDULER = os.getenv("CELERY_BEAT_SCHEDULER")
+
+CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL")
+
+CBR_TIMEOUT = 10
+
+CBR_URL = "https://cbr.ru/scripts/XML_daily.asp"

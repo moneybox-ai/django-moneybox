@@ -37,6 +37,31 @@ python runserver
 
 You can now access the API at http://localhost:8000.
 
+
+### Installing redis in container
+
+```bash
+docker run -p 127.0.0.1:16379:6379 --name redis-celery -d redis
+```
+### Launch Celery
+
+Open new bash window
+
+Starting Celery
+
+```bash
+celery -A moneybox worker -l info
+```
+
+Open new bash window
+
+Starting Celery periodic task
+
+```bash
+celery -A moneybox beat -l info
+```
+
+
 ### Credits
 
 This project was created by Moneybox AI with the assistance of Chat GPT.
