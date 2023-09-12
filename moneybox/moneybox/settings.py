@@ -1,6 +1,5 @@
 import os
 
-from cryptography.fernet import Fernet
 from dotenv import load_dotenv
 from pathlib import Path
 
@@ -144,6 +143,3 @@ SPECTACULAR_SETTINGS = {
 EXCHANGE_RATE_API_CLIENT = os.getenv("EXCHANGE_RATE_API_CLIENT")
 
 RUN_TYPE = os.getenv("RUN_TYPE", "WEB")
-
-ENCRYPTION_KEY = os.getenv("FERNET_KEY")
-F = Fernet(ENCRYPTION_KEY.encode())

@@ -10,7 +10,6 @@ from django.core.management.base import CommandError, CommandParser
 from django.utils.text import capfirst
 from typing import Any
 
-from moneybox.settings import F
 from users.models import APIUser
 
 
@@ -33,21 +32,18 @@ class Command(createsuperuser.Command):
         database = options["database"]
         user_data = {}
 
-        if options["token"] is not None:
+        if options.get("token") is not None:
             new_api_user = None
-            api_users = APIUser.objects.all()
-            for api_user in api_users:
-                token_encrypted = api_user.token
-                token_decrypted = F.decrypt(token_encrypted.encode()).decode()
-                if token_decrypted == options["token"]:
-                    try:
-                        api_user.user_for_admin_site
-                    except exceptions.ObjectDoesNotExist:
-                        new_api_user = api_user
-                        break
-                    raise CommandError("This token is already taken.")
-            if new_api_user is None:
+            token = options.get("token")
+            if not APIUser.objects.filter(token=token).exists():
                 raise CommandError("No such token found.")
+            api_user = APIUser.objects.filter(token=token).first()
+            try:
+                api_user.user_for_admin_site
+            except exceptions.ObjectDoesNotExist:
+                new_api_user = api_user
+            if new_api_user is None:
+                raise CommandError("This token is already taken.")
 
             user_data["new_api_user"] = new_api_user
 
@@ -159,9 +155,8 @@ class Command(createsuperuser.Command):
                 self.stdout.write("Superuser created successfully.")
 
             if user_data.get("new_api_user") is None:
-                token_encrypted = new_user.api_user.token
-                token_decrypted = F.decrypt(token_encrypted.encode()).decode()
-                self.stdout.write(f"Token: {token_decrypted}")
+                token = new_user.api_user.token
+                self.stdout.write(f"Token: {token}")
 
         except KeyboardInterrupt:
             self.stderr.write("\nOperation cancelled.")
