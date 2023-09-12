@@ -9,7 +9,7 @@ from rest_framework.exceptions import APIException
 
 from api.serializers.report import ReportSerializer
 from core.datetime import convert_date
-from users.models import Profile
+from users.models import APIUser
 from wallet.models.expense import Expense
 from wallet.models.income import Income
 
@@ -36,7 +36,9 @@ class ReportViewSet(viewsets.ViewSet):
 
     @staticmethod
     def get_user_profile(user):
-        profile = get_object_or_404(Profile, user=user)
+        # здесь пока только меняю название модели, чтобы это не вызывало ошибок,
+        # но работать так пока не будет
+        profile = get_object_or_404(APIUser, user=user)
         return profile
 
     @staticmethod

@@ -1,8 +1,8 @@
 from django.db import models
 
-from users.models import Profile
 from wallet.models.group import Group
 from wallet.models.timestamp import TimestampMixin
+from users.models import APIUser
 
 
 class Wallet(TimestampMixin):
@@ -19,7 +19,7 @@ class Wallet(TimestampMixin):
         help_text="Current balance of the wallet",
     )
     created_by = models.ForeignKey(
-        Profile,
+        APIUser,
         on_delete=models.CASCADE,
         verbose_name="User",
         help_text="Owner of the wallet",
