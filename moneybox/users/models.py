@@ -1,3 +1,5 @@
+import sys
+
 from typing import Any
 from uuid import uuid4
 
@@ -16,15 +18,16 @@ class APIUser(TimestampMixin):
 
 
 class CustomUserManager(UserManager):
-    def create_superuser(self, username: str, password: str | None, new_api_user=None, **extra_fields: Any) -> Any:
-        if new_api_user is None:
-            token_new = str(uuid4())
-            new_api_user = APIUser.objects.create(token=token_new)
+    def create_superuser(self, username: str, password: str | None, **extra_fields: Any) -> Any:
+        token_new = str(uuid4())
+        new_api_user = APIUser.objects.create(token=token_new)
 
         user = self.create_user(
             username=username, password=password, api_user=new_api_user, is_staff=True, is_superuser=True
         )
         user.save(using=self._db)
+        token = user.api_user.token
+        sys.stdout.write(f"API user token: {token}\n")
         return user
 
 
