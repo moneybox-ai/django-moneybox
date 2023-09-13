@@ -1,14 +1,18 @@
-from clients.currency.client import client
+from clients.currency.cbrclient import cbr_сlient
+from moneybox.celery import app
+from wallet.models.currency import Currency
 
 
-def update_currency():
-    import django
+def create_or_update_table_currency(currencies):
+    for code, code_data in currencies.items():
+        Currency.objects.update_or_create(
+            code=code,
+            name=code_data.get("name", code),
+        )
 
-    django.setup()
-    from wallet.models.currency import Currency, CurrencyRate
 
-    usd = Currency.get_usd()
-    currencies = client.get_currencies()
-    for code, rate in client.get_rates().items():
-        target_currency, _ = Currency.objects.get_or_create(code=code, name=currencies[code])
-        CurrencyRate.objects.create(source_currency=usd, target_currency=target_currency, rate=rate)
+@app.task
+def get_exchange_rates():
+    """Delivering valute courses from cbr.ru."""
+    currencies = cbr_сlient.get_currencies_rates()
+    create_or_update_table_currency(currencies)

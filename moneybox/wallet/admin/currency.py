@@ -1,16 +1,16 @@
 from django.contrib import admin
-from wallet.models.currency import Currency, CurrencyRate
+from wallet.models.currency import Currency
 
 
 @admin.register(Currency)
 class CurrencyAdmin(admin.ModelAdmin):
-    list_display = ("id", "created_at", "updated_at", "code", "name")
-    list_filter = ("created_at", "updated_at", "id", "code", "name")
-    search_fields = ("name",)
+    list_display = ("id", "code", "name", "created_at", "updated_at")
+
+    list_filter = ("code", "name", "created_at", "updated_at", "id")
+    search_fields = ("code", "name" "cbr_valute_id")
     date_hierarchy = "created_at"
 
 
-@admin.register(CurrencyRate)
 class CurrencyRateAdmin(admin.ModelAdmin):
     list_display = (
         "id",
