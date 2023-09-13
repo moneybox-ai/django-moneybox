@@ -11,8 +11,8 @@ class APIUser(TimestampMixin):
     token = models.TextField(primary_key=True)
 
     class Meta:
-        verbose_name = "пользователь"
-        verbose_name_plural = "пользователи"
+        verbose_name = "user"
+        verbose_name_plural = "users"
 
 
 class CustomUserManager(UserManager):
@@ -34,7 +34,7 @@ class User(AbstractUser):
     REQUIRED_FIELDS = []
 
     class Meta:
-        verbose_name = "администратор"
-        verbose_name_plural = "администраторы"
+        verbose_name = "admin"
+        verbose_name_plural = "admins"
 
     objects = CustomUserManager()
