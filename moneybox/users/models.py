@@ -13,8 +13,8 @@ class APIUser(TimestampMixin):
     token = models.TextField(primary_key=True)
 
     class Meta:
-        verbose_name = "пользователь"
-        verbose_name_plural = "пользователи"
+        verbose_name = "user"
+        verbose_name_plural = "users"
 
 
 class CustomUserManager(UserManager):
@@ -32,12 +32,12 @@ class CustomUserManager(UserManager):
 
 
 class User(AbstractUser):
-    api_user = models.OneToOneField(APIUser, on_delete=models.CASCADE, related_name="user_for_admin_site")
+    api_user = models.OneToOneField(APIUser, on_delete=models.CASCADE, related_name="admin_user")
 
     REQUIRED_FIELDS = []
 
     class Meta:
-        verbose_name = "администратор"
-        verbose_name_plural = "администраторы"
+        verbose_name = "administrator"
+        verbose_name_plural = "administrators"
 
     objects = CustomUserManager()
