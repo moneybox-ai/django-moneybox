@@ -8,11 +8,13 @@ class CustomAuthentication(BaseAuthentication):
     def authenticate(self, request):
         if request.headers.get("Authorization") is not None:
             auth_header = request.headers.get("Authorization")
-            # Auth header should look like "Token <uuid_string>"
-            token_from_header = auth_header.split(" ")[1]
+            header_content = auth_header.split(" ")
+            if len(header_content) != 2:
+                raise exceptions.AuthenticationFailed("Authorization header should contain 'Token <token_value>'.")
+            token_from_header = header_content[1]
             if APIUser.objects.filter(token=token_from_header).exists():
                 authenticated_user = APIUser.objects.filter(token=token_from_header).first()
                 token = authenticated_user.token
                 return (authenticated_user, token)
-            return exceptions.AuthenticationFailed("No such token found.")
+            raise exceptions.AuthenticationFailed("No such token found.")
         return None
