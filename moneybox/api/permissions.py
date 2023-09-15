@@ -1,3 +1,4 @@
+from django.contrib.auth.models import AnonymousUser
 from django.core import exceptions
 from rest_framework import permissions
 
@@ -16,8 +17,10 @@ class IsAdminOrReadOnly(permissions.BasePermission):
     def has_permission(self, request, view):
         if request.method in permissions.SAFE_METHODS:
             return True
+        if isinstance(request.user, AnonymousUser):
+            return False
         try:
-            request.user.user_for_admin_site
+            request.user.admin_user
         except exceptions.ObjectDoesNotExist:
             return False
-        return bool(request.user and request.user.user_for_admin_site.is_staff)
+        return bool(request.user and request.user.admin_user.is_staff)
