@@ -2,8 +2,8 @@ from django.contrib import admin
 
 
 class CurrencyAdmin(admin.ModelAdmin):
-    list_display = ("id", "created_at", "updated_at", "code", "name", "cbr_code", "value")
-    list_filter = ("created_at", "updated_at", "id", "code", "name", "cbr_code", "value")
+    list_display = ("id", "created_at", "updated_at", "code", "name")
+    list_filter = ("created_at", "updated_at", "id", "code", "name")
     search_fields = ("name",)
     date_hierarchy = "created_at"
 
