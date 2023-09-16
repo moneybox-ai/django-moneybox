@@ -31,9 +31,9 @@ class CurrencyRateViewSet(ModelViewSet):
         methods=["GET"],
     )
     def get_rate(self, request):
-        currency1 = self.request.query_params.get("currency1")
-        currency2 = self.request.query_params.get("currency2")
-        date = self.request.query_params.get("date")
+        currency1 = request.query_params.get("currency1")
+        currency2 = request.query_params.get("currency2")
+        date = request.query_params.get("date")
         date = datetime.strptime(date, "%d/%m/%y").date()
         crate = CurrencyRate()
         rate = crate.get_exchange_rate(currency1, currency2, date)
