@@ -15,22 +15,6 @@ class Currency(TimestampMixin):
         verbose_name="Currency Name",
         help_text="The name of the currency, e.g. US Dollar",
     )
-    cbr_code = models.CharField(
-        max_length=7,
-        unique=True,
-        verbose_name="CbrCode",
-        blank=True,
-        null=True,
-        help_text="The code for getting monet id from cbr api",
-    )
-    value = models.DecimalField(
-        max_digits=10,
-        decimal_places=4,
-        blank=True,
-        null=True,
-        verbose_name="Currency Value",
-        help_text="The value of the currency",
-    )
 
     class Meta:
         verbose_name = "Currency"
@@ -58,12 +42,18 @@ class CurrencyRate(TimestampMixin):
     class Meta:
         verbose_name = "Currency rate"
         verbose_name_plural = "Currency rates"
+        get_latest_by = ["created_at"]
+
+    def __repr__(self):
+        return f"{self.currency} is {self.rate}"
 
     def get_exchange_rate(self, currency1, currency2, date):
-        first_value = CurrencyRate.objects.get(
+        first_value = CurrencyRate.objects.filter(
             currency=currency1, created_at__day=date.day, created_at__month=date.month, created_at__year=date.year
-        )
-        second_value = CurrencyRate.objects.get(
+        ).latest()
+        second_value = CurrencyRate.objects.filter(
             currency=currency2, created_at__day=date.day, created_at__month=date.month, created_at__year=date.year
-        )
-        return round((first_value.rate / second_value.rate), 4)
+        ).latest()
+        if first_value and second_value:
+            return round((first_value.rate / second_value.rate), 4)
+        return
