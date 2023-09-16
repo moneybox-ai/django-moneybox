@@ -1,13 +1,15 @@
 from uuid import uuid4
 
 from rest_framework import status
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
 from users.models import APIUser
 
 
 @api_view(("POST",))
+@permission_classes((AllowAny,))
 def signup(request):
     token = str(uuid4())
     APIUser.objects.create(token=token)
@@ -15,6 +17,7 @@ def signup(request):
 
 
 @api_view(("POST",))
+@permission_classes((AllowAny,))
 def signin(request):
     token_to_compare = request.data["token"]
     if APIUser.objects.filter(token=token_to_compare).exists():
