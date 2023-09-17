@@ -1,6 +1,7 @@
 from django.db import models
 
 from wallet.models.timestamp import TimestampMixin
+from core.exeptions import RateNotExist
 
 
 class Currency(TimestampMixin):
@@ -56,4 +57,4 @@ class CurrencyRate(TimestampMixin):
         ).latest()
         if first_value and second_value:
             return round((first_value.rate / second_value.rate), 4)
-        return
+        raise RateNotExist

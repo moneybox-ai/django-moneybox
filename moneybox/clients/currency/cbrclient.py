@@ -29,9 +29,9 @@ class CBRClient:
             valute_data = {
                 "num_code": valute.find("NumCode").text,
                 "char_code": valute.find("CharCode").text,
-                "nominal": valute.find("Nominal").text,
+                "nominal": float(valute.find("Nominal").text),
                 "name": valute.find("Name").text,
-                "value": valute.find("Value").text,
+                "value": float(valute.find("Value").text.replace(',', '.')),
                 "cbr_valute_id": valute.attrib["ID"],
             }
             currencies.setdefault(valute_name, valute_data)

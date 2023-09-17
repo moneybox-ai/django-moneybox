@@ -6,6 +6,7 @@ from rest_framework import filters, permissions
 from rest_framework.decorators import action
 from django.http import HttpResponse
 from datetime import datetime
+from core.datetime import RATE_DATE_FORMAT
 
 
 class CurrencyViewSet(ModelViewSet):
@@ -31,10 +32,10 @@ class CurrencyRateViewSet(ModelViewSet):
         methods=["GET"],
     )
     def get_rate(self, request):
-        currency1 = request.query_params.get("currency1")
-        currency2 = request.query_params.get("currency2")
+        currency1 = request.query_params.get("currency_from")
+        currency2 = request.query_params.get("currency_to")
         date = request.query_params.get("date")
-        date = datetime.strptime(date, "%d/%m/%y").date()
+        date = datetime.strptime(date, RATE_DATE_FORMAT).date()
         crate = CurrencyRate()
         rate = crate.get_exchange_rate(currency1, currency2, date)
         return HttpResponse(rate)
