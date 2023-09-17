@@ -2,6 +2,7 @@ from rest_framework import serializers
 
 
 class ReportSerializer(serializers.Serializer):
+    # TODO extend all methods via @extend_schema_field
     balance = serializers.SerializerMethodField()
     total_incomes = serializers.SerializerMethodField()
     total_expenses = serializers.SerializerMethodField()
