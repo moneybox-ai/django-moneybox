@@ -13,7 +13,7 @@ def create_or_update_table_currency(currencies):
             code=code,
             name=code_data.get("name", code),
         )
-        currency = Currency.objects.get(code=code),
+        currency = (Currency.objects.get(code=code),)
         rate = code_data.get("value") / code_data.get("nominal")
         create_rates(currency, rate)
 

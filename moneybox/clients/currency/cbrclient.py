@@ -31,7 +31,7 @@ class CBRClient:
                 "char_code": valute.find("CharCode").text,
                 "nominal": float(valute.find("Nominal").text),
                 "name": valute.find("Name").text,
-                "value": float(valute.find("Value").text.replace(',', '.')),
+                "value": float(valute.find("Value").text.replace(",", ".")),
                 "cbr_valute_id": valute.attrib["ID"],
             }
             currencies.setdefault(valute_name, valute_data)
