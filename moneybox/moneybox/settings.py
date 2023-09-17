@@ -118,7 +118,7 @@ REST_FRAMEWORK = {
     "PAGE_SIZE": 15,
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
     "DEFAULT_AUTHENTICATION_CLASSES": [
-        "api.authentication.CustomAuthentication",
+        "api.authentication.APIAuthentication",
     ],
     "DEFAULT_PERMISSION_CLASSES": [
         "api.permissions.IsAuthenticated",
@@ -142,15 +142,20 @@ LOGGING = {
 
 SPECTACULAR_SETTINGS = {
     "TITLE": "MoneyBox",
-    "DESCRIPTION": "Your project description",
+    "DESCRIPTION": (
+        "MoneyBox will help you better understand your finances, "
+        "improve financial literacy, and achieve financial goals."
+    ),
     "VERSION": "1.0.0",
     "SERVE_INCLUDE_SCHEMA": False,
-    "AUTH_HEADER_TYPES": ["Token"],
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "api.authentication.APIAuthentication",
+    ],
+    "SERVE_PERMISSIONS": ["rest_framework.permissions.AllowAny"],
+    "SERVE_AUTHENTICATION": None,
 }
 
 EXCHANGE_RATE_API_CLIENT = os.getenv("EXCHANGE_RATE_API_CLIENT")
-
-RUN_TYPE = os.getenv("RUN_TYPE", "WEB")
 
 CELERY_BEAT_SCHEDULER = os.getenv("CELERY_BEAT_SCHEDULER")
 
