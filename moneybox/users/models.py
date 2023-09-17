@@ -13,12 +13,16 @@ class APIUser(TimestampMixin):
     token = models.TextField(primary_key=True)
 
     class Meta:
-        verbose_name = "user"
-        verbose_name_plural = "users"
+        verbose_name = "API User"
+        verbose_name_plural = "API Users"
+
+    def __str__(self):
+        return self.token
 
 
 class CustomUserManager(UserManager):
-    def create_superuser(self, username: str, password: str | None, **extra_fields: Any) -> Any:
+    # TODO check and fix signature of parent method
+    def create_superuser(self, username: str, password: str | None, **extra_fields: Any) -> "User":
         token_new = str(uuid4())
         new_api_user = APIUser.objects.create(token=token_new)
 
@@ -37,7 +41,7 @@ class User(AbstractUser):
     REQUIRED_FIELDS = []
 
     class Meta:
-        verbose_name = "administrator"
-        verbose_name_plural = "administrators"
+        verbose_name = "Administrator"
+        verbose_name_plural = "Administrators"
 
     objects = CustomUserManager()
