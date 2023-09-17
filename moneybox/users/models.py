@@ -1,23 +1,47 @@
-from django.contrib.auth import get_user_model
+import sys
 
-from wallet.models.timestamp import TimestampMixin
+from typing import Any
+from uuid import uuid4
+
+from django.contrib.auth.models import AbstractUser, UserManager
 from django.db import models
 
-User = get_user_model()
+from wallet.models.timestamp import TimestampMixin
 
 
-class Profile(TimestampMixin):
-    user = models.OneToOneField(
-        User,
-        on_delete=models.CASCADE,
-        verbose_name="User",
-        help_text="User associated with the profile",
-        db_index=True,
-    )
-    first_name = models.CharField(max_length=255, verbose_name="First name", help_text="First name of the user")
-    last_name = models.CharField(max_length=255, verbose_name="Last name", help_text="Last name of the user")
-    email = models.EmailField(verbose_name="Email", help_text="Email of the user")
+class APIUser(TimestampMixin):
+    token = models.TextField(primary_key=True)
 
     class Meta:
-        verbose_name = "Profile"
-        verbose_name_plural = "Profiles"
+        verbose_name = "API User"
+        verbose_name_plural = "API Users"
+
+    def __str__(self):
+        return self.token
+
+
+class CustomUserManager(UserManager):
+    # TODO check and fix signature of parent method
+    def create_superuser(self, username: str, password: str | None, **extra_fields: Any) -> "User":
+        token_new = str(uuid4())
+        new_api_user = APIUser.objects.create(token=token_new)
+
+        user = self.create_user(
+            username=username, password=password, api_user=new_api_user, is_staff=True, is_superuser=True
+        )
+        user.save(using=self._db)
+        token = user.api_user.token
+        sys.stdout.write(f"API user token: {token}\n")
+        return user
+
+
+class User(AbstractUser):
+    api_user = models.OneToOneField(APIUser, on_delete=models.CASCADE, related_name="admin_user")
+
+    REQUIRED_FIELDS = []
+
+    class Meta:
+        verbose_name = "Administrator"
+        verbose_name_plural = "Administrators"
+
+    objects = CustomUserManager()

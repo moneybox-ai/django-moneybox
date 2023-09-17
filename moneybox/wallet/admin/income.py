@@ -1,6 +1,9 @@
 from django.contrib import admin
 
+from wallet.models.income import IncomeCategory
 
+
+@admin.register(IncomeCategory)
 class IncomeCategoryAdmin(admin.ModelAdmin):
     list_display = (
         "id",

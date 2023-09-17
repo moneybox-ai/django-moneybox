@@ -1,6 +1,9 @@
 from django.contrib import admin
 
+from wallet.models.expense import ExpenseCategory, Expense
 
+
+@admin.register(ExpenseCategory)
 class ExpenseCategoryAdmin(admin.ModelAdmin):
     list_display = (
         "id",
@@ -22,6 +25,7 @@ class ExpenseCategoryAdmin(admin.ModelAdmin):
     date_hierarchy = "created_at"
 
 
+@admin.register(Expense)
 class ExpenseAdmin(admin.ModelAdmin):
     list_display = (
         "id",
