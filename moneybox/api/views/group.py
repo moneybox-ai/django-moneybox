@@ -12,7 +12,7 @@ class GroupViewSet(ModelViewSet):
     serializer_class = GroupSerializer
 
     def create(self, request, *args, **kwargs):
-        name = request.data.get('name')
+        name = request.data.get("name")
         user_token = request.user.token
         user = APIUser.objects.get(token=user_token)
         group = Group.objects.create(name=name)

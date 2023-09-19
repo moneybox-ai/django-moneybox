@@ -14,6 +14,7 @@ class APIUserSerializer(serializers.ModelSerializer):
 
 class SignupSerializer(serializers.Serializer):
     """Create token and add user to the group."""
+
     invite_code = serializers.IntegerField(required=False)
 
     def create(self, validated_data):

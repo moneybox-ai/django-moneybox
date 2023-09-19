@@ -8,7 +8,7 @@ from wallet.models.group import Group
 
 class Invite(TimestampMixin):
     invite_code = models.IntegerField(unique=True)
-    group = models.ForeignKey(Group, on_delete=models.CASCADE, related_name='invites')
+    group = models.ForeignKey(Group, on_delete=models.CASCADE, related_name="invites")
     expires_at = models.DateTimeField()
 
     def is_expired(self):

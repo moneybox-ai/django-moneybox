@@ -55,7 +55,7 @@ docs_urlpatterns = [
         SpectacularRedocView.as_view(url_name="schema"),
         name="redoc",
     ),
-    path("v1/invite/", InviteViewSet.as_view({'post': 'invite'}))
+    path("v1/invite/", InviteViewSet.as_view({"post": "invite"})),
 ]
 
 auth_urlpatterns = [
