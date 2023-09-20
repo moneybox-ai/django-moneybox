@@ -30,27 +30,27 @@ from moneybox.settings import DEBUG, STATIC_URL, STATIC_ROOT
 
 router = SimpleRouter()
 
-router.register(r"api/v1/user", APIUserViewSet)
-router.register(r"api/v1/group", GroupViewSet)
-router.register(r"api/v1/wallet", WalletViewSet)
-router.register(r"api/v1/incomecategory", IncomeCategoryViewSet)
-router.register(r"api/v1/expensecategory", ExpenseCategoryViewSet)
-router.register(r"api/v1/income", IncomeViewSet)
-router.register(r"api/v1/expense", ExpenseViewSet)
-router.register(r"api/v1/transfer", TransferViewSet)
-router.register(r"api/v1/currency", CurrencyViewSet)
-router.register(r"api/v1/currencyrate", CurrencyRateViewSet)
-router.register(r"api/v1/report", ReportViewSet, basename="report")
+router.register(r"user", APIUserViewSet)
+router.register(r"group", GroupViewSet)
+router.register(r"wallet", WalletViewSet)
+router.register(r"incomecategory", IncomeCategoryViewSet)
+router.register(r"expensecategory", ExpenseCategoryViewSet)
+router.register(r"income", IncomeViewSet)
+router.register(r"expense", ExpenseViewSet)
+router.register(r"transfer", TransferViewSet)
+router.register(r"currency", CurrencyViewSet)
+router.register(r"currencyrate", CurrencyRateViewSet)
+router.register(r"report", ReportViewSet, basename="report")
 
 docs_urlpatterns = [
-    path("api/v1/schema/", SpectacularAPIView.as_view(), name="schema"),
+    path("schema/", SpectacularAPIView.as_view(), name="schema"),
     path(
-        "api/v1/schema/swagger-ui/",
+        "schema/swagger-ui/",
         SpectacularSwaggerView.as_view(url_name="schema"),
         name="swagger-ui",
     ),
     path(
-        "api/v1/schema/redoc/",
+        "schema/redoc/",
         SpectacularRedocView.as_view(url_name="schema"),
         name="redoc",
     ),
