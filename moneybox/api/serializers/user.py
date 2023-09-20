@@ -6,4 +6,4 @@ from users.models import APIUser
 class APIUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = APIUser
-        fields = "__all__"
+        fields = ("token",)
