@@ -11,7 +11,6 @@ from wallet.models.timestamp import TimestampMixin
 
 class APIUser(TimestampMixin):
     token = models.TextField(primary_key=True)
-    invite_code = models.IntegerField(null=True, blank=True)
 
     class Meta:
         verbose_name = "API User"

@@ -31,7 +31,7 @@ from moneybox.settings import DEBUG, STATIC_URL, STATIC_ROOT
 
 router = SimpleRouter()
 
-router.register(r"v1/user", APIUserViewSet)
+router.register("v1/user", APIUserViewSet)
 router.register("v1/group", GroupViewSet)
 router.register("v1/wallet", WalletViewSet)
 router.register("v1/incomecategory", IncomeCategoryViewSet)

@@ -7,14 +7,10 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('users', '0004_apiuser_invite'),
-        ('wallet', '0009_auto_20230918_1839'),
+        ('wallet', '0004_auto_20230917_1858'),
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='group',
-            name='members',
-        ),
         migrations.AddField(
             model_name='group',
             name='members',

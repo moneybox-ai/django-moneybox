@@ -7,9 +7,17 @@ from wallet.models.group import Group
 
 
 class Invite(TimestampMixin):
-    invite_code = models.IntegerField(unique=True)
+    invite_code = models.IntegerField()
     group = models.ForeignKey(Group, on_delete=models.CASCADE, related_name="invites")
     expires_at = models.DateTimeField()
+    is_deleted = models.BooleanField(default=False)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=["invite_code", "group"], name="unique_invite"),
+        ]
+        verbose_name = "Invite"
+        verbose_name_plural = "Invites"
 
     def is_expired(self):
         return self.expires_at < timezone.now()

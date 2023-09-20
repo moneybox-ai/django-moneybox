@@ -17,7 +17,7 @@ class InviteViewSet(ModelViewSet):
     serializer_class = InviteSerializer
 
     @action(detail=False, methods=("POST",), permission_classes=(IsAuthenticated,))
-    def invite(self, request):
+    def invite(self, request):  # TODO scheme for swagger
         """Create invite code."""
         invite_code = random.randint(1000000, 9999999)
         user_token = request.user.token
