@@ -28,7 +28,7 @@ class Currency(TimestampMixin):
 class CurrencyRate(TimestampMixin):
     currency = models.ForeignKey(
         Currency,
-        related_name="currency",
+        related_name="rate",
         on_delete=models.CASCADE,
         verbose_name="Currency",
         help_text="Currency",
@@ -43,17 +43,17 @@ class CurrencyRate(TimestampMixin):
     class Meta:
         verbose_name = "Currency rate"
         verbose_name_plural = "Currency rates"
-        get_latest_by = ["created_at"]
+        get_latest_by = ("created_at",)
 
     def __repr__(self):
         return f"{self.currency} is {self.rate}"
 
-    def get_exchange_rate(self, currency1, currency2, date):
+    def get_exchange_rate(self, currency_from, currency_to, date):
         first_value = CurrencyRate.objects.filter(
-            currency=currency1, created_at__day=date.day, created_at__month=date.month, created_at__year=date.year
+            currency=currency_from, created_at__day=date.day, created_at__month=date.month, created_at__year=date.year
         ).latest()
         second_value = CurrencyRate.objects.filter(
-            currency=currency2, created_at__day=date.day, created_at__month=date.month, created_at__year=date.year
+            currency=currency_to, created_at__day=date.day, created_at__month=date.month, created_at__year=date.year
         ).latest()
         if first_value and second_value:
             return round((first_value.rate / second_value.rate), 4)
