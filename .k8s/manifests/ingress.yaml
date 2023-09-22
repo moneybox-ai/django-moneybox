@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: django-moneybox-ingress
+  namespace: moneybox
+spec:
+  rules:
+  - host: "moneybox.ddns.net"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: django-moneybox-service
+            port:
+              number: 80
