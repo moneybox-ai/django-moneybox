@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: django-moneybox-service
+  namespace: moneybox
+spec:
+  type: ClusterIP
+  selector:
+    app: django-moneybox
+  ports:
+    - name: django-moneybox
+      port: 80
+      protocol: TCP
+      targetPort: 8000

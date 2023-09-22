@@ -1,7 +1,7 @@
 from django.db import models
 
 from wallet.models.timestamp import TimestampMixin
-from core.exeptions import RateNotExist
+from core.defs.exeptions import RateNotExist
 
 
 class Currency(TimestampMixin):

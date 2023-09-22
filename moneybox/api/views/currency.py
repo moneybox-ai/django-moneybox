@@ -6,7 +6,7 @@ from rest_framework import filters, permissions
 from rest_framework.decorators import action
 from django.http import HttpResponse
 from datetime import datetime
-from core.datetime import RATE_DATE_FORMAT
+from core.defs.datetime import RATE_DATE_FORMAT
 
 
 class CurrencyViewSet(ModelViewSet):
