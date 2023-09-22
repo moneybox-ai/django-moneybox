@@ -22,7 +22,9 @@ jobs:
           context: .
           dockerfile: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/moneybox_backend:${{ github.event.release.tag_name }}
+          tags:
+            - ${{ secrets.DOCKER_USERNAME }}/moneybox_backend:${{ github.event.release.tag_name }}
+            - ${{ secrets.DOCKER_USERNAME }}/moneybox_backend:latest
   send_message:
     runs-on: ubuntu-latest
     needs: build_backend_and_push_to_docker_hub

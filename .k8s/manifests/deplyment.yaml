@@ -36,7 +36,7 @@ spec:
             - collectstatic
             - --noinput
           volumeMounts:
-            - name: static-volume
+            - name: django-moneybox-static-volume
               mountPath: /app/static
       containers:
       - name: django-moneybox
@@ -60,7 +60,7 @@ spec:
           - secretRef:
               name: django-moneybox-secret
         volumeMounts:
-          - name: static-volume
+          - name: django-moneybox-static-volume
             mountPath: /app/static
         command:
           - gunicorn
@@ -68,5 +68,5 @@ spec:
           - --bind
           - 0.0.0.0:8000
       volumes:
-        - name: static-volume
+        - name: django-moneybox-static-volume
           emptyDir: { }
