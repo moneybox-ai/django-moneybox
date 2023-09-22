@@ -20,15 +20,14 @@ class SignupSerializer(serializers.Serializer):
 
     def create(self, validated_data):
         invite_code = validated_data.get("invite_code")
-        is_deleted = validated_data.get("is_deleted")
         token = str(uuid4())
         user = APIUser.objects.create(token=token)
 
         if invite_code:
             group_invite = Invite.objects.filter(invite_code=invite_code).first()
-            if not is_deleted and not group_invite.is_expired():
+            if not group_invite.is_expired():
                 group = group_invite.group
                 group.members.add(user)
-                group_invite.is_deleted = True
+                group_invite.is_deleted = True  # TODO use SafeDeletionMixin
                 group_invite.save()
         return user
