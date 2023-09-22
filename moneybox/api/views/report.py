@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from rest_framework.exceptions import APIException
 
 from api.serializers.report import ReportSerializer
-from core.datetime import convert_date
+from core.defs.datetime import convert_date
 from users.models import APIUser
 from wallet.models.expense import Expense
 from wallet.models.income import Income
