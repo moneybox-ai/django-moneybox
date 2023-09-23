@@ -1,7 +1,7 @@
 from rest_framework import exceptions
 from rest_framework.authentication import BaseAuthentication
 
-from api.crypto_temp import encrypt_token
+from api.encryption import encrypt_token
 from moneybox.settings import AUTH_HEADER
 from users.models import APIUser
 
