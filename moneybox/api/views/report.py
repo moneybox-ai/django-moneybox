@@ -3,14 +3,13 @@ from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.exceptions import APIException
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from api.serializers.report import ReportSerializer
 from api.utils import get_category_data, get_start_end_dates, get_total_data
-from core.chart_generator import generate_charts
-from core.datetime import convert_date_for_html
-from users.models import Profile
+from core.defs.chart_generator import generate_charts
+from core.defs.datetime import convert_date_for_html
+from users.models import APIUser
 from wallet.models.expense import Expense
 from wallet.models.income import Income
 
@@ -23,7 +22,6 @@ class ReportAPIException(APIException):
 
 class ReportViewSet(viewsets.ViewSet):
     serializer_class = ReportSerializer
-    permission_classes = (IsAuthenticated,)
 
     @staticmethod
     def list(request):
@@ -67,7 +65,7 @@ class ReportViewSet(viewsets.ViewSet):
 
     @staticmethod
     def get_user_profile(user):
-        profile = get_object_or_404(Profile, user=user)
+        profile = get_object_or_404(APIUser, token=user)
         return profile
 
     @staticmethod
@@ -102,7 +100,7 @@ class ReportViewSet(viewsets.ViewSet):
 
         income_expense_ratio = ReportViewSet.get_income_expense_ratio(total_incomes_per, total_expenses_per)
 
-        results = {
+        queryset = {
             "balance": total_incomes - total_expenses,
             "total_incomes": total_incomes_per,
             "total_expenses": total_expenses_per,
@@ -111,4 +109,4 @@ class ReportViewSet(viewsets.ViewSet):
             "category_expenses": ReportViewSet.get_category_expenses(profile, start_date, end_date),
         }
 
-        return results
+        return queryset

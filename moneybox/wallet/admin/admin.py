@@ -1,9 +1,7 @@
-# vim: set fileencoding=utf-8 :
 from django.contrib import admin
 
-from users.models import Profile
+
 from wallet.admin import (
-    ProfileAdmin,
     GroupAdmin,
     WalletAdmin,
     IncomeCategoryAdmin,
@@ -26,7 +24,6 @@ def _register(model, admin_class):
     admin.site.register(model, admin_class)
 
 
-_register(Profile, ProfileAdmin)
 _register(Group, GroupAdmin)
 _register(Wallet, WalletAdmin)
 _register(IncomeCategory, IncomeCategoryAdmin)

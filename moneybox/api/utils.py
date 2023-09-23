@@ -3,7 +3,7 @@ from django.utils import timezone
 
 from django.db.models import Sum, Max
 
-from core.datetime import convert_date_for_json
+from core.defs.datetime import convert_date_for_json
 
 
 def get_start_end_dates(start_date=None, end_date=None):
