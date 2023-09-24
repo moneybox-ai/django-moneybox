@@ -17,8 +17,12 @@ class Group(TimestampMixin):
         verbose_name="Group members",
         help_text="Members of the group",
         db_index=True,
+        null=True,
     )
 
     class Meta:
         verbose_name = "Group"
         verbose_name_plural = "Groups"
+
+    def __str__(self):
+        return self.name

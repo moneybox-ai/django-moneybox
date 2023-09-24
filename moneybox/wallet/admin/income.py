@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from wallet.models.income import IncomeCategory
+from wallet.models.income import Income, IncomeCategory
 
 
 @admin.register(IncomeCategory)
@@ -25,6 +25,7 @@ class IncomeCategoryAdmin(admin.ModelAdmin):
     date_hierarchy = "created_at"
 
 
+@admin.register(Income)
 class IncomeAdmin(admin.ModelAdmin):
     list_display = (
         "id",

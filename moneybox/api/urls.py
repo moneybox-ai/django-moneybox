@@ -24,6 +24,7 @@ from api.views import (
     TransferViewSet,
     WalletViewSet,
 )
+from api.views.invite import InviteViewSet
 from api.views.report import ReportViewSet
 from moneybox.settings import DEBUG, STATIC_URL, STATIC_ROOT
 
@@ -54,6 +55,7 @@ docs_urlpatterns = [
         SpectacularRedocView.as_view(url_name="schema"),
         name="redoc",
     ),
+    path("v1/invite/", InviteViewSet.as_view({"post": "invite"})),
 ]
 
 auth_urlpatterns = [
