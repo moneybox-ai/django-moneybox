@@ -1,3 +1,5 @@
+import json
+import os
 import tink
 
 from tink import cleartext_keyset_handle
@@ -6,22 +8,22 @@ from tink import daead
 daead.register()
 
 
-keyset = r"""{
-    "key": [{
-        "keyData": {
-            "keyMaterialType":
-                "SYMMETRIC",
-            "typeUrl":
-                "type.googleapis.com/google.crypto.tink.AesSivKey",
-            "value":
-                "EkAl9HCMmKTN1p3V186uhZpJQ+tivyc4IKyE+opg6SsEbWQ/WesWHzwCRrlgRuxdaggvgMzwWhjPnkk9gptBnGLK"
-        },
-        "keyId": 1919301694,
-        "outputPrefixType": "TINK",
-        "status": "ENABLED"
-    }],
-    "primaryKeyId": 1919301694
-}"""
+pre_keyset = {
+    "key": [
+        {
+            "keyData": {
+                "keyMaterialType": os.getenv("KEY_MATERIAL_TYPE"),
+                "typeUrl": os.getenv("TYPE_URL"),
+                "value": os.getenv("VALUE"),
+            },
+            "keyId": os.getenv("KEY_ID"),
+            "outputPrefixType": os.getenv("OUTPUT_PREFIX_TYPE"),
+            "status": os.getenv("STATUS"),
+        }
+    ],
+    "primaryKeyId": os.getenv("PRIMARY_KEY_ID"),
+}
+keyset = json.dumps(pre_keyset, indent=4)
 keyset_handle = cleartext_keyset_handle.read(tink.JsonKeysetReader(keyset))
 primitive = keyset_handle.primitive(daead.DeterministicAead)
 
