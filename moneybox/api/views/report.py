@@ -2,22 +2,16 @@ from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
 from rest_framework.decorators import action
-from rest_framework.exceptions import APIException
 from rest_framework.response import Response
 
 from api.serializers.report import ReportSerializer
 from api.utils import get_category_data, get_start_end_dates, get_total_data
 from core.defs.chart_generator import generate_charts
 from core.defs.datetime import convert_date_for_html
+from core.defs.exeptions import ReportAPIException
 from users.models import APIUser
 from wallet.models.expense import Expense
 from wallet.models.income import Income
-
-
-class ReportAPIException(APIException):
-    def __init__(self, detail, status_code=None):
-        super().__init__(detail)
-        self.status_code = status_code
 
 
 class ReportViewSet(viewsets.ViewSet):

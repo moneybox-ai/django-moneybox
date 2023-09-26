@@ -6,6 +6,7 @@ from django.utils import timezone
 from rest_framework.test import APIRequestFactory
 
 from core.defs.datetime import convert_date_for_json
+from core.defs.constants import Currency as ConstantsCurrency
 from users.models import APIUser
 from wallet.models.currency import Currency
 from wallet.models.expense import Expense, ExpenseCategory
@@ -37,7 +38,7 @@ def group(user):
 
 @pytest.fixture
 def currency():
-    return Currency.objects.create(code="RUB", name="Рубль")
+    return Currency.objects.create(*ConstantsCurrency.RUB)
 
 
 @pytest.fixture
