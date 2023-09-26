@@ -24,36 +24,38 @@ from api.views import (
     TransferViewSet,
     WalletViewSet,
 )
+from api.views.invite import InviteViewSet
 from api.views.report import ReportViewSet
 from moneybox.settings import DEBUG, STATIC_URL, STATIC_ROOT
 
 
 router = SimpleRouter()
 
-router.register(r"api/v1/user", APIUserViewSet)
-router.register(r"api/v1/group", GroupViewSet)
-router.register(r"api/v1/wallet", WalletViewSet)
-router.register(r"api/v1/incomecategory", IncomeCategoryViewSet)
-router.register(r"api/v1/expensecategory", ExpenseCategoryViewSet)
-router.register(r"api/v1/income", IncomeViewSet)
-router.register(r"api/v1/expense", ExpenseViewSet)
-router.register(r"api/v1/transfer", TransferViewSet)
-router.register(r"api/v1/currency", CurrencyViewSet)
-router.register(r"api/v1/currencyrate", CurrencyRateViewSet)
-router.register(r"api/v1/report", ReportViewSet, basename="report")
+router.register("v1/user", APIUserViewSet)
+router.register("v1/group", GroupViewSet)
+router.register("v1/wallet", WalletViewSet)
+router.register("v1/incomecategory", IncomeCategoryViewSet)
+router.register("v1/expensecategory", ExpenseCategoryViewSet)
+router.register("v1/income", IncomeViewSet)
+router.register("v1/expense", ExpenseViewSet)
+router.register("v1/transfer", TransferViewSet)
+router.register("v1/currency", CurrencyViewSet)
+router.register("v1/currencyrate", CurrencyRateViewSet)
+router.register("v1/report", ReportViewSet, basename="report")
 
 docs_urlpatterns = [
-    path("api/v1/schema/", SpectacularAPIView.as_view(), name="schema"),
+    path("v1/schema/", SpectacularAPIView.as_view(), name="schema"),
     path(
-        "api/v1/schema/swagger-ui/",
+        "v1/schema/swagger-ui/",
         SpectacularSwaggerView.as_view(url_name="schema"),
         name="swagger-ui",
     ),
     path(
-        "api/v1/schema/redoc/",
+        "v1/schema/redoc/",
         SpectacularRedocView.as_view(url_name="schema"),
         name="redoc",
     ),
+    path("v1/invite/", InviteViewSet.as_view({"post": "invite"})),
 ]
 
 auth_urlpatterns = [
