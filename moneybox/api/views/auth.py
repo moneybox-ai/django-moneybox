@@ -1,25 +1,25 @@
-import uuid
-
 from drf_spectacular.utils import extend_schema
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
-from api.encryption import encrypt_token
-from api.serializers import APIUserSerializer
+from api.encryption import decrypt_ciphertext, encrypt_token
+from api.serializers import APIUserSerializer, SignupSerializer
 from moneybox.settings import AUTH_HEADER
 from users.models import APIUser
 
 
-@extend_schema(request=None, responses=APIUserSerializer)
+@extend_schema(request=SignupSerializer, responses=APIUserSerializer)
 @api_view(("POST",))
 @permission_classes((AllowAny,))
 def signup(request):
-    token_str = str(uuid.uuid4())
-    token_db = encrypt_token(token_str.encode())
-    APIUser.objects.create(token=token_db)
-    return Response({"token": token_str}, status=status.HTTP_201_CREATED)
+    serializer = SignupSerializer(data=request.data)
+    if serializer.is_valid():
+        user = serializer.save()
+        token_for_user = decrypt_ciphertext(user.token)
+        return Response({"token": token_for_user}, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @extend_schema(request=APIUserSerializer, responses=None)

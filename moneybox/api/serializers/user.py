@@ -2,6 +2,7 @@ from uuid import uuid4
 
 from rest_framework import serializers
 
+from api.encryption import encrypt_token
 from users.models import APIUser
 from wallet.models.invite import Invite
 
@@ -21,7 +22,8 @@ class SignupSerializer(serializers.Serializer):
     def create(self, validated_data):
         invite_code = validated_data.get("invite_code")
         token = str(uuid4())
-        user = APIUser.objects.create(token=token)
+        token_db = encrypt_token(token.encode())
+        user = APIUser.objects.create(token=token_db)
 
         if invite_code:
             group_invite = Invite.objects.filter(invite_code=invite_code).first()
