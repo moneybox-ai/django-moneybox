@@ -23,5 +23,7 @@ class InviteViewSet(ModelViewSet):
         user_token = request.user.token
         group = Group.objects.filter(members__token=user_token).first()
         expires_at = timezone.now() + timedelta(days=7)
-        Invite.objects.create(invite_code=invite_code, group=group, expires_at=expires_at)
-        return Response({"code": invite_code})
+        if group:
+            Invite.objects.create(invite_code=invite_code, group=group, expires_at=expires_at)
+            return Response({"code": invite_code})
+        return Response({"detail": "Group not found"})
