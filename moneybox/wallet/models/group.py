@@ -17,7 +17,6 @@ class Group(TimestampMixin):
         verbose_name="Group members",
         help_text="Members of the group",
         db_index=True,
-        null=True,
     )
 
     class Meta:
