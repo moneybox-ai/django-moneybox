@@ -27,7 +27,13 @@ class Invite(TimestampMixin, SafeDeletionMixin):
 
     class Meta:
         constraints = (
-            models.UniqueConstraint(fields=("invite_code", "group",), name="unique_invite"),
+            models.UniqueConstraint(
+                fields=(
+                    "invite_code",
+                    "group",
+                ),
+                name="unique_invite",
+            ),
         )
         verbose_name = "Invite"
         verbose_name_plural = "Invites"
