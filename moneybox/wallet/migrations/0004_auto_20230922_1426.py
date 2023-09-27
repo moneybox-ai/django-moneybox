@@ -7,7 +7,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('users', '0006_remove_apiuser_invite_code'),
+        ('users', '0003_auto_20230917_0657'),
         ('wallet', '0003_auto_20230906_1309'),
     ]
 

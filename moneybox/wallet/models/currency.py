@@ -32,6 +32,8 @@ class CurrencyRate(TimestampMixin):
         on_delete=models.CASCADE,
         verbose_name="Currency",
         help_text="Currency",
+        null=True,
+        blank=True,
     )
     rate = models.DecimalField(
         max_digits=10,
