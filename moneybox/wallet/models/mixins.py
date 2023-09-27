@@ -19,3 +19,22 @@ class TimestampMixin(models.Model):
         abstract = True
         verbose_name = "Timestamp Mixin"
         verbose_name_plural = "Timestamp Mixins"
+
+
+class SafeDeletionMixin(models.Model):
+    is_deleted = models.BooleanField(default=False)
+
+    class Meta:
+        abstract = True
+
+    def delete(self, using=None, keep_parents=False):
+        self.is_deleted = True
+        self.save()
+
+    def hard_delete(self):
+        super().delete()
+
+
+class SafeDeletionManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(is_deleted=False)

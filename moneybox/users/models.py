@@ -6,10 +6,10 @@ from uuid import uuid4
 from django.contrib.auth.models import AbstractUser, UserManager
 from django.db import models
 
-from wallet.models.timestamp import TimestampMixin
+from wallet.models.mixins import TimestampMixin, SafeDeletionMixin
 
 
-class APIUser(TimestampMixin):
+class APIUser(TimestampMixin, SafeDeletionMixin):
     token = models.TextField(primary_key=True)
 
     class Meta:
