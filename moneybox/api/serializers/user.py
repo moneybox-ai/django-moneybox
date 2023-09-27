@@ -24,7 +24,7 @@ class SignupSerializer(serializers.Serializer):
 
         if invite_code:
             group_invite = Invite.objects.filter(invite_code=invite_code).first()
-            if not group_invite.is_expired():
+            if group_invite and not group_invite.is_expired:
                 group = group_invite.group
                 group.members.add(user)
                 group_invite.delete()

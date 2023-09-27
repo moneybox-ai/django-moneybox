@@ -26,11 +26,12 @@ class Invite(TimestampMixin, SafeDeletionMixin):
     expires_at = models.DateTimeField()
 
     class Meta:
-        constraints = [
-            models.UniqueConstraint(fields=["invite_code", "group"], name="unique_invite"),
-        ]
+        constraints = (
+            models.UniqueConstraint(fields=("invite_code", "group",), name="unique_invite"),
+        )
         verbose_name = "Invite"
         verbose_name_plural = "Invites"
 
+    @property
     def is_expired(self):
         return self.expires_at < timezone.now()
