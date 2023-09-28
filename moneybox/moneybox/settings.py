@@ -1,8 +1,13 @@
+import json
 import os
+import tink
 
 from dotenv import load_dotenv
+from tink import cleartext_keyset_handle
+from tink import daead
 from pathlib import Path
 
+daead.register()
 load_dotenv()
 
 
@@ -159,3 +164,22 @@ CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL")
 CBR_TIMEOUT = 10
 
 CBR_URL = "https://cbr.ru/scripts/XML_daily.asp"
+
+PRE_KEYSET = {
+    "key": [
+        {
+            "keyData": {
+                "keyMaterialType": os.getenv("KEY_MATERIAL_TYPE"),
+                "typeUrl": os.getenv("TYPE_URL"),
+                "value": os.getenv("VALUE"),
+            },
+            "keyId": os.getenv("KEY_ID"),
+            "outputPrefixType": os.getenv("OUTPUT_PREFIX_TYPE"),
+            "status": os.getenv("STATUS"),
+        }
+    ],
+    "primaryKeyId": os.getenv("PRIMARY_KEY_ID"),
+}
+KEYSET = json.dumps(PRE_KEYSET, indent=4)
+KEYSET_HANDLE = cleartext_keyset_handle.read(tink.JsonKeysetReader(KEYSET))
+PRIMITIVE = KEYSET_HANDLE.primitive(daead.DeterministicAead)
