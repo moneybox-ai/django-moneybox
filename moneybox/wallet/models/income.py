@@ -1,12 +1,12 @@
 from django.db import models, transaction
 
 from wallet.models.group import Group
-from wallet.models.timestamp import TimestampMixin
+from wallet.models.mixins import TimestampMixin, SafeDeletionMixin, SafeDeletionManager
 from wallet.models.wallet import Wallet
 from users.models import APIUser
 
 
-class IncomeCategory(TimestampMixin):
+class IncomeCategory(TimestampMixin, SafeDeletionMixin):
     name = models.CharField(
         max_length=255,
         verbose_name="Name",
@@ -27,13 +27,14 @@ class IncomeCategory(TimestampMixin):
         verbose_name="Created by",
         help_text="Profile that created the income category",
     )
+    objects = SafeDeletionManager()
 
     class Meta:
         verbose_name = "Income Category"
         verbose_name_plural = "Income Categories"
 
 
-class Income(TimestampMixin):
+class Income(TimestampMixin, SafeDeletionMixin):
     amount = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Income amount")
     category = models.ForeignKey(
         IncomeCategory,
@@ -55,6 +56,7 @@ class Income(TimestampMixin):
         verbose_name="Group for income",
         db_index=True,
     )
+    objects = SafeDeletionManager()
 
     class Meta:
         verbose_name = "Income"

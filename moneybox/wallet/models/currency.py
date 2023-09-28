@@ -1,10 +1,10 @@
 from django.db import models
 
-from wallet.models.timestamp import TimestampMixin
+from wallet.models.mixins import TimestampMixin, SafeDeletionMixin, SafeDeletionManager
 from core.defs.exeptions import RateNotExist
 
 
-class Currency(TimestampMixin):
+class Currency(TimestampMixin, SafeDeletionMixin):
     code = models.CharField(
         max_length=3,
         unique=True,
@@ -16,6 +16,7 @@ class Currency(TimestampMixin):
         verbose_name="Currency Name",
         help_text="The name of the currency, e.g. US Dollar",
     )
+    objects = SafeDeletionManager()
 
     class Meta:
         verbose_name = "Currency"
@@ -25,13 +26,15 @@ class Currency(TimestampMixin):
         return f"{self.code} {self.name}"
 
 
-class CurrencyRate(TimestampMixin):
+class CurrencyRate(TimestampMixin, SafeDeletionMixin):
     currency = models.ForeignKey(
         Currency,
         related_name="rate",
         on_delete=models.CASCADE,
         verbose_name="Currency",
         help_text="Currency",
+        null=True,
+        blank=True,
     )
     rate = models.DecimalField(
         max_digits=10,
@@ -39,6 +42,7 @@ class CurrencyRate(TimestampMixin):
         verbose_name="Exchange Rate",
         help_text="The rate at which the source currency" "can be exchanged for the target currency.",
     )
+    objects = SafeDeletionManager()
 
     class Meta:
         verbose_name = "Currency rate"
