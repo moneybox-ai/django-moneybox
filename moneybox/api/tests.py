@@ -5,16 +5,18 @@ from django.contrib.auth import get_user_model
 from django.utils import timezone
 from rest_framework.test import APIRequestFactory
 
-from core.defs.datetime import convert_date_for_json
+from api.serializers.report import ReportSerializer
+from api.views.auth import decrypt_ciphertext, encrypt_token
+from api.views.report import ReportViewSet
 from core.defs.constants import Currency as ConstantsCurrency
+from core.defs.datetime import convert_date_for_json
 from users.models import APIUser
 from wallet.models.currency import Currency
 from wallet.models.expense import Expense, ExpenseCategory
 from wallet.models.group import Group
 from wallet.models.income import Income, IncomeCategory
 from wallet.models.wallet import Wallet
-from api.serializers.report import ReportSerializer
-from api.views.report import ReportViewSet
+
 
 User = get_user_model()
 
@@ -127,3 +129,14 @@ def test_list(api_rf, user):
     assert response.status_code == 200
 
     assert ReportSerializer(actual_data).data == ReportSerializer(expected_data).data
+
+
+class TestEncryption:
+    token = "8db757d5-c7d9-44dc-a7a7-f9cf8e7920dd"
+    token_encrypted = b"\x01rf8>\x01\xfe\x8a\xd19\x00\xb9\xcd<W\xef\xa3\x03\xc0\xf5\xf3\\U93\xd9\xfb\xac\xf3\xd0\x90\x1c5\xda\xd0K\xbb\xe6\x810b\xe4\xd8\xf2\xed\xd4\x9b'\xaf\xffi\x1f\\\x07\x86\xfa\x7f"
+
+    def test_encrypt_token(self):
+        assert encrypt_token(self.token.encode()) == self.token_encrypted
+
+    def test_decrypt_ciphertext(self):
+        assert decrypt_ciphertext(self.token_encrypted) == self.token
