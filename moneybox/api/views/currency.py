@@ -1,14 +1,17 @@
+from api.permissions import IsAdminOrReadOnly
+from drf_spectacular.utils import extend_schema
 from rest_framework.viewsets import ModelViewSet
 
 from api.serializers import CurrencySerializer, CurrencyRateSerializer
 from wallet.models.currency import Currency, CurrencyRate
-from rest_framework import filters, permissions
+from rest_framework import filters
 from rest_framework.decorators import action
 from django.http import HttpResponse
 from datetime import datetime
 from core.defs.datetime import RATE_DATE_FORMAT
 
 
+@extend_schema(tags=["Currency"])
 class CurrencyViewSet(ModelViewSet):
     """List of currencies or add new currency"""
 
@@ -19,10 +22,10 @@ class CurrencyViewSet(ModelViewSet):
         "code",
         "name",
     )
-    # TODO fix it when the user model is donne. Add from api.permissions import IsAdminOrReadOnly
-    permission_classes = (permissions.AllowAny,)
+    permission_classes = (IsAdminOrReadOnly,)
 
 
+@extend_schema(tags=["Currency"])
 class CurrencyRateViewSet(ModelViewSet):
     queryset = CurrencyRate.objects.order_by("pk")
     serializer_class = CurrencyRateSerializer
@@ -36,6 +39,5 @@ class CurrencyRateViewSet(ModelViewSet):
         currency_to = request.query_params.get("currency_to")
         date = request.query_params.get("date")
         date = datetime.strptime(date, RATE_DATE_FORMAT).date()
-        crate = CurrencyRate()
-        rate = crate.get_exchange_rate(currency_from, currency_to, date)
+        rate = CurrencyRate.get_exchange_rate(currency_from, currency_to, date)
         return HttpResponse(rate)

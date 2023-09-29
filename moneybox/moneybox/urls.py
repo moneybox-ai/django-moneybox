@@ -1,8 +1,14 @@
 from django.contrib import admin
-from django.urls import include, path
+from django.urls import path, include
+from django.conf.urls.static import static
+from moneybox.settings import DEBUG, STATIC_URL, STATIC_ROOT
 
-from api.urls import urlpatterns as api_urlpatterns
 from core.urls import urlpatterns as core_urlpatterns
 
-urlpatterns = [path("admin/", admin.site.urls), path("api/v1/", include(api_urlpatterns))]
+urlpatterns = [
+    path("admin/", admin.site.urls),
+    path("api/", include("api.urls")),
+]
 urlpatterns += core_urlpatterns
+if DEBUG:
+    urlpatterns += static(STATIC_URL, document_root=STATIC_ROOT)

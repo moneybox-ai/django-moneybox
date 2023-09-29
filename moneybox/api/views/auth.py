@@ -10,7 +10,7 @@ from moneybox.settings import AUTH_HEADER
 from users.models import APIUser
 
 
-@extend_schema(request=SignupSerializer, responses=APIUserSerializer)
+@extend_schema(request=SignupSerializer, responses=APIUserSerializer, tags=["Auth"])
 @api_view(("POST",))
 @permission_classes((AllowAny,))
 def signup(request):
@@ -22,7 +22,7 @@ def signup(request):
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-@extend_schema(request=APIUserSerializer, responses=None)
+@extend_schema(request=APIUserSerializer, responses=None, tags=["Auth"])
 @api_view(("POST",))
 @permission_classes((AllowAny,))
 def signin(request):
@@ -33,7 +33,7 @@ def signin(request):
     return Response(status=status.HTTP_200_OK)
 
 
-@extend_schema(request=None, responses=APIUserSerializer)
+@extend_schema(request=None, responses=APIUserSerializer, tags=["Auth"])
 @api_view(("GET",))
 def get_token(request):
     auth_header = request.headers[AUTH_HEADER]

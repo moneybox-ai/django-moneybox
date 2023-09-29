@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
+from drf_spectacular.utils import extend_schema
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -14,6 +15,7 @@ from wallet.models.expense import Expense
 from wallet.models.income import Income
 
 
+@extend_schema(tags=["Reports"])
 class ReportViewSet(viewsets.ViewSet):
     serializer_class = ReportSerializer
 
