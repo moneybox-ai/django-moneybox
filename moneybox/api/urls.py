@@ -29,17 +29,17 @@ from api.views.report import ReportViewSet
 
 router = SimpleRouter()
 
-router.register("v1/user", APIUserViewSet)
-router.register("v1/group", GroupViewSet)
-router.register("v1/wallet", WalletViewSet)
-router.register("v1/incomecategory", IncomeCategoryViewSet)
-router.register("v1/expensecategory", ExpenseCategoryViewSet)
-router.register("v1/income", IncomeViewSet)
-router.register("v1/expense", ExpenseViewSet)
-router.register("v1/transfer", TransferViewSet)
-router.register("v1/currency", CurrencyViewSet)
-router.register("v1/currencyrate", CurrencyRateViewSet)
-router.register("v1/report", ReportViewSet, basename="report")
+router.register(r"v1/user", APIUserViewSet)
+router.register(r"v1/group", GroupViewSet)
+router.register(r"v1/wallet", WalletViewSet)
+router.register(r"v1/incomecategory", IncomeCategoryViewSet)
+router.register(r"v1/expensecategory", ExpenseCategoryViewSet)
+router.register(r"v1/income", IncomeViewSet)
+router.register(r"v1/expense", ExpenseViewSet)
+router.register(r"v1/transfer", TransferViewSet)
+router.register(r"v1/currency", CurrencyViewSet)
+router.register(r"v1/currencyrate", CurrencyRateViewSet)
+router.register(r"v1/report", ReportViewSet, basename="report")
 
 docs_urlpatterns = [
     path("v1/schema/", SpectacularAPIView.as_view(), name="schema"),

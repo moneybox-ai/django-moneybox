@@ -14,9 +14,6 @@ class CurrencySerializer(ModelSerializer):
         validators=(UniqueValidator(queryset=Currency.objects.all()),),
         required=True,
     )
-    nominal = (serializers.CharField(),)
-
-    value = (serializers.CharField(),)
 
     class Meta:
         model = Currency

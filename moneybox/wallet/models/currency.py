@@ -65,8 +65,8 @@ class CurrencyRate(TimestampMixin, SafeDeletionMixin):
         blank=True,
     )
     rate = models.DecimalField(
-        max_digits=10,
-        decimal_places=4,
+        max_digits=12,
+        decimal_places=5,
         verbose_name="Exchange Rate",
         help_text="The rate at which the source currency" "can be exchanged for the target currency.",
     )
