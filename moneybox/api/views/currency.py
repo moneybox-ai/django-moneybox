@@ -1,9 +1,10 @@
+from api.permissions import IsAdminOrReadOnly
 from drf_spectacular.utils import extend_schema
 from rest_framework.viewsets import ModelViewSet
 
 from api.serializers import CurrencySerializer, CurrencyRateSerializer
 from wallet.models.currency import Currency, CurrencyRate
-from rest_framework import filters, permissions
+from rest_framework import filters
 from rest_framework.decorators import action
 from django.http import HttpResponse
 from datetime import datetime
@@ -21,8 +22,7 @@ class CurrencyViewSet(ModelViewSet):
         "code",
         "name",
     )
-    # TODO fix it when the user model is donne. Add from api.permissions import IsAdminOrReadOnly
-    permission_classes = (permissions.AllowAny,)
+    permission_classes = (IsAdminOrReadOnly,)
 
 
 @extend_schema(tags=["Currency"])
