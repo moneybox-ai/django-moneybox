@@ -13,13 +13,9 @@ from users.models import APIUser
 @permission_classes((AllowAny,))
 def signup(request):  # TODO There is a error like unable to guess serializer, fix it
     serializer = SignupSerializer(data=request.data)
-
     if serializer.is_valid():
         user = serializer.save()
-        try:
-            return Response({"token": user.token}, status=status.HTTP_201_CREATED)
-        except AttributeError:
-            return Response("Invalid invite code", status=status.HTTP_400_BAD_REQUEST)
+        return Response({"token": user.token}, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
