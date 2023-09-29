@@ -18,7 +18,7 @@ def signup(request):  # TODO There is a error like unable to guess serializer, f
         user = serializer.save()
         try:
             return Response({"token": user.token}, status=status.HTTP_201_CREATED)
-        except:
+        except AttributeError:
             return Response("Invalid invite code", status=status.HTTP_400_BAD_REQUEST)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
