@@ -1,3 +1,4 @@
+from drf_spectacular.utils import extend_schema
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
@@ -7,6 +8,7 @@ from users.models import APIUser
 from wallet.models.group import Group
 
 
+@extend_schema(tags=["Groups"])
 class GroupViewSet(ModelViewSet):
     queryset = Group.objects.order_by("pk")
     serializer_class = GroupSerializer

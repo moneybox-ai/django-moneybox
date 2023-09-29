@@ -2,6 +2,7 @@ import random
 from datetime import timedelta
 
 from django.utils import timezone
+from drf_spectacular.utils import extend_schema
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
@@ -12,6 +13,7 @@ from wallet.models.group import Group
 from wallet.models.invite import Invite
 
 
+@extend_schema(tags=["Invites"])
 class InviteViewSet(ModelViewSet):
     queryset = Invite.objects.all()
     serializer_class = InviteSerializer

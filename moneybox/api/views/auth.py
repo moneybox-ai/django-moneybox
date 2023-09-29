@@ -1,3 +1,4 @@
+from drf_spectacular.utils import extend_schema
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
@@ -7,6 +8,7 @@ from api.serializers.user import SignupSerializer
 from users.models import APIUser
 
 
+@extend_schema(tags=["Auth"])
 @api_view(("POST",))
 @permission_classes((AllowAny,))
 def signup(request):  # TODO There is a error like unable to guess serializer, fix it
@@ -18,6 +20,7 @@ def signup(request):  # TODO There is a error like unable to guess serializer, f
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+@extend_schema(tags=["Auth"])
 @api_view(("POST",))
 @permission_classes((AllowAny,))
 def signin(request):  # TODO There is a error like unable to guess serializer, fix it
@@ -27,6 +30,7 @@ def signin(request):  # TODO There is a error like unable to guess serializer, f
     return Response({"error": "no such token exists"}, status.HTTP_401_UNAUTHORIZED)
 
 
+@extend_schema(tags=["Auth"])
 @api_view(("GET",))
 def get_token(request):  # TODO There is a error like unable to guess serializer, fix it
     auth_header = request.headers["Authorization"]
