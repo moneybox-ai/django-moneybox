@@ -18,6 +18,7 @@ spec:
       initContainers:
         - name: migrations
           image: error0x001/moneybox_backend:latest
+          imagePullPolicy: Always
           command:
             - python
             - manage.py
@@ -67,6 +68,21 @@ spec:
           - moneybox.wsgi:application
           - --bind
           - 0.0.0.0:8000
+      - name: django-moneybox-celery
+        image: error0x001/moneybox_backend:latest
+        imagePullPolicy: Always
+        envFrom:
+          - configMapRef:
+              name: django-moneybox-configmap
+          - secretRef:
+              name: django-moneybox-secret
+        command:
+          - celery
+          - -A
+          - moneybox
+          - beat
+          - -l
+          - info
       volumes:
         - name: django-moneybox-static-volume
           emptyDir: { }
