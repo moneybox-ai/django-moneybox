@@ -147,11 +147,12 @@ SPECTACULAR_SETTINGS = {
     "SERVE_PERMISSIONS": ["rest_framework.permissions.AllowAny"],
     "SERVE_AUTHENTICATION": None,
 }
-
+# celery
 CELERY_BEAT_SCHEDULER = os.getenv("CELERY_BEAT_SCHEDULER", "django_celery_beat.schedulers:DatabaseScheduler")
-
 CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL")
-
+# cbr
 CBR_TIMEOUT = 10
-
 CBR_URL = "https://cbr.ru/scripts/XML_daily.asp"
+# coingecko
+COINGECKO_TIMEOUT = 10
+COINGECKO_URL = "https://api.coingecko.com/api/v3/simple/price?ids={crypto_currencies}&vs_currencies={fiat_currency}"
