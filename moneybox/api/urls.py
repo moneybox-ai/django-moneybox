@@ -1,5 +1,4 @@
 from django.urls import path
-from django.conf.urls.static import static
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.routers import SimpleRouter
 
@@ -26,7 +25,6 @@ from api.views import (
 )
 from api.views.invite import InviteViewSet
 from api.views.report import ReportViewSet
-from moneybox.settings import DEBUG, STATIC_URL, STATIC_ROOT
 
 
 router = SimpleRouter()
@@ -65,5 +63,3 @@ auth_urlpatterns = [
 ]
 
 urlpatterns = router.urls + docs_urlpatterns + auth_urlpatterns
-if DEBUG:
-    urlpatterns += static(STATIC_URL, document_root=STATIC_ROOT)
