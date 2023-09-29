@@ -1,3 +1,4 @@
+from drf_spectacular.utils import extend_schema
 from rest_framework.viewsets import ModelViewSet
 
 from api.serializers import CurrencySerializer, CurrencyRateSerializer
@@ -9,6 +10,7 @@ from datetime import datetime
 from core.defs.datetime import RATE_DATE_FORMAT
 
 
+@extend_schema(tags=["Currency"])
 class CurrencyViewSet(ModelViewSet):
     """List of currencies or add new currency"""
 
@@ -23,6 +25,7 @@ class CurrencyViewSet(ModelViewSet):
     permission_classes = (permissions.AllowAny,)
 
 
+@extend_schema(tags=["Currency"])
 class CurrencyRateViewSet(ModelViewSet):
     queryset = CurrencyRate.objects.order_by("pk")
     serializer_class = CurrencyRateSerializer

@@ -59,9 +59,9 @@ docs_urlpatterns = [
 ]
 
 auth_urlpatterns = [
-    path("auth/get_token/", get_token),
-    path("auth/signup/", signup),
-    path("auth/signin/", csrf_exempt(signin)),
+    path("v1/auth/get_token/", get_token),
+    path("v1/auth/signup/", signup),
+    path("v1/auth/signin/", csrf_exempt(signin)),
 ]
 
 urlpatterns = router.urls + docs_urlpatterns + auth_urlpatterns
