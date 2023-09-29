@@ -4,6 +4,7 @@ from wallet.admin.group import GroupAdmin
 from wallet.admin.income import IncomeAdmin, IncomeCategoryAdmin
 from wallet.admin.transfer import TransferAdmin
 from wallet.admin.wallet import WalletAdmin
+from wallet.admin.invite import InviteAdmin
 
 __all__ = [
     "CurrencyAdmin",
@@ -15,4 +16,5 @@ __all__ = [
     "IncomeCategoryAdmin",
     "TransferAdmin",
     "WalletAdmin",
+    "InviteAdmin",
 ]

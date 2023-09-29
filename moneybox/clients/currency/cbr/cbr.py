@@ -24,18 +24,18 @@ class CBRClient:
             raise CBRRequestException(e)
 
         root = ET.fromstring(response.text)
-        for valute in root:
-            valute_name = valute.find("CharCode").text
+        for currency in root:
+            valute_name = currency.find("CharCode").text
             valute_data = {
-                "num_code": valute.find("NumCode").text,
-                "char_code": valute.find("CharCode").text,
-                "nominal": float(valute.find("Nominal").text),
-                "name": valute.find("Name").text,
-                "value": float(valute.find("Value").text.replace(",", ".")),
-                "cbr_valute_id": valute.attrib["ID"],
+                "num_code": currency.find("NumCode").text,
+                "char_code": currency.find("CharCode").text,
+                "nominal": float(currency.find("Nominal").text),
+                "name": currency.find("Name").text,
+                "value": float(currency.find("Value").text.replace(",", ".")),
+                "cbr_currency_id": currency.attrib["ID"],
             }
             currencies.setdefault(valute_name, valute_data)
         return currencies
 
 
-cbr_сlient = CBRClient()
+cbr_client = CBRClient()

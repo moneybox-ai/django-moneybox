@@ -21,6 +21,7 @@ class SignupSerializer(serializers.Serializer):
         invite_code = validated_data.get("invite_code")
         token = str(uuid4())
         user = APIUser.objects.create(token=token)
+        # TODO add default incomes, expenses and wallets by user
 
         if invite_code:
             group_invite = Invite.objects.filter(invite_code=invite_code).first()
