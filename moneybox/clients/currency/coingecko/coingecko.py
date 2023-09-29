@@ -25,7 +25,7 @@ class CoinGeckoClient:
             raise CoinGeckoRequestException(e)
         result = dict()
         for k, v in rates.items():
-            result[CoinGeckoCrypto.map_coingecko_to_main_crypto(k)] = v.get(FiatCurrency.RUB.lower())
+            result[CoinGeckoCrypto.map_coingecko_to_main_crypto(k)] = round(v.get(FiatCurrency.RUB.lower()), 4)
         return result
 
 
