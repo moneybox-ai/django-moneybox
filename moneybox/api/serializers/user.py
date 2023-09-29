@@ -21,7 +21,7 @@ class SignupSerializer(serializers.Serializer):
     def create(self, validated_data):
         invite_code = validated_data.get("invite_code")
         token = str(uuid4())
-        user = APIUser.objects.create(token=token)
+        user = None
         # TODO add default incomes, expenses and wallets by user
 
         if invite_code:
@@ -29,10 +29,12 @@ class SignupSerializer(serializers.Serializer):
             if not group_invite:
                 return "Invalid invite code"
             if group_invite and group_invite.is_expired:
+                user = APIUser.objects.create(token=token)
                 group = group_invite.group
                 group.members.add(user)
                 group_invite.delete()
         else:
+            user = APIUser.objects.create(token=token)
             group = Group.objects.create()
             group.members.add(user)
         return user
