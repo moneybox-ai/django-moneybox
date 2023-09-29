@@ -34,4 +34,4 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
             Deployment is completed successfully!
-            Release notes: ${{ github.event.release.body }}
+            Release notes:\n${{ github.event.release.body }}

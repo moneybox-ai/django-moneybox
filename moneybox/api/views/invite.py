@@ -19,9 +19,11 @@ class InviteViewSet(ModelViewSet):
     @action(detail=False, methods=("POST",), permission_classes=(IsAuthenticated,))
     def invite(self, request):  # TODO scheme for swagger
         """Create invite code."""
-        invite_code = random.randint(1000000, 9999999)
         user_token = request.user.token
         group = Group.objects.filter(members__token=user_token).first()
-        expires_at = timezone.now() + timedelta(days=7)
-        Invite.objects.create(invite_code=invite_code, group=group, expires_at=expires_at)
-        return Response({"code": invite_code})
+        if group:
+            invite_code = random.randint(1000000, 9999999)
+            expires_at = timezone.now() + timedelta(days=7)
+            Invite.objects.create(invite_code=invite_code, group=group, expires_at=expires_at)
+            return Response({"code": invite_code})
+        return Response({"detail": "Group not found"})  # TODO unreal case
