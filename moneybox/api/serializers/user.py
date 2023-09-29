@@ -3,6 +3,7 @@ from uuid import uuid4
 from rest_framework import serializers
 
 from users.models import APIUser
+from wallet.models.group import Group
 from wallet.models.invite import Invite
 
 
@@ -25,8 +26,13 @@ class SignupSerializer(serializers.Serializer):
 
         if invite_code:
             group_invite = Invite.objects.filter(invite_code=invite_code).first()
-            if group_invite and not group_invite.is_expired:
+            if not group_invite:
+                return "Invalid invite code"
+            if group_invite and group_invite.is_expired:
                 group = group_invite.group
                 group.members.add(user)
                 group_invite.delete()
+        else:
+            group = Group.objects.create()
+            group.members.add(user)
         return user

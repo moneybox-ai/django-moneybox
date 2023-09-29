@@ -1,6 +1,6 @@
 from django.utils import timezone
 
-from wallet.models.timestamp import TimestampMixin
+from wallet.models.mixins import TimestampMixin
 
 from django.db import models
 from wallet.models.group import Group
