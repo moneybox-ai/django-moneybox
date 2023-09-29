@@ -37,4 +37,4 @@ def update_crypto_exchange_rates():
             name=currency,
             type=CurrencyType.CRYPTO,
         )
-        CurrencyRate.objects.create(currency=currency, rate=rate)
+        CurrencyRate.objects.create(currency=currency, rate=round(rate, 4))
