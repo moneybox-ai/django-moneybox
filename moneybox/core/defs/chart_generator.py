@@ -70,11 +70,11 @@ def generate_charts(x_axis_data, report_data):
         category_incomes = report_data["category_incomes"]
         category_expenses = report_data["category_expenses"]
 
-        data1 = [(category["category__name"], category["total_expenses"]) for category in category_incomes]
-        pie_chart1_html = render_pie_chart(data1, "Доходы по категориям")
+        incomes_data = [(category["category__name"], category["category_incomes"]) for category in category_incomes]
+        pie_chart1_html = render_pie_chart(incomes_data, "Доходы по категориям")
 
-        data2 = [(category["category__name"], category["total_expenses"]) for category in category_expenses]
-        pie_chart2_html = render_pie_chart(data2, "Расходы по категориям")
+        expenses_data = [(category["category__name"], category["total_expenses"]) for category in category_expenses]
+        pie_chart2_html = render_pie_chart(expenses_data, "Расходы по категориям")
 
         chart_html = render_charts_to_html(bar_chart_html, pie_chart1_html, pie_chart2_html)
         return chart_html

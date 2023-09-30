@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from api.serializers.report import ReportSerializer
 from api.utils import get_category_data, get_start_end_dates, get_total_data
 from core.defs.chart_generator import generate_charts
-from core.defs.datetime import convert_date_for_html
+from core.defs.datetime import convert_date_to_standart_format
 from core.defs.exeptions import ReportAPIException
 from users.models import APIUser
 from wallet.models.expense import Expense
@@ -42,9 +42,9 @@ class ReportViewSet(viewsets.ViewSet):
         start_of_day, end_of_day = get_start_end_dates(start_date, end_date)
 
         if start_date == end_date:
-            x_axis_data = [convert_date_for_html(start_of_day)]
+            x_axis_data = [convert_date_to_standart_format(start_of_day)]
         else:
-            x_axis_data = [convert_date_for_html(start_of_day), convert_date_for_html(end_of_day)]
+            x_axis_data = [convert_date_to_standart_format(start_of_day), convert_date_to_standart_format(end_of_day)]
 
         chart_html = generate_charts(x_axis_data, report_data)
 
@@ -52,11 +52,8 @@ class ReportViewSet(viewsets.ViewSet):
 
     @staticmethod
     def get_user_profile(user):
-        try:
-            profile = get_object_or_404(APIUser, token=user)
-            return profile
-        except Exception as e:
-            raise ReportAPIException(detail=f"Error getting user profile: {e}")
+        profile = get_object_or_404(APIUser, token=user)
+        return profile
 
     @staticmethod
     def get_total_incomes(group, start_date=None, end_date=None):
