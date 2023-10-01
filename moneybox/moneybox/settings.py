@@ -170,7 +170,9 @@ PRE_KEYSET = {
             "keyData": {
                 "keyMaterialType": os.getenv("KEY_MATERIAL_TYPE", "SYMMETRIC"),
                 "typeUrl": os.getenv("TYPE_URL", "type.googleapis.com/google.crypto.tink.AesSivKey"),
-                "value": os.getenv("VALUE", "EkDseJb9CSmxFJJ66dRrwQXN+ToxcBxJC/GPwhFfTYHREMfgTX2t52RpDQ6u29TdintRxJm8RLaMMvmjmDao1Lpu"),
+                "value": os.getenv(
+                    "VALUE", "EkDseJb9CSmxFJJ66dRrwQXN+ToxcBxJC/GPwhFfTYHREMfgTX2t52RpDQ6u29TdintRxJm8RLaMMvmjmDao1Lpu"
+                ),
             },
             "keyId": os.getenv("KEY_ID", 2021474508),
             "outputPrefixType": os.getenv("OUTPUT_PREFIX_TYPE", "TINK"),
