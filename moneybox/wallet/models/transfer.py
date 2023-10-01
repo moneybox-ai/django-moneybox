@@ -4,12 +4,12 @@ from django.db import models, transaction
 
 from wallet.models.currency import CurrencyRate
 from wallet.models.group import Group
-from wallet.models.timestamp import TimestampMixin
+from wallet.models.mixins import TimestampMixin, SafeDeletionMixin, SafeDeletionManager
 from wallet.models.wallet import Wallet
 from users.models import APIUser
 
 
-class Transfer(TimestampMixin):
+class Transfer(TimestampMixin, SafeDeletionMixin):
     from_wallet = models.ForeignKey(
         Wallet,
         related_name="transfers_from",
@@ -52,6 +52,7 @@ class Transfer(TimestampMixin):
         help_text="The group to which the transfer belongs.",
         db_index=True,
     )
+    objects = SafeDeletionManager()
 
     class Meta:
         verbose_name = "Transfer"

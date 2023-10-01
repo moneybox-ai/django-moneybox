@@ -1,12 +1,33 @@
 from django.db import models
 
-from wallet.models.timestamp import TimestampMixin
+from wallet.models.mixins import TimestampMixin, SafeDeletionMixin, SafeDeletionManager
 from core.defs.exeptions import RateNotExist
 
 
-class Currency(TimestampMixin):
+class FiatCurrency:
+    RUB = "RUB"
+
+
+class CryptoCurrency:
+    BITCOIN = "bitcoin"
+    TON = "ton"
+    ETHEREUM = "ethereum"
+    USDC = "usdc"
+
+
+class CurrencyType:
+    FIAT = "fiat"
+    CRYPTO = "crypto"
+
+    CHOICES = [
+        (FIAT, FIAT),
+        (CRYPTO, CRYPTO),
+    ]
+
+
+class Currency(TimestampMixin, SafeDeletionMixin):
     code = models.CharField(
-        max_length=3,
+        max_length=10,
         unique=True,
         verbose_name="Currency Code",
         help_text="The unique code for this currency",
@@ -16,6 +37,14 @@ class Currency(TimestampMixin):
         verbose_name="Currency Name",
         help_text="The name of the currency, e.g. US Dollar",
     )
+    type = models.CharField(
+        max_length=255,
+        verbose_name="Currency Type",
+        help_text="The type of the currency, e.g. fiat or crypto",
+        choices=CurrencyType.CHOICES,
+        default=CurrencyType.FIAT,
+    )
+    objects = SafeDeletionManager()
 
     class Meta:
         verbose_name = "Currency"
@@ -25,20 +54,23 @@ class Currency(TimestampMixin):
         return f"{self.code} {self.name}"
 
 
-class CurrencyRate(TimestampMixin):
+class CurrencyRate(TimestampMixin, SafeDeletionMixin):
     currency = models.ForeignKey(
         Currency,
         related_name="rate",
         on_delete=models.CASCADE,
         verbose_name="Currency",
         help_text="Currency",
+        null=True,
+        blank=True,
     )
     rate = models.DecimalField(
-        max_digits=10,
-        decimal_places=4,
+        max_digits=12,
+        decimal_places=5,
         verbose_name="Exchange Rate",
         help_text="The rate at which the source currency" "can be exchanged for the target currency.",
     )
+    objects = SafeDeletionManager()
 
     class Meta:
         verbose_name = "Currency rate"
@@ -48,11 +80,12 @@ class CurrencyRate(TimestampMixin):
     def __repr__(self):
         return f"{self.currency} is {self.rate}"
 
-    def get_exchange_rate(self, currency_from, currency_to, date):
-        first_value = CurrencyRate.objects.filter(
+    @classmethod
+    def get_exchange_rate(cls, currency_from, currency_to, date):
+        first_value = cls.objects.filter(
             currency=currency_from, created_at__day=date.day, created_at__month=date.month, created_at__year=date.year
         ).latest()
-        second_value = CurrencyRate.objects.filter(
+        second_value = cls.objects.filter(
             currency=currency_to, created_at__day=date.day, created_at__month=date.month, created_at__year=date.year
         ).latest()
         if first_value and second_value:

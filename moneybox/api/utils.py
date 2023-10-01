@@ -1,9 +1,9 @@
 from datetime import datetime
-
-from django.db.models import Sum, Max
 from django.utils import timezone
 
-from core.defs.datetime import convert_date_to_datetime_format
+from django.db.models import Sum, Max
+
+from core.defs.datetime import convert_date_for_json
 
 
 def get_start_end_dates(start_date=None, end_date=None):
@@ -26,7 +26,7 @@ def get_category_data(profile, model, start_date=None, end_date=None):
         .values("category__name", "total_expenses", "created_at")
     )
 
-    return [{**x, "created_at": convert_date_to_datetime_format(x["created_at"])} for x in category_data]
+    return [{**x, "created_at": convert_date_for_json(x["created_at"])} for x in category_data]
 
 
 def get_total_data(group, model, start_date=None, end_date=None):

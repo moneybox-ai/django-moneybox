@@ -1,10 +1,10 @@
 from django.db import models
 
-from wallet.models.timestamp import TimestampMixin
+from wallet.models.mixins import TimestampMixin, SafeDeletionMixin, SafeDeletionManager
 from users.models import APIUser
 
 
-class Group(TimestampMixin):
+class Group(TimestampMixin, SafeDeletionMixin):
     name = models.CharField(
         max_length=255,
         verbose_name="Group name",
@@ -18,7 +18,11 @@ class Group(TimestampMixin):
         help_text="Members of the group",
         db_index=True,
     )
+    objects = SafeDeletionManager()
 
     class Meta:
         verbose_name = "Group"
         verbose_name_plural = "Groups"
+
+    def __str__(self):
+        return self.name
