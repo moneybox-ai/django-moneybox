@@ -19,4 +19,4 @@ class Group(TimestampMixin, SafeDeletionMixin):
         verbose_name_plural = "Groups"
 
     def __str__(self):
-        return self.pk
+        return str(self.pk)
