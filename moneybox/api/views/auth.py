@@ -1,23 +1,68 @@
+from django.db import transaction
 from drf_spectacular.utils import extend_schema
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
+from api.constants import DEFAULT_INCOME_CATEGORY, DEFAULT_EXPENSE_CATEGORY, WALLET_LIST
 from api.encryption import decrypt_ciphertext, encrypt_token
 from api.serializers import APIUserSerializer, SignupSerializer
 from moneybox.settings import AUTH_HEADER
 from users.models import APIUser
+from wallet.models.currency import Currency
+from wallet.models.group import Group
+from wallet.models.income import IncomeCategory
+from wallet.models.expense import ExpenseCategory
+from wallet.models.wallet import Wallet
 
 
 @extend_schema(request=SignupSerializer, responses=APIUserSerializer, tags=["Auth"])
 @api_view(("POST",))
 @permission_classes((AllowAny,))
+@transaction.atomic
 def signup(request):
     serializer = SignupSerializer(data=request.data)
     if serializer.is_valid():
+        invite_code = serializer.validated_data.get('invite_code')
         user = serializer.save()
         token_for_user = decrypt_ciphertext(user.token)
+        if not invite_code:
+            group = Group.objects.filter(members__token=token_for_user).first()
+            currency = Currency.objects.get_or_create(code="RUB", name="Российский рубль")
+
+            expense_categories = [
+                ExpenseCategory(
+                    name=expense_category,
+                    group=group,
+                    created_by=user
+                )
+                for expense_category in DEFAULT_EXPENSE_CATEGORY
+            ]
+            ExpenseCategory.objects.bulk_create(expense_categories)
+
+            income_categories = [
+                ExpenseCategory(
+                    name=income_category,
+                    group=group,
+                    created_by=user
+                )
+                for income_category in DEFAULT_INCOME_CATEGORY
+            ]
+            IncomeCategory.objects.bulk_create(income_categories)
+
+            wallets = [
+                Wallet(
+                    name=wallet,
+                    balance=0,
+                    group=group,
+                    created_by=user,
+                    currency=currency,
+                )
+                for wallet in WALLET_LIST
+            ]
+            Wallet.objects.bulk_create(wallets)
+
         return Response({"token": token_for_user}, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
