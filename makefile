@@ -19,6 +19,9 @@ test:
 	@echo "Running tests..."
 	$(MANAGE_PY) test
 
+gen-keyset:
+	python gen_key.py
+
 clear:
 	@echo "Clearing cache..."
 	rm -rf .ruff_cache

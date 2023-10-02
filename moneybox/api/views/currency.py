@@ -39,6 +39,5 @@ class CurrencyRateViewSet(ModelViewSet):
         currency_to = request.query_params.get("currency_to")
         date = request.query_params.get("date")
         date = datetime.strptime(date, RATE_DATE_FORMAT).date()
-        crate = CurrencyRate()
-        rate = crate.get_exchange_rate(currency_from, currency_to, date)
+        rate = CurrencyRate.get_exchange_rate(currency_from, currency_to, date)
         return HttpResponse(rate)

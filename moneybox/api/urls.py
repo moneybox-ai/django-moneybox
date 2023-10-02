@@ -1,5 +1,4 @@
 from django.urls import path
-from django.conf.urls.static import static
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.routers import SimpleRouter
 
@@ -26,22 +25,21 @@ from api.views import (
 )
 from api.views.invite import InviteViewSet
 from api.views.report import ReportViewSet
-from moneybox.settings import DEBUG, STATIC_URL, STATIC_ROOT
 
 
 router = SimpleRouter()
 
-router.register("v1/user", APIUserViewSet)
-router.register("v1/group", GroupViewSet)
-router.register("v1/wallet", WalletViewSet)
-router.register("v1/incomecategory", IncomeCategoryViewSet)
-router.register("v1/expensecategory", ExpenseCategoryViewSet)
-router.register("v1/income", IncomeViewSet)
-router.register("v1/expense", ExpenseViewSet)
-router.register("v1/transfer", TransferViewSet)
-router.register("v1/currency", CurrencyViewSet)
-router.register("v1/currencyrate", CurrencyRateViewSet)
-router.register("v1/report", ReportViewSet, basename="report")
+router.register(r"v1/user", APIUserViewSet)
+router.register(r"v1/group", GroupViewSet)
+router.register(r"v1/wallet", WalletViewSet)
+router.register(r"v1/incomecategory", IncomeCategoryViewSet)
+router.register(r"v1/expensecategory", ExpenseCategoryViewSet)
+router.register(r"v1/income", IncomeViewSet)
+router.register(r"v1/expense", ExpenseViewSet)
+router.register(r"v1/transfer", TransferViewSet)
+router.register(r"v1/currency", CurrencyViewSet)
+router.register(r"v1/currencyrate", CurrencyRateViewSet)
+router.register(r"v1/report", ReportViewSet, basename="report")
 
 docs_urlpatterns = [
     path("v1/schema/", SpectacularAPIView.as_view(), name="schema"),
@@ -65,5 +63,3 @@ auth_urlpatterns = [
 ]
 
 urlpatterns = router.urls + docs_urlpatterns + auth_urlpatterns
-if DEBUG:
-    urlpatterns += static(STATIC_URL, document_root=STATIC_ROOT)

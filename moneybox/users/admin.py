@@ -7,8 +7,7 @@ from users.models import APIUser, User
 @admin.register(APIUser)
 class CurrencyAdmin(admin.ModelAdmin):
     list_display = ("token", "created_at", "updated_at")
-
-    list_filter = ("token", "created_at", "updated_at")
+    list_filter = ("created_at", "updated_at")
     search_fields = ("token",)
     date_hierarchy = "created_at"
 

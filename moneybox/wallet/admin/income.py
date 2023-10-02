@@ -7,19 +7,14 @@ from wallet.models.income import Income, IncomeCategory
 class IncomeCategoryAdmin(admin.ModelAdmin):
     list_display = (
         "id",
-        "created_at",
-        "updated_at",
         "name",
         "group",
-        "created_by",
+        "created_at",
+        "updated_at",
     )
     list_filter = (
         "created_at",
         "updated_at",
-        "group",
-        "created_by",
-        "id",
-        "name",
     )
     search_fields = ("name",)
     date_hierarchy = "created_at"
@@ -29,24 +24,17 @@ class IncomeCategoryAdmin(admin.ModelAdmin):
 class IncomeAdmin(admin.ModelAdmin):
     list_display = (
         "id",
-        "created_at",
-        "updated_at",
         "amount",
         "category",
         "comment",
         "created_by",
         "wallet",
         "group",
+        "created_at",
+        "updated_at",
     )
     list_filter = (
         "created_at",
         "updated_at",
-        "category",
-        "created_by",
-        "wallet",
-        "group",
-        "id",
-        "amount",
-        "comment",
     )
     date_hierarchy = "created_at"

@@ -5,12 +5,6 @@ from users.models import APIUser
 
 
 class Group(TimestampMixin, SafeDeletionMixin):
-    name = models.CharField(
-        max_length=255,
-        verbose_name="Group name",
-        help_text="Name of the group",
-        db_index=True,
-    )
     members = models.ManyToManyField(
         APIUser,
         related_name="groups",
@@ -25,4 +19,4 @@ class Group(TimestampMixin, SafeDeletionMixin):
         verbose_name_plural = "Groups"
 
     def __str__(self):
-        return self.name
+        return str(self.pk)
