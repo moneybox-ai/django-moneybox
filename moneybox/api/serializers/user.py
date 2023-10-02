@@ -1,6 +1,5 @@
 from rest_framework import serializers
 
-from api.encryption import encrypt_token
 from users.models import APIUser
 from wallet.models.invite import Invite
 
