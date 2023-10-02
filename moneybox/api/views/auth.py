@@ -24,7 +24,7 @@ from wallet.models.wallet import Wallet
 def signup(request):
     serializer = SignupSerializer(data=request.data)
     if serializer.is_valid():
-        invite_code = serializer.validated_data.get('invite_code')
+        invite_code = serializer.validated_data.get("invite_code")
         user = serializer.save()
         token_for_user = decrypt_ciphertext(user.token)
         if not invite_code:
@@ -33,22 +33,14 @@ def signup(request):
             currency = Currency.objects.create(code="RUB", name="Российский рубль")
 
             expense_categories = [
-                ExpenseCategory(
-                    name=expense_category,
-                    group=group,
-                    created_by=user
-                )
+                ExpenseCategory(name=expense_category, group=group, created_by=user)
                 for expense_category in DEFAULT_EXPENSE_CATEGORY
             ]
             print(expense_categories)
             ExpenseCategory.objects.bulk_create(expense_categories)
 
             income_categories = [
-                ExpenseCategory(
-                    name=income_category,
-                    group=group,
-                    created_by=user
-                )
+                ExpenseCategory(name=income_category, group=group, created_by=user)
                 for income_category in DEFAULT_INCOME_CATEGORY
             ]
             IncomeCategory.objects.bulk_create(income_categories)
