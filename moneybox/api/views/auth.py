@@ -1,3 +1,5 @@
+from uuid import uuid4
+
 from django.db import transaction
 from drf_spectacular.utils import extend_schema
 from rest_framework import status
@@ -14,6 +16,7 @@ from wallet.models.currency import Currency
 from wallet.models.group import Group
 from wallet.models.income import IncomeCategory
 from wallet.models.expense import ExpenseCategory
+from wallet.models.invite import Invite
 from wallet.models.wallet import Wallet
 
 
@@ -26,6 +29,8 @@ def signup(request):
     if serializer.is_valid():
         invite_code = serializer.validated_data.get("invite_code")
         user = serializer.save()
+        token = str(uuid4())
+        token_db = encrypt_token(token.encode())
         token_for_user = decrypt_ciphertext(user.token)
         if not invite_code:
             group = Group.objects.create()
@@ -36,7 +41,6 @@ def signup(request):
                 ExpenseCategory(name=expense_category, group=group, created_by=user)
                 for expense_category in DEFAULT_EXPENSE_CATEGORY
             ]
-            print(expense_categories)
             ExpenseCategory.objects.bulk_create(expense_categories)
 
             income_categories = [
@@ -56,6 +60,13 @@ def signup(request):
                 for wallet in WALLET_LIST
             ]
             Wallet.objects.bulk_create(wallets)
+
+        else:
+            group_invite = Invite.objects.filter(invite_code=invite_code).first()
+            user = APIUser.objects.create(token=token_db)
+            group = group_invite.group
+            group.members.add(user)
+            group_invite.delete()
 
         return Response({"token": token_for_user}, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
