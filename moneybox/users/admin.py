@@ -1,15 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from users.models import APIUser, User
-
-
-@admin.register(APIUser)
-class CurrencyAdmin(admin.ModelAdmin):
-    list_display = ("token", "created_at", "updated_at")
-    list_filter = ("created_at", "updated_at")
-    search_fields = ("token",)
-    date_hierarchy = "created_at"
+from users.models import User
 
 
 @admin.register(User)
