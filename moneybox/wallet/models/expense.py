@@ -23,10 +23,13 @@ class ExpenseCategory(TimestampMixin, SafeDeletionMixin):
     created_by = models.ForeignKey(
         APIUser,
         on_delete=models.CASCADE,
-        verbose_name="User",
+        verbose_name="Created by",
         help_text="The user who created this expense category",
     )
     objects = SafeDeletionManager()
+
+    def __str__(self):
+        return self.name
 
     class Meta:
         verbose_name = "Expense Category"

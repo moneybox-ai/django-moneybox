@@ -36,6 +36,11 @@ spec:
             - manage.py
             - collectstatic
             - --noinput
+          envFrom:
+            - configMapRef:
+                name: django-moneybox-configmap
+            - secretRef:
+                name: django-moneybox-secret
           volumeMounts:
             - name: django-moneybox-static-volume
               mountPath: /app/static

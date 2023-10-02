@@ -4,8 +4,15 @@ from wallet.models.currency import Currency, CurrencyRate
 
 @admin.register(Currency)
 class CurrencyAdmin(admin.ModelAdmin):
-    list_display = ("id", "created_at", "updated_at", "code", "name")
-    list_filter = ("created_at", "updated_at", "code", "name")
+    list_display = (
+        "id",
+        "code",
+        "name",
+        "type",
+        "created_at",
+        "updated_at",
+    )
+    list_filter = ("type", "created_at", "updated_at")
     search_fields = ("name", "code")
     date_hierarchy = "updated_at"
 
@@ -14,14 +21,10 @@ class CurrencyAdmin(admin.ModelAdmin):
 class CurrencyRateAdmin(admin.ModelAdmin):
     list_display = (
         "id",
-        "created_at",
         "currency",
         "rate",
-    )
-    list_filter = (
         "created_at",
-        "currency",
-        "id",
-        "rate",
+        "updated_at",
     )
+    list_filter = ("currency__type", "created_at", "updated_at")
     date_hierarchy = "created_at"

@@ -182,3 +182,24 @@ PRIMITIVE = KEYSET_HANDLE.primitive(daead.DeterministicAead)
 # coingecko
 COINGECKO_TIMEOUT = 10
 COINGECKO_URL = "https://api.coingecko.com/api/v3/simple/price?ids={crypto_currencies}&vs_currencies={fiat_currency}"
+# encoding
+PRE_KEYSET = {
+    "key": [
+        {
+            "keyData": {
+                "keyMaterialType": os.getenv("KEY_MATERIAL_TYPE", "SYMMETRIC"),
+                "typeUrl": os.getenv("TYPE_URL", "type.googleapis.com/google.crypto.tink.AesSivKey"),
+                "value": os.getenv(
+                    "VALUE", "EkDseJb9CSmxFJJ66dRrwQXN+ToxcBxJC/GPwhFfTYHREMfgTX2t52RpDQ6u29TdintRxJm8RLaMMvmjmDao1Lpu"
+                ),
+            },
+            "keyId": os.getenv("KEY_ID", 2021474508),
+            "outputPrefixType": os.getenv("OUTPUT_PREFIX_TYPE", "TINK"),
+            "status": os.getenv("STATUS", "ENABLED"),
+        }
+    ],
+    "primaryKeyId": os.getenv("PRIMARY_KEY_ID", 2021474508),
+}
+KEYSET = json.dumps(PRE_KEYSET, indent=4)
+KEYSET_HANDLE = cleartext_keyset_handle.read(tink.JsonKeysetReader(KEYSET))
+PRIMITIVE = KEYSET_HANDLE.primitive(daead.DeterministicAead)
