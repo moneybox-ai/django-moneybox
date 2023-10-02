@@ -42,6 +42,4 @@ class SignupSerializer(serializers.Serializer):
             group_invite.delete()
         else:
             user = APIUser.objects.create(token=token_db)
-            group = Group.objects.create()
-            group.members.add(user)
         return user

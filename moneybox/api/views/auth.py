@@ -28,8 +28,9 @@ def signup(request):
         user = serializer.save()
         token_for_user = decrypt_ciphertext(user.token)
         if not invite_code:
-            group = Group.objects.filter(members__token=token_for_user).first()
-            currency = Currency.objects.get_or_create(code="RUB", name="Российский рубль")
+            group = Group.objects.create()
+            group.members.add(user)
+            currency = Currency.objects.create(code="RUB", name="Российский рубль")
 
             expense_categories = [
                 ExpenseCategory(
@@ -39,6 +40,7 @@ def signup(request):
                 )
                 for expense_category in DEFAULT_EXPENSE_CATEGORY
             ]
+            print(expense_categories)
             ExpenseCategory.objects.bulk_create(expense_categories)
 
             income_categories = [
