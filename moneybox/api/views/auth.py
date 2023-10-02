@@ -30,9 +30,9 @@ def signup(request):
         invite_code = serializer.validated_data.get("invite_code")
         token = str(uuid4())
         token_db = encrypt_token(token.encode())
+        user = APIUser.objects.create(token=token_db)
+        token_for_user = decrypt_ciphertext(user.token)
         if not invite_code:
-            user = APIUser.objects.create(token=token_db)
-            token_for_user = decrypt_ciphertext(user.token)
             group = Group.objects.create()
             group.members.add(user)
             currency = Currency.objects.get_or_create(code="RUB", name="Российский рубль")[0]
@@ -63,8 +63,6 @@ def signup(request):
 
         else:
             group_invite = Invite.objects.filter(invite_code=invite_code).first()
-            user = APIUser.objects.create(token=token_db)
-            token_for_user = decrypt_ciphertext(user.token)
             group = group_invite.group
             group.members.add(user)
             group_invite.delete()
