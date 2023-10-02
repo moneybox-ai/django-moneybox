@@ -21,7 +21,7 @@ class Wallet(TimestampMixin, SafeDeletionMixin):
     created_by = models.ForeignKey(
         APIUser,
         on_delete=models.CASCADE,
-        verbose_name="User",
+        verbose_name="Created by",
         help_text="Owner of the wallet",
     )
     group = models.ForeignKey(

@@ -13,8 +13,6 @@ class GroupAdmin(admin.ModelAdmin):
     list_filter = (
         "created_at",
         "updated_at",
-        "id",
     )
     raw_id_fields = ("members",)
-    search_fields = ("id",)
     date_hierarchy = "created_at"

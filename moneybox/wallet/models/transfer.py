@@ -42,7 +42,7 @@ class Transfer(TimestampMixin, SafeDeletionMixin):
     created_by = models.ForeignKey(
         APIUser,
         on_delete=models.CASCADE,
-        verbose_name="User",
+        verbose_name="Created by",
         help_text="The user who made the transfer.",
     )
     group = models.ForeignKey(
