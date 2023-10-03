@@ -11,7 +11,7 @@ from wallet.models.invite import Invite
 class APIUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = APIUser
-        fields = "__all__"
+        fields = ("token",)
 
 
 class SignupSerializer(serializers.Serializer):
