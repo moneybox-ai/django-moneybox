@@ -6,6 +6,7 @@ from django.contrib.auth.models import AbstractUser, UserManager
 from django.db import models
 
 from api.encryption import decrypt_ciphertext, encrypt_token
+from api.utils import add_defaults
 from wallet.models.mixins import TimestampMixin, SafeDeletionMixin
 
 
@@ -32,6 +33,7 @@ class CustomUserManager(UserManager):
         user.save(using=self._db)
         token = decrypt_ciphertext(user.api_user.token)
         sys.stdout.write(f"API user token: {token}\n")
+        add_defaults(user=new_api_user)
         return user
 
 
