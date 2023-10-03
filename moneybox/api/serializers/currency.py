@@ -17,7 +17,7 @@ class CurrencySerializer(ModelSerializer):
 
     class Meta:
         model = Currency
-        fields = "__all__"
+        fields = ("id", "code", "name", "created_at", "updated_at")
         validators = (
             UniqueTogetherValidator(
                 queryset=Currency.objects.all(),
