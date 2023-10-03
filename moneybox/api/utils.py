@@ -3,8 +3,7 @@ from django.utils import timezone
 
 from django.db.models import Sum, Max
 
-from api import constants
-from api.constants import DEFAULT_EXPENSE_CATEGORY, DEFAULT_INCOME_CATEGORY, WALLET_LIST
+from core.defs.constants import DEFAULT_EXPENSE_CATEGORY, DEFAULT_INCOME_CATEGORY, WALLET_LIST
 from core.defs.datetime import convert_date_to_datetime_format
 from wallet.models.currency import Currency, FiatCurrency
 from wallet.models.expense import ExpenseCategory
