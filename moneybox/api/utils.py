@@ -3,7 +3,7 @@ from django.utils import timezone
 
 from django.db.models import Sum, Max
 
-from core.defs.constants import DEFAULT_EXPENSE_CATEGORY, DEFAULT_INCOME_CATEGORY, WALLET_LIST
+from core.defs import constants
 from core.defs.datetime import convert_date_to_datetime_format
 from wallet.models.currency import Currency, FiatCurrency
 from wallet.models.expense import ExpenseCategory
@@ -37,11 +37,11 @@ def get_category_data(profile, model, start_date=None, end_date=None):
 
 def get_total_data(group, model, start_date=None, end_date=None):
     total_data_per = (
-            getattr(group, model)
-            .filter(created_at__range=get_start_end_dates(start_date, end_date))
-            .aggregate(total_data=Sum("amount"))
-            .get("total_data")
-            or 0
+        getattr(group, model)
+        .filter(created_at__range=get_start_end_dates(start_date, end_date))
+        .aggregate(total_data=Sum("amount"))
+        .get("total_data")
+        or 0
     )
 
     total_data = getattr(group, model).aggregate(total_data=Sum("amount")).get("total_data") or 0
@@ -58,13 +58,13 @@ def add_defaults(user):
 
     expense_categories = [
         ExpenseCategory(name=expense_category, group=group, created_by=user)
-        for expense_category in DEFAULT_EXPENSE_CATEGORY
+        for expense_category in constants.DEFAULT_EXPENSE_CATEGORY
     ]
     ExpenseCategory.objects.bulk_create(expense_categories)
 
     income_categories = [
         ExpenseCategory(name=income_category, group=group, created_by=user)
-        for income_category in DEFAULT_INCOME_CATEGORY
+        for income_category in constants.DEFAULT_INCOME_CATEGORY
     ]
     IncomeCategory.objects.bulk_create(income_categories)
 
@@ -76,6 +76,6 @@ def add_defaults(user):
             created_by=user,
             currency=currency,
         )
-        for wallet in WALLET_LIST
+        for wallet in constants.WALLET_LIST
     ]
     Wallet.objects.bulk_create(wallets)

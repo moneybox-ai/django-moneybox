@@ -6,7 +6,6 @@ from django.contrib.auth.models import AbstractUser, UserManager
 from django.db import models
 
 from api.encryption import decrypt_ciphertext, encrypt_token
-from api.utils import add_defaults
 from wallet.models.mixins import TimestampMixin, SafeDeletionMixin
 
 
@@ -23,6 +22,8 @@ class APIUser(TimestampMixin, SafeDeletionMixin):
 
 class CustomUserManager(UserManager):
     def create_superuser(self, username, password=None, **extra_fields):
+        from api.utils import add_defaults
+
         token_new = str(uuid4())
         token_db = encrypt_token(token_new.encode())
         new_api_user = APIUser.objects.create(token=token_db)
