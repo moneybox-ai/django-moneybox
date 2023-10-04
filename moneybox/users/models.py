@@ -22,6 +22,8 @@ class APIUser(TimestampMixin, SafeDeletionMixin):
 
 class CustomUserManager(UserManager):
     def create_superuser(self, username, password=None, **extra_fields):
+        from api.utils import add_defaults
+
         token_new = str(uuid4())
         token_db = encrypt_token(token_new.encode())
         new_api_user = APIUser.objects.create(token=token_db)
@@ -32,6 +34,7 @@ class CustomUserManager(UserManager):
         user.save(using=self._db)
         token = decrypt_ciphertext(user.api_user.token)
         sys.stdout.write(f"API user token: {token}\n")
+        add_defaults(user=new_api_user)
         return user
 
 
