@@ -171,15 +171,15 @@ PRE_KEYSET = {
                 "keyMaterialType": os.getenv("KEY_MATERIAL_TYPE", "SYMMETRIC"),
                 "typeUrl": os.getenv("TYPE_URL", "type.googleapis.com/google.crypto.tink.AesSivKey"),
                 "value": os.getenv(
-                    "VALUE", "EkDseJb9CSmxFJJ66dRrwQXN+ToxcBxJC/GPwhFfTYHREMfgTX2t52RpDQ6u29TdintRxJm8RLaMMvmjmDao1Lpu"
+                    "VALUE", "EkArLxp3k27ew77t6cnygBJXjvCrZC910MwvmAa4Nk6NU1zmNeIzLae265z/8+zGSv6Y+Y63Cl6zsVxzJ4s7Mmud"
                 ),
             },
-            "keyId": os.getenv("KEY_ID", 2021474508),
+            "keyId": os.getenv("KEY_ID", 435736593),
             "outputPrefixType": os.getenv("OUTPUT_PREFIX_TYPE", "TINK"),
             "status": os.getenv("STATUS", "ENABLED"),
         }
     ],
-    "primaryKeyId": os.getenv("PRIMARY_KEY_ID", 2021474508),
+    "primaryKeyId": os.getenv("PRIMARY_KEY_ID", 435736593),
 }
 KEYSET = json.dumps(PRE_KEYSET, indent=4)
 KEYSET_HANDLE = cleartext_keyset_handle.read(tink.JsonKeysetReader(KEYSET))

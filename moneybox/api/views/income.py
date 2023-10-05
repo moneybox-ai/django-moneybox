@@ -10,8 +10,14 @@ class IncomeCategoryViewSet(ModelViewSet):
     queryset = IncomeCategory.objects.order_by("pk")
     serializer_class = IncomeCategorySerializer
 
+    def get_queryset(self):
+        return IncomeCategory.objects.filter(group__in=self.request.user.groups.all())
+
 
 @extend_schema(tags=["Incomes"])
 class IncomeViewSet(ModelViewSet):
     queryset = Income.objects.order_by("pk")
     serializer_class = IncomeSerializer
+
+    def get_queryset(self):
+        return Income.objects.filter(group__in=self.request.user.groups.all())

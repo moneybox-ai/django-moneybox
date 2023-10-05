@@ -24,3 +24,11 @@ class IsAdminOrReadOnly(permissions.BasePermission):
         except exceptions.ObjectDoesNotExist:
             return False
         return bool(request.user and request.user.admin_user.is_staff)
+
+
+class IsAdminOnly(permissions.BasePermission):
+    def has_permission(self, request, view):
+        try:
+            return bool(request.user.admin_user)
+        except exceptions.ObjectDoesNotExist:
+            return False

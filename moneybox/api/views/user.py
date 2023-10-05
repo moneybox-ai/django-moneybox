@@ -1,6 +1,7 @@
 from drf_spectacular.utils import extend_schema
 from rest_framework.viewsets import ModelViewSet
 
+from api.permissions import IsAdminOnly
 from api.serializers import APIUserSerializer
 from users.models import APIUser
 
@@ -9,3 +10,4 @@ from users.models import APIUser
 class APIUserViewSet(ModelViewSet):
     queryset = APIUser.objects.order_by("pk")
     serializer_class = APIUserSerializer
+    permission_classes = [IsAdminOnly]

@@ -9,3 +9,6 @@ from wallet.models.transfer import Transfer
 class TransferViewSet(ModelViewSet):
     queryset = Transfer.objects.order_by("pk")
     serializer_class = TransferSerializer
+
+    def get_queryset(self):
+        return Transfer.objects.filter(group__in=self.request.user.groups.all())

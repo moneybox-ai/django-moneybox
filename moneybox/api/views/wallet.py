@@ -9,3 +9,6 @@ from wallet.models.wallet import Wallet
 class WalletViewSet(ModelViewSet):
     queryset = Wallet.objects.order_by("pk")
     serializer_class = WalletSerializer
+
+    def get_queryset(self):
+        return Wallet.objects.filter(group__in=self.request.user.groups.all().all())
