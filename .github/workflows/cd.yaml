@@ -54,7 +54,7 @@ jobs:
           sed -i 's/url=""/url="https://github.com/moneybox-ai/django-moneybox"/g' moneybox/setup.py
           sed -i 's/package_data={"openapi_client": \["py.typed"\]}/package_data={"moneybox": \["py.typed"\]}/g' moneybox/setup.py
       - name: Build and package client and publish PYPI
-      - env:
+        env:
           TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
           TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
         run: |
