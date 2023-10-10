@@ -48,8 +48,8 @@ jobs:
         run: |
           sed -i 's|NAME = "openapi-client"|NAME = "moneybox"|g' moneybox/setup.py
           sed -i 's|VERSION = "0.0.1"|VERSION = ${{ github.event.release.tag_name }}|g' moneybox/setup.py
-          sed -i 's|author="OpenAPI Generator community"|author=${{ secrets.AUTHOR }}|g' moneybox/setup.py
-          sed -i 's|author_email="team@openapitools.org"|author_email=${{ secrets.EMAIL }}|g' moneybox/setup.py
+          sed -i 's|author="OpenAPI Generator community"|author="${{ secrets.AUTHOR }}"|g' moneybox/setup.py
+          sed -i 's|author_email="team@openapitools.org"|author_email="${{ secrets.EMAIL }}"|g' moneybox/setup.py
           sed -i 's|url=""|url="https://github.com/moneybox-ai/django-moneybox"|g' moneybox/setup.py
           sed -i 's|package_data={"openapi_client": \["py.typed"\]}|package_data={"moneybox": \["py.typed"\]}|g' moneybox/setup.py
       - name: Build and package client and publish PYPI
