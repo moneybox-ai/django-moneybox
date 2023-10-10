@@ -42,7 +42,7 @@ jobs:
         run: npm install @openapitools/openapi-generator-cli -g
       - name: Start server and generate client
         run: |
-          docker-compose up
+          docker-compose up -d
           npx openapi-generator-cli generate -i http://127.0.0.1/api/v1/schema/ -g python -o moneybox
       - name: Update setup.py file
         run: |
