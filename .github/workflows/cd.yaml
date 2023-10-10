@@ -41,7 +41,7 @@ jobs:
         run: npm install @openapitools/openapi-generator-cli -g
       - name: Start Django server
         run: |
-          python manage.py runserver
+          python moneybox/manage.py runserver
           sleep 5
       - name: Generate client
         run: npx openapi-generator-cli generate -i http://127.0.0.1:8000/api/v1/schema/ -g python -o moneybox
