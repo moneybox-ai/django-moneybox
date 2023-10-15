@@ -8,7 +8,7 @@ from rest_framework.test import APIRequestFactory
 from api.serializers.report import ReportSerializer
 from api.views.auth import decrypt_ciphertext, encrypt_token
 from api.views.report import ReportViewSet
-from core.defs.datetime import convert_date_for_json
+from core.defs.datetime import convert_date_to_datetime_format
 from users.models import APIUser
 from wallet.models.currency import Currency
 from wallet.models.expense import Expense, ExpenseCategory
@@ -101,14 +101,14 @@ class TestReport:
                 {
                     "category__name": "Test Income Category",
                     "total_expenses": Decimal("100"),
-                    "created_at": convert_date_for_json(timezone.now()),
+                    "created_at": convert_date_to_datetime_format(timezone.now()),
                 }
             ],
             "category_expenses": [
                 {
                     "category__name": "Test Expense Category",
                     "total_expenses": Decimal("50"),
-                    "created_at": convert_date_for_json(timezone.now()),
+                    "created_at": convert_date_to_datetime_format(timezone.now()),
                 }
             ],
         }
