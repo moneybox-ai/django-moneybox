@@ -80,8 +80,8 @@ class TestReport:
         total_incomes_per, total_incomes = ReportViewSet.get_total_incomes(group, start_date, end_date)
         total_expenses_per, total_expenses = ReportViewSet.get_total_expenses(group, start_date, end_date)
         income_expense_ratio = ReportViewSet.get_income_expense_ratio(total_incomes_per, total_expenses_per)
-        category_incomes = ReportViewSet.get_category_incomes(user.token, start_date, end_date)
-        category_expenses = ReportViewSet.get_category_expenses(user.token, start_date, end_date)
+        category_incomes = ReportViewSet.get_category_incomes(user.pk, start_date, end_date)
+        category_expenses = ReportViewSet.get_category_expenses(user.pk, start_date, end_date)
 
         actual_data = {
             "balance": total_incomes - total_expenses,
