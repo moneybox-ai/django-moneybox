@@ -32,7 +32,7 @@ class TestReport:
 
     @pytest.fixture
     def group(self, user):
-        group = Group.objects.create(name="Test Group")
+        group = Group.objects.create()
         group.members.add(user)
         return group
 
