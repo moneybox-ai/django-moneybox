@@ -73,15 +73,17 @@ class TestReport:
         request = api_rf.get("/reports/")
         request.user = user
 
-        request.META["HTTP_AUTHORIZATION"] = f"Token {decrypt_ciphertext(user.token)}"
+        user_token = decrypt_ciphertext(user.token)
+
+        request.META["HTTP_AUTHORIZATION"] = f"Token {user_token}"
 
         start_date = timezone.now().date()
         end_date = timezone.now().date()
         total_incomes_per, total_incomes = ReportViewSet.get_total_incomes(group, start_date, end_date)
         total_expenses_per, total_expenses = ReportViewSet.get_total_expenses(group, start_date, end_date)
         income_expense_ratio = ReportViewSet.get_income_expense_ratio(total_incomes_per, total_expenses_per)
-        category_incomes = ReportViewSet.get_category_incomes(user, start_date, end_date)
-        category_expenses = ReportViewSet.get_category_expenses(user, start_date, end_date)
+        category_incomes = ReportViewSet.get_category_incomes(user_token, start_date, end_date)
+        category_expenses = ReportViewSet.get_category_expenses(user_token, start_date, end_date)
 
         actual_data = {
             "balance": total_incomes - total_expenses,
