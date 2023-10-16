@@ -28,12 +28,15 @@ class TestReport:
 
     @pytest.fixture
     def user(self):
-        return APIUser.objects.create(token=encrypt_token(self.token.encode()))
+        api_user = APIUser.objects.create(token=encrypt_token(self.token.encode()))
+        user = User.objects.create(username="username", password="password", api_user=api_user)
+        return user
 
     @pytest.fixture
     def group(self, user):
+        api_user = user.api_user
         group = Group.objects.create()
-        group.members.add(user)
+        group.members.add(api_user)
         return group
 
     @pytest.fixture
@@ -42,20 +45,27 @@ class TestReport:
 
     @pytest.fixture
     def wallet(self, user, group, currency):
-        return Wallet.objects.create(name="Test Wallet", balance=50, created_by=user, group=group, currency=currency)
+        return Wallet.objects.create(
+            name="Test Wallet", balance=50, created_by=user.api_user, group=group, currency=currency
+        )
 
     @pytest.fixture
     def income_category(self, user, group):
-        return IncomeCategory.objects.create(name="Test Income Category", group=group, created_by=user)
+        return IncomeCategory.objects.create(name="Test Income Category", group=group, created_by=user.api_user)
 
     @pytest.fixture
     def expense_category(self, user, group):
-        return ExpenseCategory.objects.create(name="Test Expense Category", group=group, created_by=user)
+        return ExpenseCategory.objects.create(name="Test Expense Category", group=group, created_by=user.api_user)
 
     @pytest.fixture
     def income(self, user, income_category, group, wallet):
         income = Income.objects.create(
-            amount=100, category=income_category, created_by=user, group=group, wallet=wallet, comment="Зарплата"
+            amount=100,
+            category=income_category,
+            created_by=user.api_user,
+            group=group,
+            wallet=wallet,
+            comment="Зарплата",
         )
         income.save()
         return income
@@ -63,25 +73,28 @@ class TestReport:
     @pytest.fixture
     def expense(self, user, expense_category, group, wallet):
         expense = Expense.objects.create(
-            amount=50, category=expense_category, created_by=user, group=group, wallet=wallet, comment="Такси"
+            amount=50, category=expense_category, created_by=user.api_user, group=group, wallet=wallet, comment="Такси"
         )
         expense.save()
         return expense
 
     @pytest.mark.django_db
-    def test_list(self, api_rf, user, group):
+    def test_list(self, api_rf, user, group, income, expense, income_category, expense_category):
         request = api_rf.get("/reports/")
         request.user = user
+        print(group)
+        print(user)
+        # exit()
 
-        request.META["HTTP_AUTHORIZATION"] = f"Token {decrypt_ciphertext(user.token)}"
+        request.META["HTTP_AUTHORIZATION"] = f"Token {decrypt_ciphertext(user.api_user.token)}"
 
         start_date = timezone.now().date()
         end_date = timezone.now().date()
         total_incomes_per, total_incomes = ReportViewSet.get_total_incomes(group, start_date, end_date)
         total_expenses_per, total_expenses = ReportViewSet.get_total_expenses(group, start_date, end_date)
         income_expense_ratio = ReportViewSet.get_income_expense_ratio(total_incomes_per, total_expenses_per)
-        category_incomes = ReportViewSet.get_category_incomes(user.api_user, start_date, end_date)
-        category_expenses = ReportViewSet.get_category_expenses(user.api_user, start_date, end_date)
+        category_incomes = ReportViewSet.get_category_incomes(user.api_user.pk, start_date, end_date)
+        category_expenses = ReportViewSet.get_category_expenses(user.api_user.pk, start_date, end_date)
 
         actual_data = {
             "balance": total_incomes - total_expenses,
