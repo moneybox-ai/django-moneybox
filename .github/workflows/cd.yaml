@@ -49,7 +49,7 @@ jobs:
         run: |
           CONTRIBUTORS=$(curl -s -H "Accept: application/vnd.github.v3+json" \
             "https://api.github.com/repos/moneybox-ai/django-moneybox/contributors" \
-            | jq -r '.[].login' | sed 's/, /\n/g')
+            | jq -r '.[].login' | sed -z 's/\n/, /\n/g' | sed 's/, $//')
           echo "::set-output name=contributors::$CONTRIBUTORS"
       - name: Update setup.py file
         run: |
