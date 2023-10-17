@@ -50,17 +50,21 @@ jobs:
           CONTRIBUTORS=$(curl -s -H "Accept: application/vnd.github.v3+json" \
             "https://api.github.com/repos/moneybox-ai/django-moneybox/contributors" \
             | jq -r '.[].login')
-          CONTRIBUTORS=$(echo -e "$CONTRIBUTORS" | tr '\n' '\n')
+          CONTRIBUTORS=$(echo -e "$CONTRIBUTORS" | tr '\n' ',')
           echo "::set-output name=contributors::$CONTRIBUTORS"
       - name: Update setup.py file
         run: |
           CONTRIBUTORS="${{ steps.contributors.outputs.contributors }}"
-          sed -i 's|NAME = "openapi-client"|NAME = "moneybox"|g' moneybox/setup.py
-          sed -i 's|VERSION = "1.0.0"|VERSION = "${{ github.event.release.tag_name }}"|g' moneybox/setup.py
-          sed -i 's|author=\"OpenAPI Generator community\"|author=\"$CONTRIBUTORS\"|g' moneybox/setup.py
-          sed -i 's|author_email=\"team@openapitools.org\"|author_email=\"support@moneybox.com"|g' moneybox/setup.py
-          sed -i 's|url=""|url="https://github.com/moneybox-ai/django-moneybox"|g' moneybox/setup.py
-          sed -i 's|package_data={"openapi_client": \["py.typed"\]}|package_data={"moneybox": \["py.typed"\]}|g' moneybox/setup.py
+          python3 -c "with open('moneybox/setup.py', 'r') as f:
+              data = f.read()
+              data = data.replace('NAME = \"openapi-client\"', 'NAME = \"moneybox\"')
+              data = data.replace('VERSION = \"1.0.0\"', 'VERSION = \"${{ github.event.release.tag_name }}\"')
+              data = data.replace('author=\"OpenAPI Generator community\"', 'author=\"$CONTRIBUTORS\"')
+              data = data.replace('author_email=\"team@openapitools.org\"', 'author_email=\"support@moneybox.com\"')
+              data = data.replace('url=\"\"', 'url=\"https://github.com/moneybox-ai/django-moneybox\"')
+              data = data.replace('package_data={\"openapi_client\": [\"py.typed\"]}', 'package_data={\"moneybox\": [\"py.typed\"]}')
+          with open('moneybox/setup.py', 'w') as f:
+              f.write(data)"
       - name: Build and package client and publish PYPI
         env:
           TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
