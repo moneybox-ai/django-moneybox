@@ -82,9 +82,6 @@ class TestReport:
     def test_list(self, api_rf, user, group, income, expense, income_category, expense_category):
         request = api_rf.get("/reports/")
         request.user = user
-        print(group)
-        print(user)
-        # exit()
 
         request.META["HTTP_AUTHORIZATION"] = f"Token {decrypt_ciphertext(user.api_user.token)}"
 
