@@ -54,7 +54,7 @@ class ReportViewSet(viewsets.ViewSet):
 
     @staticmethod
     def get_user_profile(user):
-        profile = get_object_or_404(APIUser, token=user)
+        profile = get_object_or_404(APIUser, token=user.token)
         return profile
 
     @staticmethod
