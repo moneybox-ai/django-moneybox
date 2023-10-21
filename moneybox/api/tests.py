@@ -132,11 +132,11 @@ class TestReport:
 
 class TestEncryption:
     token = "8db757d5-c7d9-44dc-a7a7-f9cf8e7920dd"
-    token_encrypted_pt_1 = (
-        b"\x01x}@\xcc\x83\xccr\x1da\xafA\x04\xa0\xa6\xbc\xc4,\xc5\xc0\x9d\x1b#1\xec\xcdz\x9b\x9b\x96"
+    token_encrypted = (
+        b"\x01\x19\xf8\xd0\x11\xb5\xb1\x8f\xba\xc6\xf4\xab\x0e\x8d\xca\xc1\xd5\xed*\x83"
+        b"9\xfc\xd2<\xc5W)b\xbf\xcf\x9c\x1a#\xa1\xee\x94#\xdf\xef\xf5\x14\x0e\xfbQxm\x8b"
+        b"t+[\xf0\xed\xc8\x80\xef\xa3\xc7"
     )
-    token_encrypted_pt_2 = b"1\x88\xf4\x8d\xb6bv\xb0e\x9f|KU\xb77\xecK\xd3\x06M\xee=\x96\xc8\x1b\xc3u"
-    token_encrypted = token_encrypted_pt_1 + token_encrypted_pt_2
 
     def test_encrypt_token(self):
         assert encrypt_token(self.token.encode()) == self.token_encrypted
