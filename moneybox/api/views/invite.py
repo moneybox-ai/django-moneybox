@@ -8,7 +8,6 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 from api.permissions import IsAuthenticated
-from api.serializers.invite import InviteSerializer
 from wallet.models.group import Group
 from wallet.models.invite import Invite
 
@@ -16,7 +15,6 @@ from wallet.models.invite import Invite
 @extend_schema(tags=["Invites"])
 class InviteViewSet(ModelViewSet):
     queryset = Invite.objects.all()
-    serializer_class = InviteSerializer
 
     @action(detail=False, methods=("POST",), permission_classes=(IsAuthenticated,))
     def invite(self, request):  # TODO scheme for swagger
