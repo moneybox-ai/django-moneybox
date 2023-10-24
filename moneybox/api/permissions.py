@@ -35,14 +35,16 @@ class IsAdminOnly(permissions.BasePermission):
 
 
 class IsGroupMember(permissions.BasePermission):
-    def has_permission(self, request, view):
-        user = request.user
-        obj = view.get_object()
+    """Allows access only to users who are members of the specified group."""
 
-        if not user or not user.is_authenticated:
+    def has_object_permission(self, request, view, obj):
+        try:
+            if not request.user or not request.user.is_authenticated:
+                return False
+
+            if obj.group is None:
+                return False
+
+            return request.user.groups.filter(pk=obj.group.pk).exists()
+        except exceptions.ObjectDoesNotExist:
             return False
-
-        if obj.group is None:
-            return False
-
-        return user.groups.filter(pk=obj.group.pk).exists()
