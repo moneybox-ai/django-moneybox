@@ -24,3 +24,27 @@ class IsAdminOrReadOnly(permissions.BasePermission):
         except exceptions.ObjectDoesNotExist:
             return False
         return bool(request.user and request.user.admin_user.is_staff)
+
+
+class IsAdminOnly(permissions.BasePermission):
+    def has_permission(self, request, view):
+        try:
+            return bool(request.user.admin_user)
+        except exceptions.ObjectDoesNotExist:
+            return False
+
+
+class IsGroupMember(permissions.BasePermission):
+    """Allows access only to users who are members of the specified group."""
+
+    def has_object_permission(self, request, view, obj):
+        try:
+            if not request.user or not request.user.is_authenticated:
+                return False
+
+            if obj.group is None:
+                return False
+
+            return request.user.groups.filter(pk=obj.group.pk).exists()
+        except exceptions.ObjectDoesNotExist:
+            return False
