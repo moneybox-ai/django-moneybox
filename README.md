@@ -1,10 +1,13 @@
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![Actions Status](https://github.com/moneybox-ai/django-moneybox/workflows/CI/badge.svg)](https://github.com/moneybox-ai/django-moneybox/actions)
+[![Python Version](https://img.shields.io/badge/python-3.11%2B-blue)](https://www.python.org/downloads/release/python-380/)
+[![Framework](https://img.shields.io/badge/framework-Django-green)](https://www.djangoproject.com/)
+[![Language](https://img.shields.io/badge/language-Python-blue)](https://www.python.org/)
 
 ## Django Moneybox [under developing]
 
-Django Moneybox is a REST API service for tracking and managing personal finances. It provides endpoints for creating,
-updating, and deleting income and expense transactions, as well as for retrieving reports on financial activity.
+Django Moneybox is a REST API service for tracking and managing personal finances. It provides endpoints for creating, updating, and deleting income and expense transactions, as well as for retrieving reports on financial activity. The application is secured with encryption key handling and employs Celery for task management.
 
 ### Installation
 
