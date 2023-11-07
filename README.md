@@ -10,7 +10,7 @@
 
 Django Moneybox is a REST API service for tracking and managing personal finances. It provides endpoints for creating, updating, and deleting income and expense transactions, as well as for retrieving reports on financial activity. The application is secured with encryption key handling and employs Celery for task management.
 
-> [More details](https://github.com/moneybox-ai/django-moneybox/docs/description.md)
+- [Description of the project](https://github.com/moneybox-ai/django-moneybox/docs/description.md)
 
 
 ### Installation
@@ -34,9 +34,19 @@ Django Moneybox can be effortlessly set up using Docker and Docker Compose. Foll
 
 This command will launch Django Moneybox, a PostgreSQL database, and other services defined in the docker-compose.yml file.
 
+### Technical description
+
+- [Documentation](https://github.com/moneybox-ai/django-moneybox/docs/tech_description.md)
+
+### Demo
+
+Explore the functionality of Django Moneybox on our development server. Test, save, and manage your financial activities.
+The API documentation can be accessed through Swagger UI.
+- [Demo](http://moneybox.ddns.net/api/v1/schema/swagger-ui/)
+
 ### Contributing
 
-Contributions to Django Moneybox are welcome! Please refer to the CONTRIBUTING.md file for guidelines.
+Contributions to Django Moneybox are welcome!
 
 ### License
 
