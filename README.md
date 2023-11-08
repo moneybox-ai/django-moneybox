@@ -51,13 +51,13 @@ Contributions to Django Moneybox are welcome!
 <table>
   <tbody>
     <tr>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/stanislav-losev"><img src="https://avatars.githubusercontent.com/u/57747493?v=4" width="100px;" alt="stanislav-losev"/><br /><sub><b>stanislav-losev</b></sub></a><br /></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/error0x001"><img src="https://avatars.githubusercontent.com/u/71964062?v=4" width="100px;" alt="error0x001"/><br /><sub><b>error0x001</b></sub></a><br /></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Faithdev21"><img src="https://avatars.githubusercontent.com/u/119350657?v=4" width="100px;" alt="Egor Loskutov"/><br /><sub><b>Egor Loskutov</b></sub></a><br /></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/tanja-ovc"><img src="https://avatars.githubusercontent.com/u/85249138?v=4" width="100px;" alt="Таня Овчинникова"/><br /><sub><b>Таня Овчинникова</b></sub></a><br /></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Eugene-Bykovsky"><img src="https://avatars.githubusercontent.com/u/45427494?v=4" width="100px;" alt="Evgenii Bykovskii"/><br /><sub><b>Evgenii Bykovskii</b></sub></a><br /></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/ArtemWhiter"><img src="https://avatars.githubusercontent.com/u/95350023?v=4" width="100px;" alt="Артем Гронский"/><br /><sub><b>Артем Гронский</b></sub></a><br /></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/maxahist"><img src="https://avatars.githubusercontent.com/u/97408215?v=4" width="100px;" alt="maxahist"/><br /><sub><b>maxahist</b></sub></a><br /></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/stanislav-losev"><img src="https://avatars.githubusercontent.com/u/57747493?v=4" width="100px;" alt="stanislav-losev"/><br /><b>stanislav-losev</b></a><br /></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/error0x001"><img src="https://avatars.githubusercontent.com/u/71964062?v=4" width="100px;" alt="error0x001"/><br /><b>error0x001</b></a><br /></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Faithdev21"><img src="https://avatars.githubusercontent.com/u/119350657?v=4" width="100px;" alt="Egor Loskutov"/><br /><b>Egor Loskutov</b></a><br /></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/tanja-ovc"><img src="https://avatars.githubusercontent.com/u/85249138?v=4" width="100px;" alt="Таня Овчинникова"/><br /><b>Таня Овчинникова</b></a><br /></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Eugene-Bykovsky"><img src="https://avatars.githubusercontent.com/u/45427494?v=4" width="100px;" alt="Evgenii Bykovskii"/><br /><b>Evgenii Bykovskii</b></a><br /></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/ArtemWhiter"><img src="https://avatars.githubusercontent.com/u/95350023?v=4" width="100px;" alt="Артем Гронский"/><br /><b>Артем Гронский</b></a><br /></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/maxahist"><img src="https://avatars.githubusercontent.com/u/97408215?v=4" width="100px;" alt="maxahist"/><br /><b>maxahist</b></a><br /></td>
     </tr>
   </tbody>
 </table>
